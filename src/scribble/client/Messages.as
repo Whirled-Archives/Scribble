@@ -1,0 +1,14 @@
+package scribble.client {
+
+import scribble.i18n.MessageBundle;
+
+public class Messages
+{
+    public static const en :MessageBundle = new MessageBundle({
+        broadcast: "Scribble broadcast by {0}: {1}",
+        pass: "{0} passed on \"{1}\".",
+        correct: "{0} and {1} get {2} points for \"{3}\"!"
+    });
+}
+
+}
