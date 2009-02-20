@@ -42,6 +42,9 @@ public class Codes
     public static const MESSAGE_FEED :String = "feed"; // on Game
     public static const MESSAGE_SECRET_WORD :String = "word"; // on Player
 
+    /** A dummy mob name and ID used for a correct foreground overlay drawing. */
+    public static const MOB_FOREGROUND :String = "fg";
+
     public static function isAdmin (playerId :int) :Boolean
     {
         return playerId == 878; // Aduros' playerId

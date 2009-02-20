@@ -3,6 +3,7 @@ package scribble.client {
 import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.events.IEventDispatcher;
 import flash.utils.ByteArray;
 import flash.utils.Dictionary;
 
@@ -20,9 +21,10 @@ public class CanvasSprite extends Sprite
 {
     public static const CANVAS_CLEARED :String = "CanvasCleared";
 
-    public function CanvasSprite (prefix :String)
+    public function CanvasSprite (prefix :String, source :IEventDispatcher = null)
     {
         _prefix = prefix;
+        _source = (source != null) ? source : this; // See declaration for wtf this is
 
         this.addEventListener(CANVAS_CLEARED, function (... _) :void {
             reset();
@@ -107,7 +109,8 @@ public class CanvasSprite extends Sprite
 
     protected function onStrokeComposed (event :ValueEvent) :void
     {
-        Command.dispatch(this, ScribbleController.SEND_STROKE, Stroke(event.value));
+        // See _source
+        Command.dispatch(_source, ScribbleController.SEND_STROKE, Stroke(event.value));
     }
 
     public function createToolbox () :Sprite
@@ -156,6 +159,13 @@ public class CanvasSprite extends Sprite
      */
     protected var _pendingStrokes :SortedHashMap =
         new SortedHashMap(SortedHashMap.NUMERIC_KEYS); // strokeId -> Stroke
+
+    /**
+     * Because this canvas may be in a mob, we need to specify the _source so CommandEvents will
+     * stay within our app and not wind up to the mob sprite, which is controlled by the Whirled
+     * client.
+     */
+    protected var _source :IEventDispatcher;
 
     protected var _strokes :StrokeContainer = new StrokeContainer(640, 480);
     protected var _overlay :DrawingOverlay = new DrawingOverlay(640, 480);

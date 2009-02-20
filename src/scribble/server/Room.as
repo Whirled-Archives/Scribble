@@ -31,7 +31,7 @@ public class Room
 
         _pictionary = new PictionaryCanvas(1, this);
 
-        _canvases.push(new Canvas(0, _ctrl.props));
+        _canvases.push(new BackdropCanvas(0, this));
         _canvases.push(_pictionary);
     }
 

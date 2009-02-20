@@ -27,6 +27,15 @@ public class ScribblePanel extends Sprite
         Game.ctrl.game.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onGameMessage);
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
 
+        Game.ctrl.local.setMobSpriteExporter(function (name :String) :Sprite {
+            if (name == Codes.MOB_FOREGROUND) {
+                return new Sprite(); // We'll fill it up later
+            } else {
+                Game.log.warning("Non-overlay mob created? Prepare for breakage.");
+                return null;
+            }
+        });
+
         // Test stuff
         var switcher :Sprite = new Sprite();
         switcher.graphics.beginFill(0x00ff00);
