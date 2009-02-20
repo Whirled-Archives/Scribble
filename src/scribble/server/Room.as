@@ -18,6 +18,10 @@ public class Room
     {
         _ctrl = ctrl;
 
+        // Reinitialize memory. It turns out if a game is rebooted by the owner uploading a new
+        // version, non-persistent memory sticks around! 
+        _ctrl.props.set(Codes.PLAYER_MODES, null, true);
+
         _ctrl.addEventListener(AVRGameRoomEvent.PLAYER_LEFT, onPlayerLeft);
 
         // TODO: Handle this better
@@ -25,14 +29,10 @@ public class Room
         //    _ctrl.props.set("game", null);
         //});
 
-        _pictionary = new PictionaryCanvas(1, _ctrl);
+        _pictionary = new PictionaryCanvas(1, this);
 
         _canvases.push(new Canvas(0, _ctrl.props));
         _canvases.push(_pictionary);
-
-        // Reinitialize memory. It turns out if a game is rebooted by the owner uploading a new
-        // version, non-persistent memory sticks around! 
-        _ctrl.props.set(Codes.PLAYER_MODES, null);
     }
 
     public function get ctrl () :RoomSubControlServer
@@ -40,7 +40,8 @@ public class Room
         return _ctrl;
     }
 
-    public function get players () :Set
+    /** All the players in this Room. */
+    public function get players () :Dictionary
     {
         return _players;
     }
@@ -78,7 +79,7 @@ public class Room
 //            }
 //        }
 //    }
-    protected function setMode (playerId :int, newMode :Object) :void
+    public function setMode (playerId :int, newMode :Object) :void
     {
         var modes :Dictionary = Dictionary(_ctrl.props.get(Codes.PLAYER_MODES));
 
@@ -125,7 +126,7 @@ public class Room
     }
 
     protected var _ctrl :RoomSubControlServer;
-    protected var _players :Set = new HashSet(); // of Player // TODO: Make it an array
+    protected var _players :Dictionary = new Dictionary(); // playerId -> Player
 
     protected var _canvases :Array = []; // of Canvas
     protected var _pictionary :PictionaryCanvas;

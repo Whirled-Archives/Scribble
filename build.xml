@@ -1,6 +1,5 @@
-<project default="compile" basedir=".">
+<project name="Scribble" default="compile" basedir=".">
 
-  <!-- defines our project parameters -->
   <property name="app.source-dir" value="src"/>
 
   <property name="app.name" value="Game"/>
@@ -10,7 +9,7 @@
   <property name="app.server-agent" value="Server"/>
   <property name="app.server-agent-package-dir" value="scribble/server"/>
 
-  <!-- include the standard build script -->
+  <!-- Point $WHIRLED_HOME to your SDK. -->
   <property environment="env" />
   <property name="sdk.dir" value="${env.WHIRLED_HOME}" />
   <import file="${sdk.dir}/etc/project-include.xml"/>

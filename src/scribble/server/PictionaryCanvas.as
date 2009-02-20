@@ -10,19 +10,19 @@ import scribble.data.PictionaryLogic;
 
 public class PictionaryCanvas extends Canvas
 {
-    public function PictionaryCanvas (mode :int, ctrl :RoomSubControlServer)
+    public function PictionaryCanvas (mode :int, room :Room)
     {
-        super(mode, ctrl.props);
+        super(mode, room.ctrl.props);
 
-        _ctrl = ctrl;
-        _ticker = new Ticker(_ctrl.props, Codes.keyTicker(_prefix));
+        _room = room;
+        _ticker = new Ticker(_props, Codes.keyTicker(_prefix));
 
         _logic = new PictionaryLogic(_prefix, _props);
 
-        _ctrl.addEventListener(AVRGameRoomEvent.ROOM_UNLOADED, onRoomUnloaded);
+        _room.ctrl.addEventListener(AVRGameRoomEvent.ROOM_UNLOADED, onRoomUnloaded);
 
         _props.set(Codes.keyPhase(_prefix), null, true);
-        //setPhase(Codes.PHASE_NOT_ENOUGH_PLAYERS);
+        //setPhase(PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS);
         //setPhase(-1);
     }
 
@@ -33,24 +33,24 @@ public class PictionaryCanvas extends Canvas
         }
 
         switch (phase) {
-            case Codes.PHASE_INTERMISSION:
+            case PictionaryLogic.PHASE_INTERMISSION:
                 purgeMissingPlayers();
                 _props.set(Codes.keyTurnHolder(_prefix), null, true);
                 _round = 0;
                 _ticker.start(20, true, nextTurn);
                 break;
 
-            case Codes.PHASE_PAUSE:
+            case PictionaryLogic.PHASE_PAUSE:
                 _ticker.start(5, false, nextTurn);
                 break;
 
-            case Codes.PHASE_PLAYING:
+            case PictionaryLogic.PHASE_PLAYING:
                 _ticker.start(10, true, function () :void {
-                    setPhase(Codes.PHASE_PAUSE);
+                    setPhase(PictionaryLogic.PHASE_PAUSE);
                 });
                 break;
 
-            case Codes.PHASE_NOT_ENOUGH_PLAYERS:
+            case PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS:
                 _ticker.stop();
                 break;
         }
@@ -71,7 +71,7 @@ public class PictionaryCanvas extends Canvas
         }
 
         if (_players.size() == PictionaryLogic.PLAYERS_REQUIRED) {
-            setPhase(Codes.PHASE_INTERMISSION);
+            setPhase(PictionaryLogic.PHASE_INTERMISSION);
         }
     }
 
@@ -80,10 +80,10 @@ public class PictionaryCanvas extends Canvas
         super.playerDidClose(playerId);
 
         if (_players.size() == PictionaryLogic.PLAYERS_REQUIRED-1) {
-            setPhase(Codes.PHASE_NOT_ENOUGH_PLAYERS);
+            setPhase(PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS);
 
         } else if (_logic.getTurnHolder() == _logic.getRosterId(playerId)) {
-            setPhase(Codes.PHASE_PAUSE);
+            setPhase(PictionaryLogic.PHASE_PAUSE);
         }
     }
 
@@ -100,7 +100,7 @@ public class PictionaryCanvas extends Canvas
         var roster :Dictionary = _logic.getRoster();
 
         for (var rosterId :String in roster) {
-            if (!_ctrl.isPlayerHere(int(roster[rosterId]))) {
+            if (!(roster[rosterId] in _room.players)) {
                 _props.setIn(Codes.keyRoster(_prefix), int(rosterId), null, true);
             }
         }
@@ -125,7 +125,7 @@ public class PictionaryCanvas extends Canvas
         _props.set(Codes.keyTurnHolder(_prefix), turnHolder, true);
         _props.setIn(Codes.keyScores(_prefix), turnHolder, int(_logic.getScores()[turnHolder])+1, true);
 
-        setPhase(Codes.PHASE_PLAYING);
+        setPhase(PictionaryLogic.PHASE_PLAYING);
     }
 
     public function pass (player :Player) :void
@@ -135,11 +135,12 @@ public class PictionaryCanvas extends Canvas
 
     protected function onRoomUnloaded (event :AVRGameRoomEvent) :void
     {
+        trace("=== Room unloaded.");
         // Clean up
         _ticker.stop();
     }
 
-    protected var _ctrl :RoomSubControlServer;
+    protected var _room :Room;
     protected var _ticker :Ticker;
     protected var _logic :PictionaryLogic;
 

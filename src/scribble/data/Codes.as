@@ -38,18 +38,13 @@ public class Codes
     /** A room property (Dictionary) that maps playerId to canvasIndex. */
     public static const PLAYER_MODES :String = "mode";
 
-    // Phases within Pictionary
-    public static const PHASE_NOT_ENOUGH_PLAYERS :int = 0;
-    public static const PHASE_INTERMISSION :int = 1;
-    public static const PHASE_PLAYING :int = 2;
-    public static const PHASE_PAUSE :int = 3;
-
     public static const MESSAGE_BROADCAST :String = "broadcast"; // on Game
     public static const MESSAGE_FEED :String = "feed"; // on Game
+    public static const MESSAGE_SECRET_WORD :String = "word"; // on Player
 
     public static function isAdmin (playerId :int) :Boolean
     {
-        return playerId == 878;
+        return playerId == 878; // Aduros' playerId
     }
 
     public static function keyCanvas (prefix :String) :String

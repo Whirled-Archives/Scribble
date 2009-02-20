@@ -5,6 +5,8 @@ import flash.display.DisplayObjectContainer;
 import flash.display.Graphics;
 import flash.display.Shape;
 
+import com.gskinner.motion.GTween;
+
 import scribble.data.Codes;
 
 public class GraphicsUtil
@@ -48,6 +50,15 @@ public class GraphicsUtil
     {
         while (container.numChildren > 0) {
             container.removeChildAt(0);
+        }
+    }
+
+    /** Like GTween.reverse(), but always ensures playback. */
+    public static function flip (tween :GTween) :void
+    {
+        tween.reverse();
+        if (tween.state == GTween.END) {
+            tween.play();
         }
     }
 }

@@ -65,8 +65,6 @@ public class CanvasSprite extends Sprite
 
         addChild(_strokes);
         addChild(_overlay);
-
-        initTools();
     }
 
     protected function onRoomElementChanged (event :ElementChangedEvent) :void
@@ -112,30 +110,34 @@ public class CanvasSprite extends Sprite
         Command.dispatch(this, ScribbleController.SEND_STROKE, Stroke(event.value));
     }
 
-    protected function initTools () :void
+    public function createToolbox () :Sprite
     {
-        _undo = new UndoSprite(this);
-        this.addEventListener(CanvasSprite.CANVAS_CLEARED, function (... _) :void {
-            _undo.reset();
-        });
-        _overlay.addEventListener(DrawingOverlay.BRUSH_DOWN, function (... _) :void {
-            // Clear redo history on canvas click
-            _undo.clearRedo();
-        });
-        _undo.x = 50;
-        addChild(_undo);
+        var toolbox :Sprite = new Sprite();
 
-        _picker = new BrushPicker();
-        _picker.y = 50;
-        _picker.addEventListener(BrushPicker.BRUSH_CHANGED, function (event :ValueEvent) :void {
+        var picker :BrushPicker = new BrushPicker();
+        picker.addEventListener(BrushPicker.BRUSH_CHANGED, function (event :ValueEvent) :void {
             var brushId :int = int(event.value);
             _composer.setBrush(brushId);
             _overlay.setBrush(brushId);
         });
-        addChild(_picker);
+        toolbox.addChild(picker);
 
-        _clearButton = new ClearButton();
-        addChild(_clearButton);
+        var clearButton :ClearButton = new ClearButton();
+        clearButton.x = toolbox.width;
+        toolbox.addChild(clearButton);
+
+        var undo :UndoSprite = new UndoSprite(this);
+        this.addEventListener(CanvasSprite.CANVAS_CLEARED, function (... _) :void {
+            undo.reset();
+        });
+        _overlay.addEventListener(DrawingOverlay.BRUSH_DOWN, function (... _) :void {
+            // Clear redo history on canvas click
+            undo.clearRedo();
+        });
+        undo.x = toolbox.width;
+        toolbox.addChild(undo);
+
+        return toolbox;
     }
 
     protected function reset () :void
@@ -158,10 +160,6 @@ public class CanvasSprite extends Sprite
     protected var _strokes :StrokeContainer = new StrokeContainer(640, 480);
     protected var _overlay :DrawingOverlay = new DrawingOverlay(640, 480);
     protected var _composer :StrokeComposer = new StrokeComposer(_overlay, null);
-
-    protected var _undo :UndoSprite;
-    protected var _clearButton :ImageButton;
-    protected var _picker :BrushPicker;
 }
 
 }

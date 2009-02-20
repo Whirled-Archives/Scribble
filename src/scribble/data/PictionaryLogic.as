@@ -10,16 +10,28 @@ public class PictionaryLogic
     /** Players required to start. */
     public static const PLAYERS_REQUIRED :int = 2;
 
+    // Phases within the game
+    public static const PHASE_NOT_ENOUGH_PLAYERS :int = 0;
+    public static const PHASE_INTERMISSION :int = 1;
+    public static const PHASE_PLAYING :int = 2;
+    public static const PHASE_PAUSE :int = 3;
+
     public function PictionaryLogic (prefix :String, props :PropertyGetSubControl)
     {
         _prefix = prefix;
         _props = props;
     }
 
-    /** The current turn holder. This is a roster index and NOT a playerId! */
+    /** The current turn holder. This is a rosterId and NOT a playerId! */
     public function getTurnHolder () :int
     {
-        return int(_props.get(Codes.keyTurnHolder(_prefix)));
+        switch (getPhase()) {
+            case PHASE_NOT_ENOUGH_PLAYERS:
+            case PHASE_INTERMISSION:
+                return -1; // No turn holder for these phases
+            default:
+                return int(_props.get(Codes.keyTurnHolder(_prefix)));
+        }
     }
 
     public function getRoster () :Dictionary
@@ -41,8 +53,7 @@ public class PictionaryLogic
 
     public function getPhase () :int
     {
-        var phase :Object = _props.get(Codes.keyPhase(_prefix));
-        return (phase != null) ? int(phase) : -1;
+        return int(_props.get(Codes.keyPhase(_prefix)));
     }
 
     public function getScores () :Dictionary

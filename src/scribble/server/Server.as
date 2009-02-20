@@ -1,6 +1,7 @@
 package scribble.server {
 
 import flash.utils.ByteArray;
+import flash.utils.Dictionary;
 
 import com.threerings.util.Log;
 
@@ -21,6 +22,8 @@ public class Server extends ServerObject
         _ctrl.game.addEventListener(AVRGameControlEvent.PLAYER_JOINED_GAME, onPlayerJoin);
         _ctrl.game.addEventListener(AVRGameControlEvent.PLAYER_QUIT_GAME, onPlayerQuit);
         _ctrl.game.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onGameMessage);
+
+        log.info("Scribble started. This could be the beginning of a beautiful game");
     }
 
     protected function getRoom (roomId :int) :Room
@@ -77,12 +80,14 @@ public class Server extends ServerObject
             _rooms[roomId] = room;
         }
 
+//        room.setMode(playerId, Codes.CANVAS_ROOM); // TODO: Move this out?
 //        room.ctrl.props.setIn(Codes.PLAYER_MODES, playerId, Codes.CANVAS_ROOM, true);
 
         player.room = room;
-        if (!room.players.add(player)) {
+        if (playerId in room.players) {
             log.warning("Player was already in entered room?", "playerId", playerId, "roomId", roomId);
         }
+        room.players[playerId] = player;
     }
 
     protected function onRoomUnloaded (event :AVRGameRoomEvent) :void
@@ -107,8 +112,10 @@ public class Server extends ServerObject
         if (room == null) {
             log.warning("Player tried to leave an unregistered room",
                 "playerId", playerId, "roomId", roomId);
-        } else if (!room.players.remove(player)) {
+        } else if (!(playerId in room.players)) {
             log.warning("Player wasn't in left room?", "playerId", playerId, "roomId", roomId);
+        } else {
+            delete room.players[playerId];
         }
     }
 
@@ -155,9 +162,8 @@ public class Server extends ServerObject
 
     protected var _ctrl :AVRServerGameControl;
 
-    protected var _players :Array = []; // playerId -> Player
-
-    protected var _rooms :Array = []; // roomId -> Room
+    protected var _players :Dictionary = new Dictionary(); // playerId -> Player
+    protected var _rooms :Dictionary = new Dictionary(); // roomId -> Room
 }
 
 }

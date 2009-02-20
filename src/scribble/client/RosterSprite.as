@@ -17,7 +17,6 @@ public class RosterSprite extends Sprite
 {
     public function RosterSprite ()
     {
-        _turnArrow.y = -500; // TODO
         _turnArrow.visible = false;
         addChild(_turnArrow);
     }
@@ -53,7 +52,6 @@ public class RosterSprite extends Sprite
 
         var row :RowSprite = new RowSprite();
         row.nameLabel.text = name;
-        row.scoreLabel.text = "(None)";
         row.x = 25;
 
         trace("Added: rosterId="+rosterId+", name="+name);

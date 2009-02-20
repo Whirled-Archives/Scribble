@@ -1,8 +1,14 @@
 package scribble.client {
 
 import flash.display.Sprite;
+import flash.events.Event;
+import flash.geom.Rectangle;
 import flash.utils.Dictionary;
+import flash.filters.DropShadowFilter;
 
+import com.gskinner.motion.GTween;
+
+import com.whirled.avrg.*;
 import com.whirled.net.*;
 
 import scribble.data.Codes;
@@ -15,14 +21,42 @@ public class PictionaryMode extends ModeSprite
         _prefix = Codes.CANVAS_PREFIXES[Codes.CANVAS_PICTIONARY];
         _logic = new PictionaryLogic(_prefix, Game.ctrl.room.props);
 
+        _panel = new Sprite();
+        _panel.graphics.beginFill(0xffffff);
+        _panel.graphics.drawRect(0, 0, 640, 480);
+        _panel.graphics.endFill();
+        _panel.filters = [ new DropShadowFilter() ];
+
         _canvas = new CanvasSprite(_prefix);
-        addChild(_canvas);
+
+        _panel.addChild(_canvas);
 
         _tickerContainer.x = 200;
-        addChild(_tickerContainer);
+        _panel.addChild(_tickerContainer);
 
         _roster.x = 400;
-        addChild(_roster);
+        _panel.addChild(_roster);
+
+        _panel.addChild(_canvas.createToolbox());
+
+        addChild(_panel);
+
+        var screen :Rectangle = Game.ctrl.local.getPaintableArea();
+
+        trace(_panel.height);
+
+        _panel.y = -_panel.height;
+        _slideIn = new GTween(_panel, 2, {y: (screen.height-_panel.height)/2}, {autoPlay: false});
+        _slideIn.addEventListener(Event.COMPLETE, onSlideComplete);
+
+        onResize();
+    }
+
+    protected function onResize (... _) :void
+    {
+        var screen :Rectangle = Game.ctrl.local.getPaintableArea();
+
+        _panel.x = (screen.width-_panel.width)/2; // Center horizontal
     }
 
     public override function didEnter () :void
@@ -33,14 +67,33 @@ public class PictionaryMode extends ModeSprite
 
         Game.ctrl.room.props.addEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
         Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
+        Game.ctrl.player.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onPlayerMessage);
+        Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
+
+        if (_slideIn.state == GTween.BEGINNING) {
+            _slideIn.play();
+        } else {
+            GraphicsUtil.flip(_slideIn);
+            _transitionReversed = !_transitionReversed;
+        }
+    }
+
+    protected function onSlideComplete (event :Event) :void
+    {
+        if (_transitionReversed) {
+            super.didLeave();
+        }
     }
 
     public override function didLeave () :void
     {
-        super.didLeave();
+        GraphicsUtil.flip(_slideIn);
+        _transitionReversed = !_transitionReversed;
 
         Game.ctrl.room.props.removeEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
         Game.ctrl.room.props.removeEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
+        Game.ctrl.player.removeEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onPlayerMessage);
+        Game.ctrl.local.removeEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
     }
 
     protected function setTicker (duration :int) :void
@@ -58,22 +111,22 @@ public class PictionaryMode extends ModeSprite
     protected function updatePhase () :void
     {
         switch (Game.ctrl.room.props.get(Codes.keyPhase(_prefix))) {
-            case Codes.PHASE_INTERMISSION:
+            case PictionaryLogic.PHASE_INTERMISSION:
                 setTicker(20);
                 Game.ctrl.local.feedback("= Intermission");
                 break;
 
-            case Codes.PHASE_PAUSE:
+            case PictionaryLogic.PHASE_PAUSE:
                 clearTicker();
                 Game.ctrl.local.feedback("= Pause");
                 break;
 
-            case Codes.PHASE_PLAYING:
+            case PictionaryLogic.PHASE_PLAYING:
                 setTicker(10);
                 Game.ctrl.local.feedback("= Playing");
                 break;
 
-            case Codes.PHASE_NOT_ENOUGH_PLAYERS:
+            case PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS:
                 clearTicker();
                 Game.ctrl.local.feedback("= Not enough players");
                 break;
@@ -128,12 +181,24 @@ public class PictionaryMode extends ModeSprite
         }
     }
 
+    protected function onPlayerMessage (event :MessageReceivedEvent) :void
+    {
+        if (event.name == Codes.MESSAGE_SECRET_WORD) {
+            //_word = event.value;
+        }
+    }
+
+    protected var _panel :Sprite = new Sprite(); // Holds the goods
+
     protected var _roster :RosterSprite = new RosterSprite();
     protected var _tickerContainer :Sprite = new Sprite();
     protected var _canvas :CanvasSprite;
 
     protected var _prefix :String;
     protected var _logic :PictionaryLogic;
+
+    protected var _slideIn :GTween;
+    protected var _transitionReversed :Boolean;
 }
 
 }

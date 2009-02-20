@@ -24,7 +24,6 @@ public class ScribblePanel extends Sprite
         blendMode = flash.display.BlendMode.LAYER;
 
         Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
-        Game.ctrl.room.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onRoomMessage);
         Game.ctrl.game.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onGameMessage);
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
 
@@ -40,7 +39,7 @@ public class ScribblePanel extends Sprite
         switcher.addEventListener(MouseEvent.CLICK, function (... _) :void {
             var modes :Dictionary = Dictionary(Game.ctrl.room.props.get(Codes.PLAYER_MODES));
             if (modes == null) {
-                throw new Error("Modes dictionary not found.");
+                trace("======== Modes dictionary not found!");
             }
             var mode :int = int(modes[Game.ctrl.player.getPlayerId()]);
             if (mode == Codes.CANVAS_ROOM) {
@@ -63,7 +62,7 @@ public class ScribblePanel extends Sprite
             if (event.oldValue != null) {
                 const oldMode :int = int(event.oldValue);
                 if (oldMode in _modeSprites) {
-                    ModeSprite(_modeSprites[oldMode]).didLeave();
+                    _modeSprites[oldMode].didLeave();
                 }
             }
             if (event.newValue != null) {
@@ -83,16 +82,17 @@ public class ScribblePanel extends Sprite
             }
         }
     }
-
-    protected function onRoomMessage (event :MessageReceivedEvent) :void
-    {
-        // TODO?
-    }
-
     protected function onGameMessage (event :MessageReceivedEvent) :void
     {
-        if (event.name == Codes.MESSAGE_BROADCAST) {
-            Game.ctrl.local.feedback(Messages.en.xlate(event.value));
+        switch (event.name) {
+            case Codes.MESSAGE_BROADCAST:
+                Game.ctrl.local.feedback(Messages.en.xlate(event.value));
+                break;
+
+            case Codes.MESSAGE_FEED:
+                // TODO: Show a nice little news ticker or something
+                Game.ctrl.local.feedback(Messages.en.xlate(event.value));
+                break;
         }
     }
 
