@@ -15,7 +15,11 @@ public class BackdropMode extends ModeSprite
 {
     public function BackdropMode ()
     {
-        _canvas = new CanvasSprite(Codes.CANVAS_PREFIXES[Codes.CANVAS_ROOM], this);
+        // One time setting. These bounds aren't updated when the backdrop changes
+        // Consider just making the bounds [MAX_INT, MAX_INT]?
+        var bounds :Array = Game.ctrl.local.getRoomBounds();
+        _canvas = new CanvasSprite(Codes.CANVAS_PREFIXES[Codes.CANVAS_ROOM],
+            bounds[0], bounds[1], this);
 
         //addChild(_canvas);
 

@@ -27,7 +27,7 @@ public class PictionaryMode extends ModeSprite
         _panel.graphics.endFill();
         _panel.filters = [ new DropShadowFilter() ];
 
-        _canvas = new CanvasSprite(_prefix);
+        _canvas = new CanvasSprite(_prefix, 640, 480);
 
         _panel.addChild(_canvas);
 

@@ -21,10 +21,14 @@ public class CanvasSprite extends Sprite
 {
     public static const CANVAS_CLEARED :String = "CanvasCleared";
 
-    public function CanvasSprite (prefix :String, source :IEventDispatcher = null)
+    public function CanvasSprite (prefix :String, width :int, height :int, source :IEventDispatcher = null)
     {
         _prefix = prefix;
         _source = (source != null) ? source : this; // See declaration for wtf this is
+
+        _strokes = new StrokeContainer(width, height);
+        _overlay = new DrawingOverlay(width, height);
+        _composer = new StrokeComposer(_overlay, null);
 
         this.addEventListener(CANVAS_CLEARED, function (... _) :void {
             reset();
@@ -167,9 +171,9 @@ public class CanvasSprite extends Sprite
      */
     protected var _source :IEventDispatcher;
 
-    protected var _strokes :StrokeContainer = new StrokeContainer(640, 480);
-    protected var _overlay :DrawingOverlay = new DrawingOverlay(640, 480);
-    protected var _composer :StrokeComposer = new StrokeComposer(_overlay, null);
+    protected var _strokes :StrokeContainer;
+    protected var _overlay :DrawingOverlay;
+    protected var _composer :StrokeComposer;
 }
 
 }
