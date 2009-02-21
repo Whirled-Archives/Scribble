@@ -30,17 +30,19 @@ public class CanvasSprite extends Sprite
         _overlay = new DrawingOverlay(width, height);
         _composer = new StrokeComposer(_overlay, null);
 
-        this.addEventListener(CANVAS_CLEARED, function (... _) :void {
+        // For the eraser brush to work
+        this.blendMode = flash.display.BlendMode.LAYER;
+
+        addEventListener(CANVAS_CLEARED, function (... _) :void {
             reset();
         });
-        this.addEventListener(StrokeEvent.STROKE_ADDED, function (event :StrokeEvent) :void {
+        addEventListener(StrokeEvent.STROKE_ADDED, function (event :StrokeEvent) :void {
             if (event.isMyStroke()) {
                 _pendingStrokes.put(event.strokeId, event.stroke);
                 if (event.stroke.isEnding) {
                     _overlay.pop();
                     _pendingStrokes.forEach(function (strokeId :int, stroke :Stroke) :void {
                         _strokes.addStroke(stroke, strokeId, event.artistId, false);
-                        trace(strokeId);
                     });
                     _pendingStrokes.clear();
                 }
@@ -49,7 +51,7 @@ public class CanvasSprite extends Sprite
                 _strokes.addStroke(event.stroke, event.strokeId, event.artistId);
             }
         });
-        this.addEventListener(StrokeEvent.STROKE_REMOVED, function (event :StrokeEvent) :void {
+        addEventListener(StrokeEvent.STROKE_REMOVED, function (event :StrokeEvent) :void {
             _strokes.removeStroke(event.strokeId);
             _pendingStrokes.remove(event.strokeId);
         });

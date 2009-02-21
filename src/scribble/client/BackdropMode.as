@@ -21,8 +21,6 @@ public class BackdropMode extends ModeSprite
         _canvas = new CanvasSprite(Codes.CANVAS_PREFIXES[Codes.CANVAS_ROOM],
             bounds[0], bounds[1], this);
 
-        //addChild(_canvas);
-
         _toolbox = _canvas.createToolbox();
         addChild(_toolbox);
 

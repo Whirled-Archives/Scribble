@@ -20,9 +20,6 @@ public class ScribblePanel extends Sprite
 {
     public function ScribblePanel ()
     {
-        // For the eraser brush to work
-        blendMode = flash.display.BlendMode.LAYER;
-
         Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
         Game.ctrl.game.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onGameMessage);
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);

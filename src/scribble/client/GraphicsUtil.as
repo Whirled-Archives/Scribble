@@ -42,7 +42,7 @@ public class GraphicsUtil
             shape.graphics.lineStyle(4, Codes.BRUSH_COLORS[brushId]);
         } else {
             shape.blendMode = BlendMode.ERASE;
-            shape.graphics.lineStyle(24, 1);
+            shape.graphics.lineStyle(24, 0xffffff);
         }
     }
 
