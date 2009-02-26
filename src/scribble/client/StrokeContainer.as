@@ -45,6 +45,11 @@ public class StrokeContainer extends Sprite
             p2 = points[ii++]; // TODO: Never send dots
         }
 
+        if (p0 == null || p1 == null || p2 == null) {
+            Game.log.warn("Wacky Stroke/ContinuationInfo detected. Bailing");
+            return;
+        }
+
         var layer :Shape = new Shape();
         layer.graphics.moveTo(p1.x, p1.y);
         GraphicsUtil.setupBrush(layer, stroke.brush);
