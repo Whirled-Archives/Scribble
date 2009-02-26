@@ -75,7 +75,12 @@ public class BackdropMode extends ModeSprite
     override public function didLeave () :void
     {
         var mob :MobSubControlClient = Game.ctrl.room.getMobSubControl(Codes.MOB_FOREGROUND);
-        Sprite(mob.getMobSprite()).removeChild(_canvas);
+        if (mob != null) {
+            var mobSprite :Sprite = Sprite(mob.getMobSprite());
+            if (mobSprite.contains(_canvas)) { // These 2 checks can fail when transitioning to a new room
+                mobSprite.removeChild(_canvas);
+            }
+        }
 
         GraphicsUtil.flip(_slideIn);
 

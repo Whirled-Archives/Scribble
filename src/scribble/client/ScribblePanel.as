@@ -23,6 +23,7 @@ public class ScribblePanel extends Sprite
         Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
         Game.ctrl.game.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onGameMessage);
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
+        //Game.ctrl.player.addEventListener(AVRGamePlayerEvent.LEFT_ROOM, onLeftRoom);
 
         Game.ctrl.local.setMobSpriteExporter(function (name :String) :Sprite {
             if (name == Codes.MOB_FOREGROUND) {
@@ -43,17 +44,8 @@ public class ScribblePanel extends Sprite
         switcher.y = rect.height - 60;
         const self :ScribblePanel = this;
         switcher.addEventListener(MouseEvent.CLICK, function (... _) :void {
-            var modes :Dictionary = Dictionary(Game.ctrl.room.props.get(Codes.PLAYER_MODES));
-            if (modes == null) {
-                trace("======== Modes dictionary not found!");
-            }
-            var mode :int = int(modes[Game.ctrl.player.getPlayerId()]);
-            if (mode == Codes.CANVAS_ROOM) {
-                mode = Codes.CANVAS_PICTIONARY;
-            } else {
-                mode = Codes.CANVAS_ROOM;
-            }
-            Command.dispatch(self, ScribbleController.CHANGE_MODE, mode);
+            Command.dispatch(self, ScribbleController.CHANGE_MODE,
+                _localMode == Codes.CANVAS_ROOM ? Codes.CANVAS_PICTIONARY : Codes.CANVAS_ROOM);
         });
         addChild(switcher);
     }
@@ -63,16 +55,17 @@ public class ScribblePanel extends Sprite
         // Has the server put us in a new mode?
         if (event.name == Codes.PLAYER_MODES && event.key == Game.ctrl.player.getPlayerId()) {
 
-            trace("==== Transitioning from " + event.oldValue + " to " + event.newValue);
+            Game.log.info("Transition", "oldMode", event.oldValue, "newMode", event.newValue);
 
-            if (event.oldValue != null) {
-                const oldMode :int = int(event.oldValue);
-                if (oldMode in _modeSprites) {
-                    _modeSprites[oldMode].didLeave();
-                }
+            // Transition out of the old mode
+            if (_localMode in _modeSprites) {
+                _modeSprites[_localMode].didLeave();
             }
+
+            const newMode :int = int(event.newValue);
+            _localMode = newMode;
+
             if (event.newValue != null) {
-                const newMode :int = int(event.newValue);
                 if (newMode in _modeSprites) {
                     ModeSprite(_modeSprites[newMode]).didEnter();
                 } else {
@@ -102,6 +95,15 @@ public class ScribblePanel extends Sprite
         }
     }
 
+    protected function onLeftRoom (event :AVRGamePlayerEvent) :void
+    {
+        if (_localMode in _modeSprites) {
+            _modeSprites[_localMode].didLeave();
+        } else {
+            Game.log.warning("Couldn't clean up the current mode on room exit", "mode", _localMode);
+        }
+    }
+
     protected function onEnteredRoom (event :AVRGamePlayerEvent) :void
     {
         Command.dispatch(this, ScribbleController.CHANGE_MODE, Codes.CANVAS_ROOM);
@@ -109,6 +111,9 @@ public class ScribblePanel extends Sprite
 
     /** Manages transitions. */
     protected const _modeSprites :Dictionary = new Dictionary(); // mode -> ModeSprite
+
+    /** The mode the client is running. */
+    protected var _localMode :int;
 }
 
 }
