@@ -46,7 +46,7 @@ public class StrokeContainer extends Sprite
         }
 
         if (p0 == null || p1 == null || p2 == null) {
-            Game.log.warn("Wacky Stroke/ContinuationInfo detected. Bailing");
+            Game.log.warning("Wacky Stroke/ContinuationInfo detected. Bailing");
             return;
         }
 
