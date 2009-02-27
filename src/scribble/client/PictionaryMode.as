@@ -50,26 +50,35 @@ public class PictionaryMode extends ModeSprite
         _slideIn.addEventListener(Event.COMPLETE, onSlideComplete);
 
         onResize();
+
+        addEventListener(Event.ADDED_TO_STAGE, function (... _) :void {
+            _canvas.init(false);
+            updatePhase();
+            initRoster();
+
+            Game.ctrl.room.props.addEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
+            Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
+            Game.ctrl.player.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onPlayerMessage);
+            Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
+        });
+        addEventListener(Event.REMOVED_FROM_STAGE, function (... _) :void {
+            Game.ctrl.room.props.removeEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
+            Game.ctrl.room.props.removeEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
+            Game.ctrl.player.removeEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onPlayerMessage);
+            Game.ctrl.local.removeEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
+        });
     }
 
     protected function onResize (... _) :void
     {
         var screen :Rectangle = Game.ctrl.local.getPaintableArea();
-
-        _panel.x = (screen.width-_panel.width)/2; // Center horizontal
+        if (screen != null) {
+            _panel.x = (screen.width-_panel.width)/2; // Center horizontal
+        }
     }
 
     public override function didEnter () :void
     {
-        _canvas.init(false);
-        updatePhase();
-        initRoster();
-
-        Game.ctrl.room.props.addEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
-        Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
-        Game.ctrl.player.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onPlayerMessage);
-        Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
-
         if (_slideIn.state == GTween.BEGINNING) {
             _slideIn.play();
         } else {
@@ -89,11 +98,6 @@ public class PictionaryMode extends ModeSprite
     {
         GraphicsUtil.flip(_slideIn);
         _transitionReversed = !_transitionReversed;
-
-        Game.ctrl.room.props.removeEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
-        Game.ctrl.room.props.removeEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
-        Game.ctrl.player.removeEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onPlayerMessage);
-        Game.ctrl.local.removeEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
     }
 
     protected function setTicker (duration :int) :void

@@ -23,7 +23,7 @@ public class ScribblePanel extends Sprite
         Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
         Game.ctrl.game.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onGameMessage);
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
-        //Game.ctrl.player.addEventListener(AVRGamePlayerEvent.LEFT_ROOM, onLeftRoom);
+        Game.ctrl.player.addEventListener(AVRGamePlayerEvent.LEFT_ROOM, onLeftRoom);
 
         Game.ctrl.local.setMobSpriteExporter(function (name :String) :Sprite {
             if (name == Codes.MOB_FOREGROUND) {
@@ -59,6 +59,7 @@ public class ScribblePanel extends Sprite
 
             // Transition out of the old mode
             if (_localMode in _modeSprites) {
+                Game.log.info("Transitioning out of mode " + _localMode);
                 _modeSprites[_localMode].didLeave();
             }
 
@@ -98,7 +99,7 @@ public class ScribblePanel extends Sprite
     protected function onLeftRoom (event :AVRGamePlayerEvent) :void
     {
         if (_localMode in _modeSprites) {
-            _modeSprites[_localMode].didLeave();
+            removeChild(_modeSprites[_localMode]);
         } else {
             Game.log.warning("Couldn't clean up the current mode on room exit", "mode", _localMode);
         }

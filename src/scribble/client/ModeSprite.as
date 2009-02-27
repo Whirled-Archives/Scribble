@@ -11,7 +11,11 @@ public class ModeSprite extends Sprite
 
     public function didLeave () :void
     {
-        parent.removeChild(this);
+        // Uh, for some reason GTween is called its complete handlers when the sprite is
+        // REMOVED_FROM_STAGE, so this null check is necessary
+        if (parent != null) {
+            parent.removeChild(this);
+        }
     }
 }
 
