@@ -147,9 +147,10 @@ public class PictionaryMode extends ModeSprite
         for (var key :String in roster) {
             var rosterId :int = int(key);
             var playerId :int = roster[rosterId];
+            var scores :Dictionary = _logic.getScores();
             if (playerId in modes && modes[playerId] == Codes.CANVAS_PICTIONARY) {
                 _roster.add(rosterId, Game.getName(playerId));
-                _roster.setScore(rosterId, _logic.getScores()[rosterId]);
+                _roster.setScore(rosterId, scores[rosterId]);
             }
         }
     }
@@ -171,11 +172,13 @@ public class PictionaryMode extends ModeSprite
     {
         switch (event.name) {
             case Codes.PLAYER_MODES:
+                var rosterId :int = _logic.getRosterId(event.key);
                 if (event.oldValue == Codes.CANVAS_PICTIONARY) {
-                    _roster.remove(_logic.getRosterId(event.key));
+                    _roster.remove(rosterId);
                 }
                 if (event.newValue == Codes.CANVAS_PICTIONARY) {
-                    _roster.add(_logic.getRosterId(event.key), Game.getName(event.key));
+                    _roster.add(rosterId, Game.getName(event.key));
+                    _roster.setScore(rosterId, _logic.getScores()[rosterId]);
                 }
                 break;
 
