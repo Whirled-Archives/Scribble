@@ -1,7 +1,6 @@
 package scribble.client {
 
 import flash.display.Bitmap;
-import flash.display.BlendMode;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent; // TODO: temp
@@ -59,7 +58,6 @@ public class ScribblePanel extends Sprite
 
             // Transition out of the old mode
             if (_localMode in _modeSprites) {
-                Game.log.info("Transitioning out of mode " + _localMode);
                 _modeSprites[_localMode].didLeave();
             }
 

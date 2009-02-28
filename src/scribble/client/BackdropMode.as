@@ -7,8 +7,9 @@ import flash.geom.Rectangle;
 import com.gskinner.motion.GTween;
 import com.gskinner.motion.MultiTween; // TODO: Upgrade to latest GTween and use timelines
 
-import com.whirled.avrg.MobSubControlClient;
-import com.whirled.avrg.AVRGameControlEvent;
+import com.threerings.util.MethodQueue;
+
+import com.whirled.avrg.*;
 
 import scribble.data.Codes;
 
@@ -35,13 +36,8 @@ public class BackdropMode extends ModeSprite
         new MultiTween([this, _canvas], {alpha: 0}, _fadeOut);
 
         addEventListener(Event.ADDED_TO_STAGE, function (... _) :void {
-            var mob :MobSubControlClient = Game.ctrl.room.getMobSubControl(Codes.MOB_FOREGROUND);
-            if (mob != null) {
-                Sprite(mob.getMobSprite()).addChild(_canvas);
-                mob.setHotSpot(_canvas.width/2, _canvas.height, 0);
-            } else {
-                Game.log.warning("Where's the mob?");
-            }
+            Game.ctrl.room.addEventListener(AVRGameRoomEvent.MOB_CONTROL_AVAILABLE, onMobSpawned);
+            onMobSpawned(); // It could already be available
 
             _canvas.init(true);
             Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
@@ -56,6 +52,7 @@ public class BackdropMode extends ModeSprite
                 }
             }
 
+            Game.ctrl.room.removeEventListener(AVRGameRoomEvent.MOB_CONTROL_AVAILABLE, onMobSpawned);
             Game.ctrl.local.removeEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
         });
     }
@@ -64,6 +61,23 @@ public class BackdropMode extends ModeSprite
     {
         if (alpha == 0) {
             super.didLeave();
+        }
+    }
+
+    protected function onMobSpawned (event :AVRGameRoomEvent = null) :void
+    {
+        var mob :MobSubControlClient = (event != null) ?
+            MobSubControlClient(event.value) : Game.ctrl.room.getMobSubControl(Codes.MOB_FOREGROUND);
+        if (mob != null) {
+            // Whirled's internal MobSprite seems to wipe itself once too often when a new mob
+            // is set up. This callLater is to avoid a race condition when canvas is added to the
+            // mob, but is then wiped by Whirled.
+            // TODO: Report this bug
+            MethodQueue.callLater(function () :void {
+                var sprite :Sprite = Sprite(mob.getMobSprite());
+                sprite.addChild(_canvas);
+                mob.setHotSpot(_canvas.width/2, _canvas.height, 0);
+            });
         }
     }
 
@@ -101,7 +115,7 @@ public class BackdropMode extends ModeSprite
         _transition = 2;
     }
 
-    protected var _canvas :CanvasSprite;
+    protected static var _canvas :CanvasSprite;
     protected var _toolbox :Sprite;
 
     // Transitions
