@@ -17,26 +17,26 @@ public class Ticker
         duration :int, networked :Boolean, onComplete :Function = null) :void
     {
         // TODO: Verify that this is causing problems
-//        if (duration <= 0) {
-//            throw new ArgumentError("Duration must be > 0");
-//        }
-//
-//        stop();
-//
-//        if (networked) {
-//            _timer = new Timer(1000, duration);
-//            _timer.addEventListener(TimerEvent.TIMER, tick);
-//            tick(); // Immediately shoot an event now for the '0' tick
-//        } else {
-//            _timer = new Timer(1000*duration, 1);
-//        }
-//        if (onComplete != null) {
-//            _timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (... _) :void {
-//                onComplete();
-//            });
-//        }
-//
-//        _timer.start();
+        if (duration <= 0) {
+            throw new ArgumentError("Duration must be > 0");
+        }
+
+        stop();
+
+        if (networked) {
+            _timer = new Timer(1000, duration);
+            _timer.addEventListener(TimerEvent.TIMER, tick);
+            tick(); // Immediately shoot an event now for the '0' tick
+        } else {
+            _timer = new Timer(1000*duration, 1);
+        }
+        if (onComplete != null) {
+            _timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (... _) :void {
+                onComplete();
+            });
+        }
+
+        _timer.start();
     }
 
     public function stop () :void
