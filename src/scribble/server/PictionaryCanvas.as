@@ -10,7 +10,7 @@ import scribble.data.PictionaryLogic;
 
 public class PictionaryCanvas extends Canvas
 {
-    public function PictionaryCanvas (mode :int, room :Room)
+    public function PictionaryCanvas (mode :int, room :RoomManager)
     {
         super(mode, room.ctrl.props);
 
@@ -147,7 +147,7 @@ public class PictionaryCanvas extends Canvas
         _ticker.stop();
     }
 
-    protected var _room :Room;
+    protected var _room :RoomManager;
     protected var _ticker :Ticker;
     protected var _logic :PictionaryLogic;
 

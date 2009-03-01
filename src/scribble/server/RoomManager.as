@@ -14,9 +14,9 @@ import aduros.net.REMOTE;
 
 import scribble.data.Codes;
 
-public class Room
+public class RoomManager
 {
-    public function Room (ctrl :RoomSubControlServer)
+    public function RoomManager (ctrl :RoomSubControlServer)
     {
         _ctrl = ctrl;
 
@@ -42,7 +42,7 @@ public class Room
         return _ctrl;
     }
 
-    /** All the players in this Room. */
+    /** All the players in this room. */
     public function get players () :Dictionary
     {
         return _players; // TODO: Necessary?

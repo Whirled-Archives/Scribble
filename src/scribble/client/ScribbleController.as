@@ -35,12 +35,6 @@ public class ScribbleController extends Controller
         _roomService.clearCanvas();
     }
 
-//    public function handleSendStroke (stroke :Stroke) :void
-//    {
-//        Game.ctrl.agent.sendMessage("sendStroke", stroke.toBytes());
-//        //panel.debugAddStroke(stroke);
-//    }
-
     public function handleSendStroke (... strokes) :void
     {
         if (strokes.length == 1) {

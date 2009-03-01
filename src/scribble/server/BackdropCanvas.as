@@ -4,7 +4,7 @@ import scribble.data.Codes;
 
 public class BackdropCanvas extends Canvas
 {
-    public function BackdropCanvas (mode :int, room :Room)
+    public function BackdropCanvas (mode :int, room :RoomManager)
     {
         super(mode, room.ctrl.props);
 

@@ -7,7 +7,7 @@ import com.whirled.avrg.*;
 public class Player
     implements Hashable
 {
-    public var room :Room;
+    public var room :RoomManager;
 
     public function Player (ctrl :PlayerSubControlServer)
     {

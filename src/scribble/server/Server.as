@@ -36,7 +36,7 @@ public class Server extends ServerObject
         log.info("Scribble started. This could be the beginning of a beautiful game");
     }
 
-    public function getRoom (roomId :int) :Room
+    public function getRoom (roomId :int) :RoomManager
     {
         return _rooms[roomId];
     }
@@ -82,10 +82,10 @@ public class Server extends ServerObject
         var roomId :int = int(event.value);
 
         var player :Player = getPlayer(playerId);
-        var room :Room = getRoom(roomId);
+        var room :RoomManager = getRoom(roomId);
 
         if (room == null) {
-            room = new Room(_ctrl.getRoom(roomId));
+            room = new RoomManager(_ctrl.getRoom(roomId));
             room.ctrl.addEventListener(AVRGameRoomEvent.ROOM_UNLOADED, onRoomUnloaded);
             _rooms[roomId] = room;
         }
@@ -117,7 +117,7 @@ public class Server extends ServerObject
         var roomId :int = int(event.value);
 
         var player :Player = getPlayer(playerId);
-        var room :Room = getRoom(roomId);
+        var room :RoomManager = getRoom(roomId);
 
         if (room == null) {
             log.warning("Player tried to leave an unregistered room",
@@ -134,7 +134,7 @@ public class Server extends ServerObject
     protected var _gameManager :GameManager;
 
     protected var _players :Dictionary = new Dictionary(); // playerId -> Player
-    protected var _rooms :Dictionary = new Dictionary(); // roomId -> Room
+    protected var _rooms :Dictionary = new Dictionary(); // roomId -> RoomManager
 }
 
 }
