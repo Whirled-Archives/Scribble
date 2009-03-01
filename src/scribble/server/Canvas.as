@@ -97,6 +97,11 @@ public class Canvas
     {
         requireWriteAccess(player);
 
+        clear();
+    }
+
+    protected function clear () :void
+    {
         _props.set(Codes.keyCanvas(_prefix), null);
         _strokeCounter = 0;
     }

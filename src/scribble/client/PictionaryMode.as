@@ -163,7 +163,7 @@ public class PictionaryMode extends ModeSprite
                 break;
 
             case Codes.keyTurnHolder(_prefix):
-                _roster.setTurnHolder(int(event.newValue));
+                _roster.setTurnHolder(_logic.getTurnHolder());
                 break;
         }
     }

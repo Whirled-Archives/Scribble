@@ -14,7 +14,8 @@ public class Ticker
     }
 
     public function start (
-        duration :int, networked :Boolean, onComplete :Function = null) :void
+        duration :int, networked :Boolean,
+        onComplete :Function = null, onProgress :Function = null) :void
     {
         // TODO: Verify that this is causing problems
         if (duration <= 0) {
@@ -23,16 +24,20 @@ public class Ticker
 
         stop();
 
+        _timer = new Timer(1000, duration);
+
         if (networked) {
-            _timer = new Timer(1000, duration);
             _timer.addEventListener(TimerEvent.TIMER, tick);
             tick(); // Immediately shoot an event now for the '0' tick
-        } else {
-            _timer = new Timer(1000*duration, 1);
         }
         if (onComplete != null) {
             _timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (... _) :void {
                 onComplete();
+            });
+        }
+        if (onProgress != null) {
+            _timer.addEventListener(TimerEvent.TIMER, function (... _) :void {
+                onProgress(_timer.currentCount);
             });
         }
 

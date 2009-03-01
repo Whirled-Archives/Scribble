@@ -15,12 +15,6 @@ import com.threerings.util.SortedHashMap;
 /** A component for rendering a list of people. */
 public class RosterSprite extends Sprite
 {
-    public function RosterSprite ()
-    {
-        _turnArrow.visible = false;
-        addChild(_turnArrow);
-    }
-
     public function setName (rosterId :int, name :String) :void
     {
         _sprites[rosterId].nameLabel.text = name;
@@ -34,12 +28,22 @@ public class RosterSprite extends Sprite
 
     public function setTurnHolder (rosterId :int) :void
     {
-        _turnHolder = rosterId;
+        if (_turnHolder >= 0) {
+            _sprites[_turnHolder].removeChild(_turnArrow);
+        }
 
-        // TODO: Look at the current turn holder, do a nice transition to the new one
-        // If turnArrow was not visible, no transition
-        _turnArrow.y = _sprites[rosterId].y;
-        _turnArrow.visible = true;
+        if (rosterId >= 0) {
+            var newRow :RowSprite = _sprites[rosterId];
+            if (_turnHolder >= 0) {
+                _turnArrow.y = _sprites[_turnHolder].y - newRow.y;
+                new GTween(_turnArrow, 1, {y: 0});
+            } else {
+                _turnArrow.y = 0;
+            }
+            newRow.addChild(_turnArrow);
+        }
+
+        _turnHolder = rosterId;
     }
 
     public function add (rosterId :int, name :String) :void
@@ -74,15 +78,15 @@ public class RosterSprite extends Sprite
             return;
         }
 
+        // If he was the turn holder, remove the arrow
+        if (rosterId == _turnHolder) {
+            setTurnHolder(-1);
+        }
+
         delete _entries[rosterId];
 
         removeChild(_sprites[rosterId]);
         delete _sprites[rosterId];
-
-        // If he was the turn holder, hide the arrow
-        if (rosterId == _turnHolder) {
-            _turnArrow.visible = false;
-        }
 
         // Bump up all the sprites after it
         for (var ii :String in _sprites) {
@@ -98,7 +102,7 @@ public class RosterSprite extends Sprite
     }
 
     protected var _entries :Object = {}; // rosterId -> RosterEntry
-    protected var _turnHolder :int;
+    protected var _turnHolder :int = -1;
 
     protected var _sprites :Object = {}; // rosterId -> RowSprite
 

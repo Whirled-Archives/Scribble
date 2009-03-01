@@ -32,12 +32,17 @@ public class PictionaryCanvas extends Canvas
             throw new Error("Can't switch to the same phase!");
         }
 
+        _props.set(Codes.keyPhase(_prefix), phase, true);
+
         switch (phase) {
             case PictionaryLogic.PHASE_INTERMISSION:
-                purgeMissingPlayers();
                 _props.set(Codes.keyTurnHolder(_prefix), null, true);
                 _round = 0;
-                _ticker.start(20, true, nextTurn);
+                _ticker.start(20, true, function () :void {
+                    purgeMissingPlayers();
+                    _props.set(Codes.keyScores(_prefix), null, true);
+                    nextTurn();
+                });
                 break;
 
             case PictionaryLogic.PHASE_PAUSE:
@@ -54,8 +59,6 @@ public class PictionaryCanvas extends Canvas
                 _ticker.stop();
                 break;
         }
-
-        _props.set(Codes.keyPhase(_prefix), phase, true);
     }
 
     override public function playerDidOpen (playerId :int) :void
@@ -108,6 +111,8 @@ public class PictionaryCanvas extends Canvas
 
     protected function nextTurn () :void
     {
+        clear();
+
         var turnHolder :int = _logic.getTurnHolder();
         var roster :Dictionary = _logic.getRoster();
         var end :int = getInsertIndex(Codes.keyRoster(_prefix));
@@ -131,12 +136,13 @@ public class PictionaryCanvas extends Canvas
     public function pass (player :Player) :void
     {
         requireWriteAccess(player);
+
+        // TODO
     }
 
     protected function onRoomUnloaded (event :AVRGameRoomEvent) :void
     {
-        trace("=== Room unloaded.");
-        // Clean up
+        // Clean up?
         _ticker.stop();
     }
 
