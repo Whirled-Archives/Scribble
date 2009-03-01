@@ -9,8 +9,9 @@ import com.whirled.ServerObject;
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
+import aduros.i18n.MessageUtil;
+
 import scribble.data.Codes;
-import scribble.i18n.MessageUtil;
 
 public class Server extends ServerObject
 {
@@ -134,8 +135,7 @@ public class Server extends ServerObject
         if (event.name == "sendBroadcast") {
             if (Codes.isAdmin(event.senderId)) {
                 _ctrl.game.sendMessage(Codes.MESSAGE_BROADCAST, MessageUtil.pack("broadcast",
-                    player.room.ctrl.getAvatarInfo(event.senderId).name,
-                    event.value));
+                    player.room.ctrl.getAvatarInfo(event.senderId).name, event.value));
             } else {
                 log.warning("Got a broadcast request from non-admin", "senderId", event.senderId);
             }

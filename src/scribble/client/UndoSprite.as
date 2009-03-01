@@ -6,20 +6,14 @@ import flash.events.MouseEvent;
 
 import com.threerings.util.Command;
 
+import aduros.display.ImageButton;
+
 import scribble.data.Stroke;
 
 public class UndoSprite extends Sprite
 {
     public function UndoSprite (canvas :CanvasSprite)
     {
-//        overlay.addEventListener(DrawingOverlay.BRUSH_UP, function (... _) :void {
-//            // TODO: What if _workingGroup is empty?
-//            _undoStack.push(_workingGroup);
-//            _workingGroup = [];
-//        });
-//        overlay.addEventListener(DrawingOverlay.BRUSH_DOWN, function (... _) :void {
-//            _redoStack = [];
-//        });
         canvas.addEventListener(StrokeEvent.STROKE_ADDED,
             function (event :StrokeEvent) :void {
                 if (event.isMyStroke()) {

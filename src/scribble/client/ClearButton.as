@@ -5,6 +5,8 @@ import flash.events.MouseEvent;
 
 import com.threerings.util.Command;
 
+import aduros.display.ImageButton;
+
 public class ClearButton extends ImageButton
 {
     public function ClearButton ()

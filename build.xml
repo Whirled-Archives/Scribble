@@ -1,6 +1,7 @@
 <project name="Scribble" default="compile" basedir=".">
 
   <property name="app.source-dir" value="src"/>
+  <property name="app.library-dir" value="lib"/>
 
   <property name="app.name" value="Game"/>
   <property name="app.package-dir" value="scribble/client"/>

@@ -1,6 +1,6 @@
 package scribble.client {
 
-import scribble.i18n.MessageBundle;
+import aduros.i18n.MessageBundle;
 
 public class Messages
 {
