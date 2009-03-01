@@ -128,7 +128,14 @@ public class PictionaryCanvas extends Canvas
             }
         } while (!_players.contains(roster[turnHolder]));
 
+        var player :Player = _room.players[roster[turnHolder]];
+
         _props.set(Codes.keyTurnHolder(_prefix), turnHolder, true);
+
+        // TODO
+        player.mode.apply("sendWord", "writeme");
+
+        // TODO: temp
         _props.setIn(Codes.keyScores(_prefix), turnHolder, int(_logic.getScores()[turnHolder])+1, true);
 
         setPhase(PictionaryLogic.PHASE_PLAYING);

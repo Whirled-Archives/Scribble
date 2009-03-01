@@ -108,6 +108,11 @@ public class ScribblePanel extends Sprite
         Command.dispatch(this, ScribbleController.CHANGE_MODE, Codes.CANVAS_ROOM);
     }
 
+    public function getModeSprite () :ModeSprite
+    {
+        return _modeSprites[_localMode];
+    }
+
     /** Manages transitions. */
     protected const _modeSprites :Dictionary = new Dictionary(); // mode -> ModeSprite
 

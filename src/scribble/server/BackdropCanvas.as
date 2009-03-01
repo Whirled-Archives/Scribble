@@ -13,7 +13,7 @@ public class BackdropCanvas extends Canvas
             room.ctrl.despawnMob(Codes.MOB_FOREGROUND);
         }
 
-        // Note: It can't be at (0, 1, 0), that it won't work with topdown backdrops
+        // Note: It can't be at (0, 1, 0), that won't work with topdown backdrops
         room.ctrl.spawnMob(Codes.MOB_FOREGROUND, Codes.MOB_FOREGROUND, 0.5, 0, 0);
     }
 }

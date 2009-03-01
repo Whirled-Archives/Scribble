@@ -11,6 +11,8 @@ import com.gskinner.motion.GTween;
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
+import aduros.net.REMOTE;
+
 import scribble.data.Codes;
 import scribble.data.PictionaryLogic;
 
@@ -203,6 +205,11 @@ public class PictionaryMode extends ModeSprite
         if (event.name == Codes.MESSAGE_SECRET_WORD) {
             //_word = event.value;
         }
+    }
+
+    REMOTE function sendWord (word :String) :void
+    {
+        Game.ctrl.local.feedback("Got secret word: " + word);
     }
 
     protected var _panel :Sprite = new Sprite(); // Holds the goods

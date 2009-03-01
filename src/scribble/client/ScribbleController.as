@@ -5,7 +5,9 @@ import flash.utils.ByteArray;
 import com.threerings.util.Controller;
 import com.threerings.util.ValueEvent;
 
-import aduros.net.RemoteCaller;
+import aduros.net.REMOTE;
+import aduros.net.RemoteProvider;
+import aduros.net.RemoteProxy;
 
 import scribble.data.Stroke;
 
@@ -23,8 +25,12 @@ public class ScribbleController extends Controller
 
     public function ScribbleController ()
     {
-        _roomService = new RemoteCaller(Game.ctrl.agent, "room");
-        _gameService = new RemoteCaller(Game.ctrl.agent, "game");
+        _roomService = new RemoteProxy(Game.ctrl.agent, "room");
+        _gameService = new RemoteProxy(Game.ctrl.agent, "game");
+
+        new RemoteProvider(Game.ctrl.player, "mode", function () :Object {
+            return panel.getModeSprite();
+        });
 
         panel = new ScribblePanel();
         setControlledPanel(panel);
@@ -62,8 +68,12 @@ public class ScribbleController extends Controller
         _gameService.sendBroadcast(message);
     }
 
-    protected var _roomService :RemoteCaller;
-    protected var _gameService :RemoteCaller;
+//    REMOTE function broadcast (message :String) :void
+//    {
+//    }
+
+    protected var _roomService :RemoteProxy;
+    protected var _gameService :RemoteProxy;
 }
 
 }

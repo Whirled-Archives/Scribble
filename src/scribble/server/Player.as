@@ -4,14 +4,20 @@ import com.threerings.util.Hashable;
 
 import com.whirled.avrg.*;
 
+import aduros.net.RemoteCaller;
+
 public class Player
     implements Hashable
 {
     public var room :RoomManager;
 
+    public var mode :RemoteCaller;
+
     public function Player (ctrl :PlayerSubControlServer)
     {
         _ctrl = ctrl;
+
+        mode = new RemoteCaller(_ctrl, "mode");
     }
 
     public function get ctrl () :PlayerSubControlServer
