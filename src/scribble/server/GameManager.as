@@ -4,6 +4,7 @@ import com.whirled.avrg.*;
 
 import aduros.i18n.MessageUtil;
 import aduros.net.REMOTE;
+import aduros.net.RemoteCaller;
 
 import scribble.data.Codes;
 
@@ -13,6 +14,8 @@ public class GameManager
     {
         _server = server;
         _ctrl = ctrl;
+
+        _gameService = new RemoteCaller(ctrl, "game");
     }
 
     protected function requireAdmin (playerId :int) :void
@@ -23,15 +26,21 @@ public class GameManager
         }
     }
 
-    REMOTE function sendBroadcast (playerId :int, message :String) :void
+    REMOTE function sendBroadcast (playerId :int, text :String) :void
     {
         requireAdmin(playerId);
 
         var player :Player = _server.getPlayer(playerId);
-
-        _ctrl.sendMessage(Codes.MESSAGE_BROADCAST,
-            MessageUtil.pack("broadcast", player.getName(), message));
+        
+        _gameService.apply("broadcast", MessageUtil.pack("broadcast", player.getName(), text));
     }
+
+    public function feed (key :String, ... msg) :void
+    {
+        _gameService.apply("feed", MessageUtil.pack(key, msg));
+    }
+
+    protected var _gameService :RemoteCaller;
 
     protected var _server :Server;
     protected var _ctrl :GameSubControlServer;

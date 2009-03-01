@@ -28,12 +28,14 @@ public class ScribbleController extends Controller
         _roomService = new RemoteProxy(Game.ctrl.agent, "room");
         _gameService = new RemoteProxy(Game.ctrl.agent, "game");
 
-        new RemoteProvider(Game.ctrl.player, "mode", function () :Object {
-            return panel.getModeSprite();
-        });
-
         panel = new ScribblePanel();
         setControlledPanel(panel);
+
+        new RemoteProvider(Game.ctrl.player, "mode", panel.getModeSprite);
+        new RemoteProvider(Game.ctrl.room, "mode", panel.getModeSprite);
+
+        var self :Object = this;
+        new RemoteProvider(Game.ctrl.game, "game", function () :Object { return self; });
     }
 
     public function handleClearCanvas () :void
@@ -63,14 +65,21 @@ public class ScribbleController extends Controller
         _roomService.changeMode(mode);
     }
 
-    public function handleBroadcast (message :String) :void
+    public function handleBroadcast (text :String) :void
     {
-        _gameService.sendBroadcast(message);
+        _gameService.sendBroadcast(text);
     }
 
-//    REMOTE function broadcast (message :String) :void
-//    {
-//    }
+    REMOTE function broadcast (message :Array) :void
+    {
+        Game.ctrl.local.feedback("Broadcast: " + Messages.en.xlate(message));
+    }
+
+    REMOTE function feed (message :Array) :void
+    {
+        // TODO: Put into a feed ticker sprite
+        Game.ctrl.local.feedback("Feed: " + Messages.en.xlate(message));
+    }
 
     protected var _roomService :RemoteProxy;
     protected var _gameService :RemoteProxy;

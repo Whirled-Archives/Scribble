@@ -98,6 +98,8 @@ public class Server extends ServerObject
             log.warning("Player was already in entered room?", "playerId", playerId, "roomId", roomId);
         }
         room.players[playerId] = player;
+
+        _gameManager.feed("joined", player.getName());
     }
 
     protected function onRoomUnloaded (event :AVRGameRoomEvent) :void
