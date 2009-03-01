@@ -114,7 +114,7 @@ public class PictionaryMode extends ModeSprite
 
     protected function updatePhase () :void
     {
-        switch (Game.ctrl.room.props.get(Codes.keyPhase(_prefix))) {
+        switch (_logic.getPhase()) {
             case PictionaryLogic.PHASE_INTERMISSION:
                 setTicker(20);
                 Game.ctrl.local.feedback("= Intermission");
@@ -164,6 +164,16 @@ public class PictionaryMode extends ModeSprite
 
             case Codes.keyTurnHolder(_prefix):
                 _roster.setTurnHolder(_logic.getTurnHolder());
+                break;
+
+            case Codes.keyScores(_prefix):
+                if (event.newValue == null) {
+                    for (var rosterId :String in _logic.getRoster()) {
+                        _roster.setScore(int(rosterId), 0);
+                    }
+                } else {
+                    Game.log.warning("Scores set to something other than null?", "value", event.newValue);
+                }
                 break;
         }
     }
