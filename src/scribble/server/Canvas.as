@@ -63,39 +63,39 @@ public class Canvas
         _players.add(playerId);
     }
 
-    protected function requireWriteAccess (player :Player) :void // throws Error
+    protected function requireWriteAccess (playerId :int) :void
+        // throws Error
     {
         // See subclasses
     }
 
-    public function sendStroke (player :Player, strokeBytes :ByteArray) :void
+    public function sendStroke (playerId :int, strokeBytes :ByteArray) :void
     {
-        requireWriteAccess(player);
+        requireWriteAccess(playerId);
 
-        _props.setIn(Codes.keyCanvas(_prefix), _strokeCounter,
-            [ player.ctrl.getPlayerId(), strokeBytes ]);
+        _props.setIn(Codes.keyCanvas(_prefix), _strokeCounter, [ playerId, strokeBytes ]);
         _strokeCounter += 1;
     }
 
-    public function sendStrokeList (player :Player, list :Array) :void
+    public function sendStrokeList (playerId :int, list :Array) :void
     {
         for each (var strokeBytes :ByteArray in list) {
-            sendStroke(player, strokeBytes);
+            sendStroke(playerId, strokeBytes);
         }
     }
 
-    public function removeStrokes (player :Player, strokeIds :Array) :void
+    public function removeStrokes (playerId :int, strokeIds :Array) :void
     {
-        requireWriteAccess(player);
+        requireWriteAccess(playerId);
 
         for each (var strokeId :int in strokeIds) {
             _props.setIn(Codes.keyCanvas(_prefix), strokeId, null);
         }
     }
 
-    public function clearCanvas (player :Player) :void
+    public function clearCanvas (playerId :int) :void
     {
-        requireWriteAccess(player);
+        requireWriteAccess(playerId);
 
         clear();
     }

@@ -10,6 +10,8 @@ import com.threerings.util.Set;
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
+import aduros.net.REMOTE;
+
 import scribble.data.Codes;
 
 public class Room
@@ -43,7 +45,7 @@ public class Room
     /** All the players in this Room. */
     public function get players () :Dictionary
     {
-        return _players;
+        return _players; // TODO: Necessary?
     }
 
     protected function onPlayerLeft (event :AVRGameRoomEvent) :void
@@ -51,14 +53,14 @@ public class Room
         setMode(int(event.value), null);
     }
 
-    protected function getCanvas (player :Player) :Canvas
+    protected function getCanvas (playerId :int) :Canvas
     {
         var modes :Dictionary = Dictionary(_ctrl.props.get(Codes.PLAYER_MODES));
         if (modes == null) {
             throw new Error("Modes dictionary not found.");
         }
 
-        var canvas :Canvas = Canvas(_canvases[modes[player.ctrl.getPlayerId()]]);
+        var canvas :Canvas = Canvas(_canvases[modes[playerId]]);
         if (canvas == null) {
             throw new Error("No valid mode found for player.");
         }
@@ -66,19 +68,6 @@ public class Room
         return canvas;
     }
 
-//    protected function onRoomElementChanged (event :ElementChangedEvent) :void
-//    {
-//        // Listen for mode switches to notify each canvas involved
-//        if (event.name == Codes.PLAYER_MODES) {
-//            var playerId :int = event.key;
-//            if (event.oldValue != null) {
-//                _canvases[int(event.oldValue)].playerDidClose(playerId);
-//            }
-//            if (event.newValue != null) {
-//                _canvases[int(event.newValue)].playerDidOpen(playerId);
-//            }
-//        }
-//    }
     public function setMode (playerId :int, newMode :Object) :void
     {
         var modes :Dictionary = Dictionary(_ctrl.props.get(Codes.PLAYER_MODES));
@@ -95,34 +84,34 @@ public class Room
         _ctrl.props.setIn(Codes.PLAYER_MODES, playerId, newMode, true);
     }
 
-    public function changeMode (player :Player, mode :int) :void
+    REMOTE function changeMode (playerId :int, mode :int) :void
     {
-        setMode(player.ctrl.getPlayerId(), mode);
+        _ctrl.doBatch(setMode, playerId, mode);
     }
 
-    public function sendStroke (player :Player, strokeBytes :ByteArray) :void
+    REMOTE function sendStroke (playerId :int, strokeBytes :ByteArray) :void
     {
-        getCanvas(player).sendStroke(player, strokeBytes);
+        _ctrl.doBatch(getCanvas(playerId).sendStroke, playerId, strokeBytes);
     }
 
-    public function sendStrokeList (player :Player, list :Array) :void
+    REMOTE function sendStrokeList (playerId :int, list :Array) :void
     {
-        _ctrl.doBatch(getCanvas(player).sendStrokeList, player, list);
+        _ctrl.doBatch(getCanvas(playerId).sendStrokeList, playerId, list);
     }
 
-    public function removeStrokes (player :Player, strokeIds :Array) :void
+    REMOTE function removeStrokes (playerId :int, strokeIds :Array) :void
     {
-        _ctrl.doBatch(getCanvas(player).removeStrokes, player, strokeIds);
+        _ctrl.doBatch(getCanvas(playerId).removeStrokes, playerId, strokeIds);
     }
 
-    public function clearCanvas (player :Player) :void
+    REMOTE function clearCanvas (playerId :int) :void
     {
-        getCanvas(player).clearCanvas(player);
+        _ctrl.doBatch(getCanvas(playerId).clearCanvas, playerId);
     }
 
-    public function pictionaryPass (player :Player) :void
+    REMOTE function pictionaryPass (playerId :int) :void
     {
-        _pictionary.pass(player);
+        _ctrl.doBatch(_pictionary.pass, playerId);
     }
 
     protected var _ctrl :RoomSubControlServer;

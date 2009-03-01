@@ -90,9 +90,10 @@ public class PictionaryCanvas extends Canvas
         }
     }
 
-    override protected function requireWriteAccess (player :Player) :void // throws Error
+    override protected function requireWriteAccess (playerId :int) :void
+        // throws Error
     {
-        if (!_logic.canDraw(player.ctrl.getPlayerId())) {
+        if (!_logic.canDraw(playerId)) {
             throw new Error("Permission denied. Are you the turn holder?");
         }
     }
@@ -133,9 +134,9 @@ public class PictionaryCanvas extends Canvas
         setPhase(PictionaryLogic.PHASE_PLAYING);
     }
 
-    public function pass (player :Player) :void
+    public function pass (playerId :int) :void
     {
-        requireWriteAccess(player);
+        requireWriteAccess(playerId);
 
         // TODO
     }

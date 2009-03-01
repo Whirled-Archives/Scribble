@@ -10,6 +10,7 @@ import com.whirled.avrg.*;
 import com.whirled.net.*;
 
 import aduros.i18n.MessageUtil;
+import aduros.net.RemoteProvider;
 
 import scribble.data.Codes;
 
@@ -22,17 +23,25 @@ public class Server extends ServerObject
         _ctrl = new AVRServerGameControl(this);
         _ctrl.game.addEventListener(AVRGameControlEvent.PLAYER_JOINED_GAME, onPlayerJoin);
         _ctrl.game.addEventListener(AVRGameControlEvent.PLAYER_QUIT_GAME, onPlayerQuit);
-        _ctrl.game.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onGameMessage);
+
+        _gameManager = new GameManager(this, _ctrl.game);
+
+        new RemoteProvider(_ctrl.game, "game", function (senderId :int) :Object {
+            return _gameManager;
+        });
+        new RemoteProvider(_ctrl.game, "room", function (senderId :int) :Object {
+            return getPlayer(senderId).room;
+        });
 
         log.info("Scribble started. This could be the beginning of a beautiful game");
     }
 
-    protected function getRoom (roomId :int) :Room
+    public function getRoom (roomId :int) :Room
     {
         return _rooms[roomId];
     }
 
-    protected function getPlayer (playerId :int) :Player
+    public function getPlayer (playerId :int) :Player
     {
         return _players[playerId];
     }
@@ -120,47 +129,9 @@ public class Server extends ServerObject
         }
     }
 
-    protected function onGameMessage (event :MessageReceivedEvent) :void
-    {
-        if (event.isFromServer()) {
-            return; // Don't handle our own messages
-        }
-
-        var player :Player = getPlayer(event.senderId);
-        if (player == null) {
-            log.warning("Got message from unregistered player", "senderId", event.senderId);
-            return;
-        }
-
-        if (event.name == "sendBroadcast") {
-            if (Codes.isAdmin(event.senderId)) {
-                _ctrl.game.sendMessage(Codes.MESSAGE_BROADCAST, MessageUtil.pack("broadcast",
-                    player.room.ctrl.getAvatarInfo(event.senderId).name, event.value));
-            } else {
-                log.warning("Got a broadcast request from non-admin", "senderId", event.senderId);
-            }
-
-        } else {
-            // Room targeted messages
-            try {
-                var handler :Function = player.room[event.name];
-                if (event.value != null) {
-                    // TODO: doBatch here
-                    handler(player, event.value);
-                } else {
-                    handler(player);
-                }
-            } catch (error :Error) {
-                log.warning("Error calling Room message handler",
-                    "name", event.name,
-                    "playerId", player.ctrl.getPlayerId(),
-                    "roomId", player.room.ctrl.getRoomId(),
-                    error);
-            }
-        }
-    }
-
     protected var _ctrl :AVRServerGameControl;
+
+    protected var _gameManager :GameManager;
 
     protected var _players :Dictionary = new Dictionary(); // playerId -> Player
     protected var _rooms :Dictionary = new Dictionary(); // roomId -> Room

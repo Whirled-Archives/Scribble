@@ -5,6 +5,8 @@ import flash.utils.ByteArray;
 import com.threerings.util.Controller;
 import com.threerings.util.ValueEvent;
 
+import aduros.net.RemoteCaller;
+
 import scribble.data.Stroke;
 
 public class ScribbleController extends Controller
@@ -15,17 +17,22 @@ public class ScribbleController extends Controller
     public static const REMOVE_STROKES :String = "RemoveStrokes";
     public static const CHANGE_MODE :String = "ChangeMode";
 
+    public static const BROADCAST :String = "Broadcast";
+
     public var panel :ScribblePanel;
 
     public function ScribbleController ()
     {
+        _roomService = new RemoteCaller(Game.ctrl.agent, "room");
+        _gameService = new RemoteCaller(Game.ctrl.agent, "game");
+
         panel = new ScribblePanel();
         setControlledPanel(panel);
     }
 
     public function handleClearCanvas () :void
     {
-        Game.ctrl.agent.sendMessage("clearCanvas");
+        _roomService.clearCanvas();
     }
 
 //    public function handleSendStroke (stroke :Stroke) :void
@@ -37,9 +44,9 @@ public class ScribbleController extends Controller
     public function handleSendStroke (... strokes) :void
     {
         if (strokes.length == 1) {
-            Game.ctrl.agent.sendMessage("sendStroke", strokes[0].toBytes());
+            _roomService.sendStroke(strokes[0].toBytes());
         } else {
-            Game.ctrl.agent.sendMessage("sendStrokeList",
+            _roomService.sendStrokeList(
                 strokes.map(function (stroke :Stroke, ... _) :ByteArray {
                     return stroke.toBytes();
                 }));
@@ -48,13 +55,21 @@ public class ScribbleController extends Controller
 
     public function handleRemoveStrokes (... strokeIds) :void
     {
-        Game.ctrl.agent.sendMessage("removeStrokes", strokeIds);
+        _roomService.removeStrokes(strokeIds);
     }
 
     public function handleChangeMode (mode :int) :void
     {
-        Game.ctrl.agent.sendMessage("changeMode", mode);
+        _roomService.changeMode(mode);
     }
+
+    public function handleBroadcast (message :String) :void
+    {
+        _gameService.sendBroadcast(message);
+    }
+
+    protected var _roomService :RemoteCaller;
+    protected var _gameService :RemoteCaller;
 }
 
 }

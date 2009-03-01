@@ -19,6 +19,11 @@ public class Player
         return _ctrl;
     }
 
+    public function getName () :String
+    {
+        return room.ctrl.getAvatarInfo(_ctrl.getPlayerId()).name;
+    }
+
     public function equals (other :Object) :Boolean
     {
         return hashCode() == other.hashCode();
