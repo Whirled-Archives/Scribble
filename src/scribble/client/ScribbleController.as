@@ -3,6 +3,7 @@ package scribble.client {
 import flash.utils.ByteArray;
 
 import com.threerings.util.Controller;
+import com.threerings.util.StringUtil;
 import com.threerings.util.ValueEvent;
 
 import aduros.net.REMOTE;
@@ -20,6 +21,8 @@ public class ScribbleController extends Controller
     public static const REMOVE_STROKES :String = "RemoveStrokes";
     public static const CHANGE_MODE :String = "ChangeMode";
     public static const BROADCAST :String = "Broadcast";
+    public static const PICTIONARY_PASS :String = "PictionaryPass";
+    public static const PICTIONARY_GUESS :String = "PictionaryGuess";
 
     public var panel :ScribblePanel;
 
@@ -67,6 +70,20 @@ public class ScribbleController extends Controller
     public function handleBroadcast (text :String) :void
     {
         _gameService.sendBroadcast(text);
+    }
+
+    public function handlePictionaryPass () :void
+    {
+        _roomService.pictionaryPass();
+    }
+
+    public function handlePictionaryGuess (guess :String) :void
+    {
+        if (StringUtil.isBlank(guess)) {
+            Game.log.info("Refusing to send blank guess", "guess", guess);
+        } else {
+            _roomService.pictionaryGuess(guess);
+        }
     }
 
     REMOTE function broadcast (message :Array) :void

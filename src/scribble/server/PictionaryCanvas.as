@@ -131,8 +131,10 @@ public class PictionaryCanvas extends Canvas
 
         _props.set(Codes.keyTurnHolder(_prefix), turnHolder, true);
 
-        // TODO
-        player.mode.apply("sendWord", "writeme");
+        _wordId = Math.random()*_wordlist.length;
+        _wordClean = cleanupWord(_wordlist[_wordId]);
+
+        player.mode.apply("sendWord", _wordlist[_wordId]);
 
         // TODO: temp
         _props.setIn(Codes.keyScores(_prefix), turnHolder, int(_logic.getScores()[turnHolder])+1, true);
@@ -147,6 +149,29 @@ public class PictionaryCanvas extends Canvas
         // TODO
     }
 
+    public function guess (playerId :int, guess :String) :void
+    {
+        if (_logic.getPhase() != PictionaryLogic.PHASE_PLAYING) {
+            throw new Error("Game should be in the PLAYING phase");
+        }
+
+        var rosterId :int = _logic.getRosterId(playerId);
+        if (rosterId < 0) {
+            throw new Error("Guesser was not in the roster");
+        } else if (rosterId == _logic.getTurnHolder()) {
+            throw new Error("Guesser was the turn holder");
+        }
+
+        if (cleanupWord(guess) == _wordClean) {
+            setPhase(PictionaryLogic.PHASE_PAUSE);
+        }
+    }
+
+    protected function cleanupWord (word :String) :String
+    {
+        return word.replace(" ", "").toLowerCase();
+    }
+
     protected function onRoomUnloaded (event :AVRGameRoomEvent) :void
     {
         // Clean up?
@@ -157,15 +182,18 @@ public class PictionaryCanvas extends Canvas
     {
         try {
             ba.position = 0; // TODO: Remove once Whirled rewinds for you
-            _words = ba.readUTFBytes(ba.length).split("\n");
-            Server.log.info("Word list created", "length", _words.length);
+            _wordlist = ba.readUTFBytes(ba.length).split("\n");
+            Server.log.info("Word list created", "length", _wordlist.length);
 
         } catch (error :Error) {
             Server.log.error("Word list parsing failed!", error);
         }
     }
 
-    protected static var _words :Array;
+    protected static var _wordlist :Array; // of String
+
+    protected var _wordId :int; // An index into _wordlist
+    protected var _wordClean :String; // A cleaned up version of the current secret word
 
     protected var _room :RoomManager;
     protected var _ticker :Ticker;

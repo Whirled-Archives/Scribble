@@ -114,6 +114,11 @@ public class RoomManager
         _ctrl.doBatch(_pictionary.pass, playerId);
     }
 
+    REMOTE function pictionaryGuess (playerId :int, guess :String) :void
+    {
+        _ctrl.doBatch(_pictionary.guess, playerId, guess);
+    }
+
     protected var _ctrl :RoomSubControlServer;
     protected var _players :Dictionary = new Dictionary(); // playerId -> Player
 

@@ -2,11 +2,18 @@ package scribble.client {
 
 import flash.display.Sprite;
 import flash.events.Event;
-import flash.geom.Rectangle;
-import flash.utils.Dictionary;
+import flash.events.KeyboardEvent;
 import flash.filters.DropShadowFilter;
+import flash.geom.Rectangle;
+import flash.text.TextField;
+import flash.text.TextFieldType;
+import flash.ui.Keyboard;
+import flash.utils.Dictionary;
 
 import com.gskinner.motion.GTween;
+
+import com.threerings.flash.TextFieldUtil;
+import com.threerings.util.Command;
 
 import com.whirled.avrg.*;
 import com.whirled.net.*;
@@ -39,13 +46,23 @@ public class PictionaryMode extends ModeSprite
         _roster.x = 400;
         _panel.addChild(_roster);
 
-        _panel.addChild(_canvas.createToolbox());
+        var guesser :TextField = TextFieldUtil.createField("Type here",
+            { borderColor: 0, type: TextFieldType.INPUT, restrict: "A-Za-z " });
+        guesser.addEventListener(KeyboardEvent.KEY_DOWN, function (event :KeyboardEvent) :void {
+            if (event.keyCode == Keyboard.ENTER) {
+                Command.dispatch(guesser, ScribbleController.PICTIONARY_GUESS, guesser.text);
+                guesser.text = "";
+            }
+        });
+        _panel.addChild(guesser);
+
+        var toolbox :Sprite = _canvas.createToolbox();
+        toolbox.y = _canvas.height - toolbox.height;
+        _panel.addChild(toolbox);
 
         addChild(_panel);
 
         var screen :Rectangle = Game.ctrl.local.getPaintableArea();
-
-        trace(_panel.height);
 
         _panel.y = -_panel.height;
         _slideIn = new GTween(_panel, 2, {y: (screen.height-_panel.height)/2}, {autoPlay: false});
