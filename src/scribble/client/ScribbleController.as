@@ -8,6 +8,7 @@ import com.threerings.util.ValueEvent;
 import aduros.net.REMOTE;
 import aduros.net.RemoteProvider;
 import aduros.net.RemoteProxy;
+import aduros.util.F;
 
 import scribble.data.Stroke;
 
@@ -18,7 +19,6 @@ public class ScribbleController extends Controller
     public static const SEND_STROKE :String = "SendStroke";
     public static const REMOVE_STROKES :String = "RemoveStrokes";
     public static const CHANGE_MODE :String = "ChangeMode";
-
     public static const BROADCAST :String = "Broadcast";
 
     public var panel :ScribblePanel;
@@ -34,8 +34,7 @@ public class ScribbleController extends Controller
         new RemoteProvider(Game.ctrl.player, "mode", panel.getModeSprite);
         new RemoteProvider(Game.ctrl.room, "mode", panel.getModeSprite);
 
-        var self :Object = this;
-        new RemoteProvider(Game.ctrl.game, "game", function () :Object { return self; });
+        new RemoteProvider(Game.ctrl.game, "game", F.konst(this));
     }
 
     public function handleClearCanvas () :void
