@@ -1,5 +1,6 @@
 package scribble.server {
 
+import flash.utils.ByteArray;
 import flash.utils.Dictionary;
 
 import com.whirled.avrg.*;
@@ -22,8 +23,6 @@ public class PictionaryCanvas extends Canvas
         _room.ctrl.addEventListener(AVRGameRoomEvent.ROOM_UNLOADED, onRoomUnloaded);
 
         _props.set(Codes.keyPhase(_prefix), null, true);
-        //setPhase(PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS);
-        //setPhase(-1);
     }
 
     protected function setPhase (phase :int) :void
@@ -153,6 +152,20 @@ public class PictionaryCanvas extends Canvas
         // Clean up?
         _ticker.stop();
     }
+
+    public static function createWordList (ba :ByteArray) :void
+    {
+        try {
+            ba.position = 0; // TODO: Remove once Whirled rewinds for you
+            _words = ba.readUTFBytes(ba.length).split("\n");
+            Server.log.info("Word list created", "length", _words.length);
+
+        } catch (error :Error) {
+            Server.log.error("Word list parsing failed!", error);
+        }
+    }
+
+    protected static var _words :Array;
 
     protected var _room :RoomManager;
     protected var _ticker :Ticker;

@@ -11,6 +11,7 @@ import com.whirled.net.*;
 
 import aduros.i18n.MessageUtil;
 import aduros.net.RemoteProvider;
+import aduros.util.F;
 
 import scribble.data.Codes;
 
@@ -23,6 +24,10 @@ public class Server extends ServerObject
         _ctrl = new AVRServerGameControl(this);
         _ctrl.game.addEventListener(AVRGameControlEvent.PLAYER_JOINED_GAME, onPlayerJoin);
         _ctrl.game.addEventListener(AVRGameControlEvent.PLAYER_QUIT_GAME, onPlayerQuit);
+
+        // Load up the pictionary word list right off the bat
+        _ctrl.game.loadLevelPackData("wordlist", PictionaryCanvas.createWordList,
+            F.curry(log.error, "Couldn't load word list!"));
 
         _gameManager = new GameManager(this, _ctrl.game);
 
