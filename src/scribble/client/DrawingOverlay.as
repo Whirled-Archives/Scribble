@@ -39,7 +39,6 @@ public class DrawingOverlay extends Sprite
             }
             _cursor.x = event.localX;
             _cursor.y = event.localY;
-            trace("MOOOOOOoove");
         });
         addEventListener(MouseEvent.ROLL_OVER, function (event :MouseEvent) :void {
             if (event.buttonDown && !_brushDown) {
