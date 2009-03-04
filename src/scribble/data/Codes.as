@@ -38,9 +38,8 @@ public class Codes
     /** A room property (Dictionary) that maps playerId to canvasIndex. */
     public static const PLAYER_MODES :String = "mode";
 
-    public static const MESSAGE_BROADCAST :String = "broadcast"; // on Game
-    public static const MESSAGE_FEED :String = "feed"; // on Game
-    public static const MESSAGE_SECRET_WORD :String = "word"; // on Player
+    public static const MESSAGE_SECRET_WORD :String = "word"; // String, on Player
+    public static const MESSAGE_CLEARED :String = "clear"; // int, on Room
 
     /** A dummy mob name and ID used for a correct foreground overlay drawing. */
     public static const MOB_FOREGROUND :String = "fg";

@@ -8,14 +8,26 @@ public class BackdropCanvas extends Canvas
     {
         super(mode, room.ctrl.props);
 
-        if (room.ctrl.getMobSubControl(Codes.MOB_FOREGROUND) != null) {
+        _room = room;
+
+        if (_room.ctrl.getMobSubControl(Codes.MOB_FOREGROUND) != null) {
             // Should only ever be called after a reboot
-            room.ctrl.despawnMob(Codes.MOB_FOREGROUND);
+            _room.ctrl.despawnMob(Codes.MOB_FOREGROUND);
         }
 
         // Note: It can't be at (0, 1, 0), that won't work with topdown backdrops
-        room.ctrl.spawnMob(Codes.MOB_FOREGROUND, Codes.MOB_FOREGROUND, 0.5, 0, 0);
+        _room.ctrl.spawnMob(Codes.MOB_FOREGROUND, Codes.MOB_FOREGROUND, 0.5, 0, 0);
     }
+
+    /** Clearing the backdrop also sends a message saying who did it. */
+    override public function clearCanvas (playerId :int) :void
+    {
+        super.clearCanvas(playerId);
+
+        _room.ctrl.sendMessage(Codes.MESSAGE_CLEARED, playerId);
+    }
+
+    protected var _room :RoomManager;
 }
 
 }

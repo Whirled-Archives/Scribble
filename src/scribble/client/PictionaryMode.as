@@ -78,12 +78,14 @@ public class PictionaryMode extends ModeSprite
             Game.ctrl.room.props.addEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
             Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
             Game.ctrl.player.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onPlayerMessage);
+            Game.ctrl.room.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onRoomMessage);
             Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
         });
         addEventListener(Event.REMOVED_FROM_STAGE, function (... _) :void {
             Game.ctrl.room.props.removeEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
             Game.ctrl.room.props.removeEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
             Game.ctrl.player.removeEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onPlayerMessage);
+            Game.ctrl.room.removeEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onRoomMessage);
             Game.ctrl.local.removeEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
         });
     }
@@ -222,6 +224,10 @@ public class PictionaryMode extends ModeSprite
         if (event.name == Codes.MESSAGE_SECRET_WORD) {
             //_word = event.value;
         }
+    }
+
+    protected function onRoomMessage (event :MessageReceivedEvent) :void
+    {
     }
 
     REMOTE function sendWord (word :String) :void

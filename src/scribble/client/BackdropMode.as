@@ -10,6 +10,7 @@ import com.gskinner.motion.MultiTween; // TODO: Upgrade to latest GTween and use
 import com.threerings.util.MethodQueue;
 
 import com.whirled.avrg.*;
+import com.whirled.net.*;
 
 import scribble.data.Codes;
 
@@ -40,6 +41,7 @@ public class BackdropMode extends ModeSprite
             onMobSpawned(); // It could already be available
 
             _canvas.init(true);
+            Game.ctrl.room.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onRoomMessage);
             Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
         });
 
@@ -53,6 +55,7 @@ public class BackdropMode extends ModeSprite
             }
 
             Game.ctrl.room.removeEventListener(AVRGameRoomEvent.MOB_CONTROL_AVAILABLE, onMobSpawned);
+            Game.ctrl.room.removeEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onRoomMessage);
             Game.ctrl.local.removeEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
         });
     }
@@ -78,6 +81,13 @@ public class BackdropMode extends ModeSprite
                 sprite.addChild(_canvas);
                 mob.setHotSpot(_canvas.width/2, _canvas.height, 0);
             });
+        }
+    }
+
+    protected function onRoomMessage (event :MessageReceivedEvent) :void
+    {
+        if (event.name == Codes.MESSAGE_CLEARED) {
+            Game.ctrl.local.feedback(Messages.en.xlate("erased", Game.getName(int(event.value))));
         }
     }
 

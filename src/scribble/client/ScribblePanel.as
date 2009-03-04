@@ -20,7 +20,6 @@ public class ScribblePanel extends Sprite
     public function ScribblePanel ()
     {
         Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
-        Game.ctrl.game.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onGameMessage);
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.LEFT_ROOM, onLeftRoom);
 
@@ -78,19 +77,6 @@ public class ScribblePanel extends Sprite
                     ms.didEnter();
                 }
             }
-        }
-    }
-    protected function onGameMessage (event :MessageReceivedEvent) :void
-    {
-        switch (event.name) {
-            case Codes.MESSAGE_BROADCAST:
-                Game.ctrl.local.feedback(Messages.en.xlate(event.value));
-                break;
-
-            case Codes.MESSAGE_FEED:
-                // TODO: Show a nice little news ticker or something
-                Game.ctrl.local.feedback(Messages.en.xlate(event.value));
-                break;
         }
     }
 
