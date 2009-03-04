@@ -157,12 +157,14 @@ public class CanvasSprite extends Sprite
         _pendingStrokes.clear();
     }
 
+    /** Memory prefix of this canvas. */
     protected var _prefix :String;
 
     /**
      * When the brush is down, save my incoming strokes to this map, when the brush is lifted we'll
      * add them.
      */
+    // TODO: Does this have to be sorted?
     protected var _pendingStrokes :SortedHashMap =
         new SortedHashMap(SortedHashMap.NUMERIC_KEYS); // strokeId -> Stroke
 

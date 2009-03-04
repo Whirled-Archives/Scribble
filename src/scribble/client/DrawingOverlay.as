@@ -4,6 +4,7 @@ import flash.display.Shape;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 import flash.geom.Point;
+import flash.ui.Mouse;
 
 import com.threerings.util.ValueEvent;
 
@@ -36,12 +37,17 @@ public class DrawingOverlay extends Sprite
             if (_brushDown) {
                 dispatchBrush(BRUSH_DRAG, event);
             }
+            _cursor.x = event.localX;
+            _cursor.y = event.localY;
+            trace("MOOOOOOoove");
         });
         addEventListener(MouseEvent.ROLL_OVER, function (event :MouseEvent) :void {
             if (event.buttonDown && !_brushDown) {
                 _brushDown = true;
                 dispatchBrush(BRUSH_DOWN, event);
             }
+            addChild(_cursor);
+            Mouse.hide();
         });
         addEventListener(MouseEvent.ROLL_OUT, function (event :MouseEvent) :void {
             if (event.buttonDown || _brushDown) {
@@ -52,6 +58,8 @@ public class DrawingOverlay extends Sprite
                 }
                 dispatchBrush(BRUSH_UP, event);
             }
+            removeChild(_cursor);
+            Mouse.show();
         });
 
         // Now listen to some of our own brush events to show local feedback
@@ -65,6 +73,10 @@ public class DrawingOverlay extends Sprite
             GraphicsUtil.setupBrush(_localShapes[0], _brushId);
             _localShapes[0].graphics.lineTo(point.x, point.y);
         });
+
+        addChild(_paints);
+
+        _cursor.addChild(new CURSOR());
 
         clear();
 
@@ -86,7 +98,7 @@ public class DrawingOverlay extends Sprite
         graphics.endFill();
 
         for each (var shape :Shape in _localShapes) {
-            removeChild(shape);
+            _paints.removeChild(shape);
         }
         _localShapes = [];
     }
@@ -96,13 +108,13 @@ public class DrawingOverlay extends Sprite
         var shape :Shape = new Shape();
 
         _localShapes.unshift(shape);
-        addChild(shape);
+        _paints.addChild(shape);
     }
 
     public function pop () :void
     {
         if (_localShapes.length > 0) {
-            removeChild(Shape(_localShapes.pop()));
+            _paints.removeChild(Shape(_localShapes.pop()));
         }
     }
 
@@ -117,8 +129,15 @@ public class DrawingOverlay extends Sprite
         dispatchEvent(new ValueEvent(eventName, new Point(mouse.localX, mouse.localY)));
     }
 
+    [Embed(source="../../../res/cursor.png")]
+    protected static const CURSOR :Class;
+    protected var _cursor :Sprite = new Sprite();
+
     protected var _width :int;
     protected var _height :int;
+
+    /** Contains all the local shapes, to ensure the cursor is always on top. */
+    protected var _paints :Sprite = new Sprite();
 
     protected var _localShapes :Array = []; // of Shape
     protected var _brushDown :Boolean;
