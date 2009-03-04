@@ -21,6 +21,9 @@ public class Server extends ServerObject
 
     public function Server ()
     {
+        log.info("Scribble " + BuildConfig.WHEN +
+            ". This could be the beginning of a beautiful game", "debug", BuildConfig.DEBUG);
+
         _ctrl = new AVRServerGameControl(this);
         _ctrl.game.addEventListener(AVRGameControlEvent.PLAYER_JOINED_GAME, onPlayerJoin);
         _ctrl.game.addEventListener(AVRGameControlEvent.PLAYER_QUIT_GAME, onPlayerQuit);
@@ -37,8 +40,6 @@ public class Server extends ServerObject
         new RemoteProvider(_ctrl.game, "room", function (senderId :int) :Object {
             return getPlayer(senderId).room;
         });
-
-        log.info("Scribble started. This could be the beginning of a beautiful game");
     }
 
     public function getRoom (roomId :int) :RoomManager

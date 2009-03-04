@@ -18,6 +18,8 @@ public class Game extends Sprite
 
     public function Game ()
     {
+        log.info("Starting Scribble " + BuildConfig.WHEN, "debug", BuildConfig.DEBUG);
+
         ctrl = new AVRGameControl(this);
 
         if (!ctrl.isConnected()) {

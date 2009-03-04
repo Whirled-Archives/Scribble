@@ -10,6 +10,18 @@
   <property name="app.server-agent" value="Server"/>
   <property name="app.server-agent-package-dir" value="scribble/server"/>
 
+  <target name="build-config">
+    <tstamp>
+      <format property="when" pattern="hh:mm:ss mm/dd/yy" />
+    </tstamp>
+    <filter token="WHEN" value="${when}" />
+    <filter token="DEBUG" value="false" /> <!-- TODO -->
+    <copy file="lib/BuildConfig.as.in" tofile="${app.source-dir}/BuildConfig.as" filtering="true" overwrite="true" />
+  </target>
+
+  <target name="build" depends="build-config, project-include.build" />
+  <target name="build-server" depends="build-config, project-include.build-server" />
+
   <!-- Point $WHIRLED_HOME to your SDK. -->
   <property environment="env" />
   <property name="sdk.dir" value="${env.WHIRLED_HOME}" />
