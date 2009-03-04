@@ -10,12 +10,14 @@
   <property name="app.server-agent" value="Server"/>
   <property name="app.server-agent-package-dir" value="scribble/server"/>
 
+  <property name="release" value="false" />
+
   <target name="build-config">
     <tstamp>
-      <format property="when" pattern="hh:mm:ss mm/dd/yy" />
+      <format property="when" pattern="hh:mm:ss yy/MM/dd" />
     </tstamp>
     <filter token="WHEN" value="${when}" />
-    <filter token="DEBUG" value="false" /> <!-- TODO -->
+    <filter token="DEBUG" value="!${release}" />
     <copy file="lib/BuildConfig.as.in" tofile="${app.source-dir}/BuildConfig.as" filtering="true" overwrite="true" />
   </target>
 

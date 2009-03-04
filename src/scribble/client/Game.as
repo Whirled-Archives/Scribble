@@ -18,12 +18,16 @@ public class Game extends Sprite
 
     public function Game ()
     {
-        log.info("Starting Scribble " + BuildConfig.WHEN, "debug", BuildConfig.DEBUG);
+        var msg :String = "Scribble, compiled at " + BuildConfig.WHEN;
+        log.info(msg, "debug", BuildConfig.DEBUG);
 
         ctrl = new AVRGameControl(this);
-
         if (!ctrl.isConnected()) {
             return;
+        }
+
+        if (BuildConfig.DEBUG) {
+            ctrl.local.feedback(msg);
         }
 
         var controller :ScribbleController = new ScribbleController();
