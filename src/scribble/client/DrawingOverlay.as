@@ -69,7 +69,6 @@ public class DrawingOverlay extends Sprite
         });
         addEventListener(BRUSH_DRAG, function (event :ValueEvent) :void {
             var point :Point = event.value as Point;
-            GraphicsUtil.setupBrush(_localShapes[0], _brushId);
             _localShapes[0].graphics.lineTo(point.x, point.y);
         });
 
@@ -105,6 +104,8 @@ public class DrawingOverlay extends Sprite
     public function push () :void
     {
         var shape :Shape = new Shape();
+
+        GraphicsUtil.setupBrush(shape, _brushId);
 
         _localShapes.unshift(shape);
         _paints.addChild(shape);
