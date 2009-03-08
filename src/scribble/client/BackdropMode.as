@@ -53,7 +53,7 @@ public class BackdropMode extends ModeSprite
             Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
 
             Game.ctrl.room.props.addEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
-            updateLock();
+            updateEnabled();
         });
 
         addEventListener(Event.REMOVED_FROM_STAGE, function (... _) :void {
@@ -132,15 +132,17 @@ public class BackdropMode extends ModeSprite
     protected function onRoomPropertyChanged (event :PropertyChangedEvent) :void
     {
         if (event.name == Codes.keyLock(_prefix)) {
-            updateLock();
+            updateEnabled();
         }
     }
 
-    protected function updateLock () :void
+    protected function updateEnabled () :void
     {
         var locked :Boolean = Game.ctrl.room.props.get(Codes.keyLock(_prefix));
+        var enabled :Boolean = _active && !locked;
 
-        _toolbox.visible = !locked;
+        _toolbox.visible = enabled;
+        _canvas.enabled = enabled;
         _lock.toggled = locked;
     }
 
@@ -162,6 +164,8 @@ public class BackdropMode extends ModeSprite
     protected static const ICON_UNLOCK :Class;
 
     protected var _prefix :String;
+
+    protected var _active :Boolean = true; // TODO
 
     protected static var _canvas :CanvasSprite;
     protected var _toolbox :Sprite;

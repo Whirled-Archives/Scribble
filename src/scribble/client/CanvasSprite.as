@@ -75,6 +75,15 @@ public class CanvasSprite extends Sprite
         addChild(_overlay);
     }
 
+    public function set enabled (on :Boolean) :void
+    {
+        if (contains(_overlay) && !on) {
+            removeChild(_overlay);
+        } else if (!contains(_overlay) && on) {
+            addChild(_overlay);
+        }
+    }
+
     protected function onRoomElementChanged (event :ElementChangedEvent) :void
     {
         if (event.name == Codes.keyCanvas(_prefix)) {
