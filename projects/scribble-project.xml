@@ -1,0 +1,12 @@
+<project name="scribble-project">
+  
+  <property name="app.source-dir" value="src"/>
+  <property name="app.source-extras" value="../../src"/>
+  <property name="app.lib-extras" value="../../lib"/>
+
+  <!-- Point $WHIRLED_HOME to your SDK. -->
+  <property environment="env" />
+  <property name="sdk.dir" value="${env.WHIRLED_HOME}" />
+  <import file="${sdk.dir}/etc/project-include.xml"/>
+
+</project>

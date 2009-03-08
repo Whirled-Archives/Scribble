@@ -44,6 +44,9 @@ public class Codes
     /** A dummy mob name and ID used for a correct foreground overlay drawing. */
     public static const MOB_FOREGROUND :String = "fg";
 
+    /** Entity property to check if a canvas is lockable. */
+    public static const PUBLIC_LOCKABLE :String = "scribble:lockable";
+
     public static function isAdmin (playerId :int) :Boolean
     {
         return playerId == 878; // Aduros' playerId
