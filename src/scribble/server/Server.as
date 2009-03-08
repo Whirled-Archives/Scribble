@@ -34,9 +34,7 @@ public class Server extends ServerObject
 
         _gameManager = new GameManager(this, _ctrl.game);
 
-        new RemoteProvider(_ctrl.game, "game", function (senderId :int) :Object {
-            return _gameManager;
-        });
+        new RemoteProvider(_ctrl.game, "game", F.konst(_gameManager));
         new RemoteProvider(_ctrl.game, "room", function (senderId :int) :Object {
             return getPlayer(senderId).room;
         });
