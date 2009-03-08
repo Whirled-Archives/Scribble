@@ -119,6 +119,11 @@ public class RoomManager
         _ctrl.doBatch(_pictionary.guess, playerId, guess);
     }
 
+    REMOTE function toggleLock (playerId :int) :void
+    {
+        _ctrl.doBatch(getCanvas(playerId).toggleLock);
+    }
+
     protected var _ctrl :RoomSubControlServer;
     protected var _players :Dictionary = new Dictionary(); // playerId -> Player
 

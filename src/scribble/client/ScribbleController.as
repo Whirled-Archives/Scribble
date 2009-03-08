@@ -23,6 +23,7 @@ public class ScribbleController extends Controller
     public static const BROADCAST :String = "Broadcast";
     public static const PICTIONARY_PASS :String = "PictionaryPass";
     public static const PICTIONARY_GUESS :String = "PictionaryGuess";
+    public static const TOGGLE_LOCK :String = "ToggleLock";
 
     public var panel :ScribblePanel;
 
@@ -82,6 +83,11 @@ public class ScribbleController extends Controller
         } else {
             _roomService.pictionaryGuess(guess);
         }
+    }
+
+    public function handleToggleLock () :void
+    {
+        _roomService.toggleLock();
     }
 
     REMOTE function broadcast (message :Array) :void

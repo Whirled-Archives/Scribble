@@ -81,6 +81,11 @@ public class Codes
     {
         return prefix + "ticker"; // int
     }
+
+    public static function keyLock (prefix :String) :String
+    {
+        return prefix + "lock"; // Boolean
+    }
 }
 
 }

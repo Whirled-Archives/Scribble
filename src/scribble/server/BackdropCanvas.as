@@ -27,6 +27,19 @@ public class BackdropCanvas extends Canvas
         _room.ctrl.sendMessage(Codes.MESSAGE_CLEARED, playerId);
     }
 
+    override protected function requireWriteAccess (playerId :int) :void
+        // throws Error
+    {
+        if (_props.get(Codes.keyLock(_prefix))) {
+            throw new Error("Permission denied. Canvas is locked.");
+        }
+    }
+
+    override public function toggleLock () :void
+    {
+        _props.set(Codes.keyLock(_prefix), !_props.get(Codes.keyLock(_prefix)));
+    }
+
     protected var _room :RoomManager;
 }
 

@@ -68,6 +68,11 @@ public class Canvas
     {
         // See subclasses
     }
+    
+    public function toggleLock () :void
+    {
+        // Nothing by default, see subclasses
+    }
 
     public function sendStroke (playerId :int, strokeBytes :ByteArray) :void
     {
