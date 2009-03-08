@@ -11,6 +11,7 @@ import aduros.net.RemoteProvider;
 import aduros.net.RemoteProxy;
 import aduros.util.F;
 
+import scribble.data.Codes;
 import scribble.data.Stroke;
 
 public class ScribbleController extends Controller
@@ -87,7 +88,19 @@ public class ScribbleController extends Controller
 
     public function handleToggleLock () :void
     {
-        _roomService.toggleLock();
+        for each (var id :String in Game.ctrl.room.getEntityIds()) {
+            var lockable :Object = Game.ctrl.room.getEntityProperty(Codes.PUBLIC_LOCKABLE, id);
+            if (lockable is Boolean) {
+                if (lockable) {
+                    _roomService.toggleLock();
+                } else {
+                    Game.ctrl.local.feedback(Messages.en.xlate("lock_denied"));
+                }
+                return;
+            }
+        }
+
+        Game.ctrl.local.feedback(Messages.en.xlate("lock_missing"));
     }
 
     REMOTE function broadcast (message :Array) :void

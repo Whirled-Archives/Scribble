@@ -10,7 +10,10 @@ public class Messages
         correct: "{0} and {1} get {2} points for \"{3}\"!",
         trophy: "{0} earned the {1} trophy!",
         joined: "{0} entered a room!",
-        erased: "{0} cleared the canvas"
+        erased: "{0} cleared the canvas.",
+
+        lock_denied: "There was a LockToy present, but you do not own this room.",
+        lock_missing: "No LockToy found. Buy one at (TODO)."
     });
 }
 

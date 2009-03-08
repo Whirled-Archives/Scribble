@@ -13,8 +13,8 @@ public class Locker extends Sprite
     {
         _ctrl = new ToyControl(this);
 
-        _ctrl.registerPropertyProvider(function (key :String) :Boolean {
-            return (key == Codes.PUBLIC_LOCKABLE && _ctrl.canManageRoom());
+        _ctrl.registerPropertyProvider(function (key :String) :Object {
+            return (key == Codes.PUBLIC_LOCKABLE) ? _ctrl.canManageRoom() : null;
         });
 
         addChild(new ICON());
