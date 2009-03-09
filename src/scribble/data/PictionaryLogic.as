@@ -20,6 +20,8 @@ public class PictionaryLogic
     public static const DELAY_PLAYING :int = 20;
     public static const DELAY_PAUSE :int = 5;
 
+    public static const ROUNDS :int = 3;
+
     public function PictionaryLogic (prefix :String, props :PropertyGetSubControl)
     {
         _prefix = prefix;

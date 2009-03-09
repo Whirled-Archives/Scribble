@@ -120,10 +120,14 @@ public class PictionaryCanvas extends Canvas
         do {
             turnHolder += 1;
             if (turnHolder == end) {
-//                _cycle += 1;
-//                if (_cycle < 3) {
+                _round += 1;
+                if (_round == PictionaryLogic.ROUNDS) {
+                    setPhase(PictionaryLogic.PHASE_INTERMISSION);
+                    // TODO: Declare winner, payouts, etc
+                    return;
+                } else {
                     turnHolder = 0;
-//                }
+                }
             }
         } while (!_players.contains(roster[turnHolder]));
 
