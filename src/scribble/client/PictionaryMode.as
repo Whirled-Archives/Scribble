@@ -137,7 +137,7 @@ public class PictionaryMode extends ModeSprite
     {
         switch (_logic.getPhase()) {
             case PictionaryLogic.PHASE_INTERMISSION:
-                setTicker(20);
+                setTicker(PictionaryLogic.DELAY_INTERMISSION);
                 Game.ctrl.local.feedback("= Intermission");
                 break;
 
@@ -147,7 +147,7 @@ public class PictionaryMode extends ModeSprite
                 break;
 
             case PictionaryLogic.PHASE_PLAYING:
-                setTicker(10);
+                setTicker(PictionaryLogic.DELAY_PLAYING);
                 Game.ctrl.local.feedback("= Playing");
                 break;
 

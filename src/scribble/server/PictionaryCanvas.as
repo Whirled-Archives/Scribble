@@ -37,7 +37,7 @@ public class PictionaryCanvas extends Canvas
             case PictionaryLogic.PHASE_INTERMISSION:
                 _props.set(Codes.keyTurnHolder(_prefix), null, true);
                 _round = 0;
-                _ticker.start(20, true, function () :void {
+                _ticker.start(PictionaryLogic.DELAY_INTERMISSION, true, function () :void {
                     purgeMissingPlayers();
                     _props.set(Codes.keyScores(_prefix), null, true);
                     nextTurn();
@@ -45,11 +45,11 @@ public class PictionaryCanvas extends Canvas
                 break;
 
             case PictionaryLogic.PHASE_PAUSE:
-                _ticker.start(5, false, nextTurn);
+                _ticker.start(PictionaryLogic.DELAY_PAUSE, false, nextTurn);
                 break;
 
             case PictionaryLogic.PHASE_PLAYING:
-                _ticker.start(10, true, function () :void {
+                _ticker.start(PictionaryLogic.DELAY_PLAYING, true, function () :void {
                     setPhase(PictionaryLogic.PHASE_PAUSE);
                 });
                 break;

@@ -16,6 +16,10 @@ public class PictionaryLogic
     public static const PHASE_PLAYING :int = 2;
     public static const PHASE_PAUSE :int = 3;
 
+    public static const DELAY_INTERMISSION :int = 10;
+    public static const DELAY_PLAYING :int = 20;
+    public static const DELAY_PAUSE :int = 5;
+
     public function PictionaryLogic (prefix :String, props :PropertyGetSubControl)
     {
         _prefix = prefix;
