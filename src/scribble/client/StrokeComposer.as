@@ -18,7 +18,7 @@ public class StrokeComposer extends EventDispatcher
 
     public static const TOLERANCE :int = 2; // TODO: Tweak
 
-    public function StrokeComposer (drawing :DrawingOverlay, picker :BrushPicker)
+    public function StrokeComposer (drawing :DrawingOverlay)
     {
         drawing.addEventListener(DrawingOverlay.BRUSH_DOWN, onBrushDown);
         drawing.addEventListener(DrawingOverlay.BRUSH_UP, onBrushUp);

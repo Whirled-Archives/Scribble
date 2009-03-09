@@ -28,7 +28,7 @@ public class CanvasSprite extends Sprite
 
         _strokes = new StrokeContainer(width, height);
         _overlay = new DrawingOverlay(width, height);
-        _composer = new StrokeComposer(_overlay, null);
+        _composer = new StrokeComposer(_overlay);
 
         // For the eraser brush to work
         this.blendMode = flash.display.BlendMode.LAYER;
