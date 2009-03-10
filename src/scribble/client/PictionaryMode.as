@@ -7,6 +7,7 @@ import flash.events.MouseEvent;
 import flash.filters.DropShadowFilter;
 import flash.geom.Rectangle;
 import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
 import flash.text.TextFieldType;
 import flash.ui.Keyboard;
 import flash.utils.Dictionary;
@@ -69,6 +70,9 @@ public class PictionaryMode extends ModeSprite
             Game.ctrl.local.showInvitePage(Messages.en.xlate("picto_invite"));
         });
 
+        _wordField.x = _panel.width;
+        _wordField.y = _panel.height - 24;
+
         var screen :Rectangle = Game.ctrl.local.getPaintableArea();
 
         _panel.y = -_panel.height;
@@ -84,14 +88,12 @@ public class PictionaryMode extends ModeSprite
 
             Game.ctrl.room.props.addEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
             Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
-            Game.ctrl.player.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onPlayerMessage);
             Game.ctrl.room.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onRoomMessage);
             Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
         });
         addEventListener(Event.REMOVED_FROM_STAGE, function (... _) :void {
             Game.ctrl.room.props.removeEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
             Game.ctrl.room.props.removeEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
-            Game.ctrl.player.removeEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onPlayerMessage);
             Game.ctrl.room.removeEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onRoomMessage);
             Game.ctrl.local.removeEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
         });
@@ -195,7 +197,16 @@ public class PictionaryMode extends ModeSprite
                 break;
 
             case Codes.keyTurnHolder(_prefix):
-                _roster.setTurnHolder(_logic.getTurnHolder());
+                var turnHolder :int = _logic.getTurnHolder();
+
+                // If I'm the turn holder
+                if (_logic.getRoster()[turnHolder] == Game.ctrl.player.getPlayerId()) {
+                    _panel.addChild(_wordField);
+                } else if (_panel.contains(_wordField)) {
+                    _panel.removeChild(_wordField);
+                }
+
+                _roster.setTurnHolder(turnHolder);
                 break;
 
             case Codes.keyScores(_prefix):
@@ -230,20 +241,15 @@ public class PictionaryMode extends ModeSprite
         }
     }
 
-    protected function onPlayerMessage (event :MessageReceivedEvent) :void
-    {
-        if (event.name == Codes.MESSAGE_SECRET_WORD) {
-            //_word = event.value;
-        }
-    }
-
     protected function onRoomMessage (event :MessageReceivedEvent) :void
     {
+        // TODO: Handle pictionary room-wide messages
     }
 
     REMOTE function sendWord (word :String) :void
     {
-        Game.ctrl.local.feedback("Got secret word: " + word);
+        _wordField.text = word;
+        Game.log.info("Got word to draw", "word", word);
     }
 
     protected var _panel :Sprite = new Sprite(); // Holds the goods
@@ -255,6 +261,11 @@ public class PictionaryMode extends ModeSprite
     [Embed(source="../../../res/invite.png")]
     protected static const ICON_INVITE :Class;
     protected var _inviteButton :ImageButton = new ImageButton(new ICON_INVITE());
+
+    protected var _wordField :TextField = TextFieldUtil.createField("",
+        { textColor: 0xffffff, selectable: false,
+            autoSize: TextFieldAutoSize.RIGHT, outlineColor: 0x00000 },
+        { font: "_sans", size: 24, bold: true });
 
     protected var _prefix :String;
     protected var _logic :PictionaryLogic;
