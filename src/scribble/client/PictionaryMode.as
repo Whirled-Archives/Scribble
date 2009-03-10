@@ -246,7 +246,7 @@ public class PictionaryMode extends ModeSprite
         switch (event.name) {
             case Codes.msgGuess(_prefix):
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_guess",
-                    Game.getName(_logic.getPlayerId(event.value[0])), event.value[1]));
+                    Game.getName(event.value[0]), event.value[1]));
                 break;
 
             case Codes.msgPass(_prefix):
