@@ -131,14 +131,13 @@ public class PictionaryCanvas extends Canvas
             }
         } while (!_players.contains(roster[turnHolder]));
 
-        var player :Player = _room.players[roster[turnHolder]];
-
-        _props.set(Codes.keyTurnHolder(_prefix), turnHolder, true);
-
         _wordId = Math.random()*_wordlist.length;
         _wordClean = cleanupWord(_wordlist[_wordId]);
 
+        var player :Player = _room.players[roster[turnHolder]];
         player.mode.apply("sendWord", _wordlist[_wordId]);
+
+        _props.set(Codes.keyTurnHolder(_prefix), turnHolder, true);
 
         setPhase(PictionaryLogic.PHASE_PLAYING);
     }
