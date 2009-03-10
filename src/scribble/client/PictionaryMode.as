@@ -3,6 +3,7 @@ package scribble.client {
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
+import flash.events.MouseEvent;
 import flash.filters.DropShadowFilter;
 import flash.geom.Rectangle;
 import flash.text.TextField;
@@ -18,6 +19,7 @@ import com.threerings.util.Command;
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
+import aduros.display.ImageButton;
 import aduros.net.REMOTE;
 
 import scribble.data.Codes;
@@ -61,6 +63,11 @@ public class PictionaryMode extends ModeSprite
         _panel.addChild(toolbox);
 
         addChild(_panel);
+
+        _inviteButton.y = _panel.height-_inviteButton.height;
+        _inviteButton.addEventListener(MouseEvent.CLICK, function(... _) :void {
+            Game.ctrl.local.showInvitePage(Messages.en.xlate("picto_invite"));
+        });
 
         var screen :Rectangle = Game.ctrl.local.getPaintableArea();
 
@@ -138,7 +145,10 @@ public class PictionaryMode extends ModeSprite
         switch (_logic.getPhase()) {
             case PictionaryLogic.PHASE_INTERMISSION:
                 setTicker(PictionaryLogic.DELAY_INTERMISSION);
-                Game.ctrl.local.feedback("= Intermission");
+                Game.ctrl.local.feedback(Messages.en.xlate("picto_intermission"));
+                if (_panel.contains(_inviteButton)) {
+                    _panel.removeChild(_inviteButton);
+                }
                 break;
 
             case PictionaryLogic.PHASE_PAUSE:
@@ -153,7 +163,8 @@ public class PictionaryMode extends ModeSprite
 
             case PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS:
                 clearTicker();
-                Game.ctrl.local.feedback("= Not enough players");
+                Game.ctrl.local.feedback(Messages.en.xlate("picto_not_enough_players"));
+                _panel.addChild(_inviteButton);
                 break;
         }
     }
@@ -240,6 +251,10 @@ public class PictionaryMode extends ModeSprite
     protected var _roster :RosterSprite = new RosterSprite();
     protected var _tickerContainer :Sprite = new Sprite();
     protected var _canvas :CanvasSprite;
+
+    [Embed(source="../../../res/invite.png")]
+    protected static const ICON_INVITE :Class;
+    protected var _inviteButton :ImageButton = new ImageButton(new ICON_INVITE());
 
     protected var _prefix :String;
     protected var _logic :PictionaryLogic;

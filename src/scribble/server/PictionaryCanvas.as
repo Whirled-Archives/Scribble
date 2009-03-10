@@ -140,9 +140,6 @@ public class PictionaryCanvas extends Canvas
 
         player.mode.apply("sendWord", _wordlist[_wordId]);
 
-        // TODO: temp
-        _props.setIn(Codes.keyScores(_prefix), turnHolder, int(_logic.getScores()[turnHolder])+1, true);
-
         setPhase(PictionaryLogic.PHASE_PLAYING);
     }
 
@@ -153,20 +150,37 @@ public class PictionaryCanvas extends Canvas
         // TODO
     }
 
+    protected function addScore (rosterId :int, delta :int) :void
+    {
+        _props.setIn(Codes.keyScores(_prefix), rosterId,
+            int(_logic.getScores()[rosterId])+delta, true);
+    }
+
     public function guess (playerId :int, guess :String) :void
     {
         if (_logic.getPhase() != PictionaryLogic.PHASE_PLAYING) {
             throw new Error("Game should be in the PLAYING phase");
         }
 
+        var turnHolder :int = _logic.getTurnHolder();
         var rosterId :int = _logic.getRosterId(playerId);
+
         if (rosterId < 0) {
             throw new Error("Guesser was not in the roster");
-        } else if (rosterId == _logic.getTurnHolder()) {
+        } else if (rosterId == turnHolder) {
             throw new Error("Guesser was the turn holder");
         }
 
         if (cleanupWord(guess) == _wordClean) {
+            var roster :Dictionary = _logic.getRoster();
+            var guesser :Player = _room.players[roster[turnHolder]];
+            var drawer :Player = _room.players[roster[rosterId]];
+
+            addScore(rosterId, 1);
+            addScore(turnHolder, 2);
+
+            // TODO: Payout guesser and drawer
+
             setPhase(PictionaryLogic.PHASE_PAUSE);
         }
     }
