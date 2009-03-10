@@ -17,7 +17,7 @@ public class Messages
         picto_intermission: "Get ready! The next round of (TODO) will soon begin.",
         picto_pass: "{0} passed on \"{1}\".",
         picto_correct: "{0} and {1} get {2} points for \"{3}\"!",
-        picto_invite: "This is the invite defmsg"
+        picto_invite: "(TODO)"
     });
 }
 
