@@ -57,6 +57,11 @@ public class PictionaryLogic
         return -1;
     }
 
+    public function getPlayerId (rosterId :int) :int
+    {
+        return getRoster()[rosterId];
+    }
+
     public function getPhase () :int
     {
         return int(_props.get(Codes.keyPhase(_prefix)));

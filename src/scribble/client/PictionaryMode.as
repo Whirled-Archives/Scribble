@@ -200,7 +200,7 @@ public class PictionaryMode extends ModeSprite
                 var turnHolder :int = _logic.getTurnHolder();
 
                 // If I'm the turn holder
-                if (_logic.getRoster()[turnHolder] == Game.ctrl.player.getPlayerId()) {
+                if (_logic.getPlayerId(turnHolder) == Game.ctrl.player.getPlayerId()) {
                     _panel.addChild(_wordField);
                 } else if (_panel.contains(_wordField)) {
                     _panel.removeChild(_wordField);
@@ -243,7 +243,17 @@ public class PictionaryMode extends ModeSprite
 
     protected function onRoomMessage (event :MessageReceivedEvent) :void
     {
-        // TODO: Handle pictionary room-wide messages
+        switch (event.name) {
+            case Codes.msgGuess(_prefix):
+                Game.ctrl.local.feedback(Messages.en.xlate("picto_guess",
+                    Game.getName(_logic.getPlayerId(event.value[0])), event.value[1]));
+                break;
+
+            case Codes.msgPass(_prefix):
+                Game.ctrl.local.feedback(Messages.en.xlate("picto_pass",
+                    Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
+                break;
+        }
     }
 
     REMOTE function sendWord (word :String) :void

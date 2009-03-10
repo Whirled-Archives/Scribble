@@ -38,8 +38,6 @@ public class Codes
     /** A room property (Dictionary) that maps playerId to canvasIndex. */
     public static const PLAYER_MODES :String = "mode";
 
-    public static const MESSAGE_CLEARED :String = "clear"; // int, on Room
-
     /** A dummy mob name and ID used for a correct foreground overlay drawing. */
     public static const MOB_FOREGROUND :String = "fg";
 
@@ -84,6 +82,21 @@ public class Codes
     public static function keyLock (prefix :String) :String
     {
         return prefix + "lock"; // Boolean
+    }
+
+    public static function msgCleared (prefix :String) :String
+    {
+        return prefix + "cleared"; // int
+    }
+
+    public static function msgGuess (prefix :String) :String
+    {
+        return prefix + "guess"; // [int, String]
+    }
+
+    public static function msgPass (prefix :String) :String
+    {
+        return prefix + "pass"; // String
     }
 }
 

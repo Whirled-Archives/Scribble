@@ -24,7 +24,7 @@ public class BackdropCanvas extends Canvas
     {
         super.clearCanvas(playerId);
 
-        _room.ctrl.sendMessage(Codes.MESSAGE_CLEARED, playerId);
+        _room.ctrl.sendMessage(Codes.msgCleared(_prefix), playerId);
     }
 
     override protected function requireWriteAccess (playerId :int) :void

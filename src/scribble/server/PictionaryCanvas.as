@@ -131,11 +131,11 @@ public class PictionaryCanvas extends Canvas
             }
         } while (!_players.contains(roster[turnHolder]));
 
-        _wordId = Math.random()*_wordlist.length;
-        _wordClean = cleanupWord(_wordlist[_wordId]);
+        _wordId = Math.random()*WORD_LIST.length;
+        _wordClean = cleanupWord(WORD_LIST[_wordId]);
 
         var player :Player = _room.players[roster[turnHolder]];
-        player.mode.apply("sendWord", _wordlist[_wordId]);
+        player.mode.apply("sendWord", WORD_LIST[_wordId]);
 
         _props.set(Codes.keyTurnHolder(_prefix), turnHolder, true);
 
@@ -146,7 +146,13 @@ public class PictionaryCanvas extends Canvas
     {
         requireWriteAccess(playerId);
 
-        // TODO
+        if (_logic.getPhase() != PictionaryLogic.PHASE_PLAYING) {
+            throw new Error("Game should be in the PLAYING phase");
+        }
+
+        _room.ctrl.sendMessage(Codes.msgPass(_prefix), WORD_LIST[_wordId]);
+
+        setPhase(PictionaryLogic.PHASE_PAUSE);
     }
 
     protected function addScore (rosterId :int, delta :int) :void
@@ -169,6 +175,9 @@ public class PictionaryCanvas extends Canvas
         } else if (rosterId == turnHolder) {
             throw new Error("Guesser was the turn holder");
         }
+
+        // Send the guess to the other clients to see
+        _room.ctrl.sendMessage(Codes.msgGuess(_prefix), [playerId, guess]);
 
         if (cleanupWord(guess) == _wordClean) {
             var roster :Dictionary = _logic.getRoster();
@@ -199,17 +208,17 @@ public class PictionaryCanvas extends Canvas
     {
         try {
             ba.position = 0; // TODO: Remove once Whirled rewinds for you
-            _wordlist = ba.readUTFBytes(ba.length).split("\n");
-            Server.log.info("Word list created", "length", _wordlist.length);
+            WORD_LIST = ba.readUTFBytes(ba.length).split("\n");
+            Server.log.info("Word list created", "length", WORD_LIST.length);
 
         } catch (error :Error) {
             Server.log.error("Word list parsing failed!", error);
         }
     }
 
-    protected static var _wordlist :Array; // of String
+    protected static var WORD_LIST :Array; // of String
 
-    protected var _wordId :int; // An index into _wordlist
+    protected var _wordId :int; // An index into WORD_LIST
     protected var _wordClean :String; // A cleaned up version of the current secret word
 
     protected var _room :RoomManager;
