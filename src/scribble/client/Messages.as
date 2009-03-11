@@ -5,6 +5,14 @@ import aduros.i18n.MessageBundle;
 public class Messages
 {
     public static const en :MessageBundle = new MessageBundle({
+
+        t_undo: "Undo",
+        t_redo: "Redo",
+        t_lock: "Lock/unlock backdrop canvas",
+        t_pass: "Skip turn",
+        t_invite: "Invite friends to play",
+        t_clear: "Clear canvas",
+
         broadcast: "Scribble broadcast by {0}: {1}",
         trophy: "{0} earned the {1} trophy!",
         joined: "{0} entered a room!",

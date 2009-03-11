@@ -5,6 +5,9 @@ import flash.display.Sprite;
 import com.threerings.util.Log;
 
 import com.whirled.avrg.AVRGameControl;
+import com.whirled.avrg.AVRGameControlEvent;
+
+import aduros.display.ToolTipManager;
 
 public class Game extends Sprite
 {
@@ -30,8 +33,20 @@ public class Game extends Sprite
             ctrl.local.feedback(msg);
         }
 
+        // Set up the ToolTipManager
+        ToolTipManager.instance.screen = this;
+        ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, function (... _) :void {
+            updateToolTipBounds();
+        });
+        updateToolTipBounds();
+
         var controller :ScribbleController = new ScribbleController();
         addChild(controller.panel);
+    }
+
+    protected function updateToolTipBounds () :void
+    {
+        ToolTipManager.instance.bounds = ctrl.local.getPaintableArea();
     }
 }
 

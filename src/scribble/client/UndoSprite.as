@@ -28,7 +28,7 @@ public class UndoSprite extends Sprite
                 }
             });
 
-        _undoButton = new ImageButton(Bitmap(new ICON_UNDO()));
+        _undoButton = new ImageButton(Bitmap(new ICON_UNDO()), Messages.en.xlate("t_undo"));
 //        var un :Sprite = new Sprite();
 //        un.graphics.beginFill(0x00ff00);
 //        un.graphics.drawRect(0, 0, 32, 32);
@@ -38,7 +38,7 @@ public class UndoSprite extends Sprite
         Command.bind(_undoButton, MouseEvent.CLICK, undo);
         addChild(_undoButton);
 
-        _redoButton = new ImageButton(Bitmap(new ICON_REDO()));
+        _redoButton = new ImageButton(Bitmap(new ICON_REDO()), Messages.en.xlate("t_redo"));
         Command.bind(_redoButton, MouseEvent.CLICK, redo);
         _redoButton.x = 32;
         addChild(_redoButton);

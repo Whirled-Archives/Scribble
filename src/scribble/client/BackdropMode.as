@@ -170,7 +170,8 @@ public class BackdropMode extends ModeSprite
     protected static var _canvas :CanvasSprite;
     protected var _toolbox :Sprite;
 
-    protected var _lock :ImageButton = new ImageButton(new ICON_LOCK(), new ICON_UNLOCK());
+    protected var _lock :ImageButton = new ImageButton(
+        new ICON_LOCK(), Messages.en.xlate("t_lock"), new ICON_UNLOCK());
 
     // Transitions
     protected var _slideIn :GTween;

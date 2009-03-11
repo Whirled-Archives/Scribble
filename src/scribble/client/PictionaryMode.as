@@ -291,11 +291,13 @@ public class PictionaryMode extends ModeSprite
 
     [Embed(source="../../../res/invite.png")]
     protected static const ICON_INVITE :Class;
-    protected var _inviteButton :ImageButton = new ImageButton(new ICON_INVITE());
+    protected var _inviteButton :ImageButton = new ImageButton(
+        new ICON_INVITE(), Messages.en.xlate("t_invite"));
 
     [Embed(source="../../../res/pass.png")]
     protected static const ICON_PASS :Class;
-    protected var _passButton :ImageButton = new ImageButton(new ICON_PASS());
+    protected var _passButton :ImageButton = new ImageButton(
+        new ICON_PASS(), Messages.en.xlate("t_pass"));
 
     protected var _wordField :TextField = TextFieldUtil.createField("",
         { textColor: 0xffffff, selectable: false,
