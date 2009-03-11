@@ -155,6 +155,8 @@ public class PictionaryMode extends ModeSprite
                 setTicker(PictionaryLogic.DELAY_INTERMISSION);
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_intermission"));
 
+                DisplayUtil.setContains(_panel, _inviteButton, false);
+
                 break;
 
             case PictionaryLogic.PHASE_PAUSE:
