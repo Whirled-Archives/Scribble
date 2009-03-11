@@ -77,11 +77,7 @@ public class CanvasSprite extends Sprite
 
     public function set enabled (on :Boolean) :void
     {
-        if (contains(_overlay) && !on) {
-            removeChild(_overlay);
-        } else if (!contains(_overlay) && on) {
-            addChild(_overlay);
-        }
+        GraphicsUtil.setContains(this, _overlay, on);
     }
 
     protected function onRoomElementChanged (event :ElementChangedEvent) :void

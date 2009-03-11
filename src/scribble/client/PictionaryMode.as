@@ -148,26 +148,53 @@ public class PictionaryMode extends ModeSprite
             case PictionaryLogic.PHASE_INTERMISSION:
                 setTicker(PictionaryLogic.DELAY_INTERMISSION);
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_intermission"));
-                if (_panel.contains(_inviteButton)) {
-                    _panel.removeChild(_inviteButton);
-                }
+
+                GraphicsUtil.setContains(_panel, _inviteButton, false);
+                _canvas.enabled = true;
+
                 break;
 
             case PictionaryLogic.PHASE_PAUSE:
                 clearTicker();
                 Game.ctrl.local.feedback("= Pause");
+
+                _canvas.enabled = false;
+
                 break;
 
             case PictionaryLogic.PHASE_PLAYING:
                 setTicker(PictionaryLogic.DELAY_PLAYING);
-                Game.ctrl.local.feedback("= Playing");
+
+                var amDrawing :Boolean = 
+                    _logic.getPlayerId(_logic.getTurnHolder()) == Game.ctrl.player.getPlayerId();
+
+                _canvas.enabled = amDrawing;
+                GraphicsUtil.setContains(_panel, _wordField, !amDrawing);
+
                 break;
 
             case PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS:
                 clearTicker();
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_not_enough_players"));
-                _panel.addChild(_inviteButton);
+
+                _canvas.enabled = true;
+                GraphicsUtil.setContains(_panel, _inviteButton, true);
+
                 break;
+        }
+    }
+
+    protected function updateTurnHolder () :void
+    {
+        var turnHolder :int = _logic.getTurnHolder();
+
+        // If I'm the turn holder
+        if (_logic.getPlayerId(turnHolder) == Game.ctrl.player.getPlayerId()) {
+            _panel.addChild(_wordField);
+            _canvas.enabled = true;
+        } else if (_panel.contains(_wordField)) {
+            _panel.removeChild(_wordField);
+            _canvas.enabled = false;
         }
     }
 
@@ -197,16 +224,7 @@ public class PictionaryMode extends ModeSprite
                 break;
 
             case Codes.keyTurnHolder(_prefix):
-                var turnHolder :int = _logic.getTurnHolder();
-
-                // If I'm the turn holder
-                if (_logic.getPlayerId(turnHolder) == Game.ctrl.player.getPlayerId()) {
-                    _panel.addChild(_wordField);
-                } else if (_panel.contains(_wordField)) {
-                    _panel.removeChild(_wordField);
-                }
-
-                _roster.setTurnHolder(turnHolder);
+                _roster.setTurnHolder(_logic.getTurnHolder());
                 break;
 
             case Codes.keyScores(_prefix):

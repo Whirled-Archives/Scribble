@@ -1,6 +1,7 @@
 package scribble.client {
 
 import flash.display.BlendMode;
+import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.Graphics;
 import flash.display.Shape;
@@ -50,6 +51,16 @@ public class GraphicsUtil
     {
         while (container.numChildren > 0) {
             container.removeChildAt(0);
+        }
+    }
+
+    public static function setContains (
+        parent :DisplayObjectContainer, child :DisplayObject, add :Boolean) :void
+    {
+        if (parent.contains(child) && !add) {
+            parent.removeChild(child);
+        } else if (!parent.contains(child) && add) {
+            parent.addChild(child);
         }
     }
 
