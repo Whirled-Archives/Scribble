@@ -69,6 +69,8 @@ public class PictionaryMode extends ModeSprite
             Game.ctrl.local.showInvitePage(Messages.en.xlate("picto_invite"));
         });
 
+        Command.bind(_passButton, MouseEvent.CLICK, ScribbleController.PICTIONARY_PASS);
+
         _wordField.x = _panel.width;
         _wordField.y = _panel.height - 24;
 
@@ -179,6 +181,9 @@ public class PictionaryMode extends ModeSprite
 
         DisplayUtil.setContains(_panel, _wordField,
             phase == PictionaryLogic.PHASE_PLAYING && canDraw);
+
+        DisplayUtil.setContains(_panel, _passButton,
+            phase == PictionaryLogic.PHASE_PLAYING && canDraw);
     }
 
     protected function initRoster () :void
@@ -287,6 +292,10 @@ public class PictionaryMode extends ModeSprite
     [Embed(source="../../../res/invite.png")]
     protected static const ICON_INVITE :Class;
     protected var _inviteButton :ImageButton = new ImageButton(new ICON_INVITE());
+
+    [Embed(source="../../../res/pass.png")]
+    protected static const ICON_PASS :Class;
+    protected var _passButton :ImageButton = new ImageButton(new ICON_PASS());
 
     protected var _wordField :TextField = TextFieldUtil.createField("",
         { textColor: 0xffffff, selectable: false,
