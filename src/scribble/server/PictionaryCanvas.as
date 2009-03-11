@@ -187,6 +187,9 @@ public class PictionaryCanvas extends Canvas
             addScore(rosterId, 1);
             addScore(turnHolder, 2);
 
+            // Notify correct guess
+            _room.ctrl.sendMessage(Codes.msgCorrect(_prefix), [ playerId, WORD_LIST[_wordId] ]);
+
             // TODO: Payout guesser and drawer
 
             setPhase(PictionaryLogic.PHASE_PAUSE);

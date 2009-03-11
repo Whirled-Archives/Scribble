@@ -98,6 +98,16 @@ public class Codes
     {
         return prefix + "pass"; // String
     }
+
+    public static function msgCorrect (prefix :String) :String
+    {
+        return prefix + "correct"; // [int, String]
+    }
+
+    public static function msgFail (prefix :String) :String
+    {
+        return prefix + "fail"; // String
+    }
 }
 
 }

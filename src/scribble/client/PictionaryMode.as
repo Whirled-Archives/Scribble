@@ -60,9 +60,9 @@ public class PictionaryMode extends ModeSprite
         });
         _panel.addChild(guesser);
 
-        var toolbox :Sprite = _canvas.createToolbox();
-        toolbox.y = _canvas.height - toolbox.height;
-        _panel.addChild(toolbox);
+        _toolbox = _canvas.createToolbox();
+        _toolbox.y = _canvas.height - _toolbox.height;
+        _panel.addChild(_toolbox);
 
         addChild(_panel);
 
@@ -143,6 +143,12 @@ public class PictionaryMode extends ModeSprite
         DisplayUtil.removeAllChildren(_tickerContainer);
     }
 
+    protected function setDrawingEnabled (on :Boolean) :void
+    {
+        DisplayUtil.setContains(_panel, _toolbox, on);
+        _canvas.enabled = on;
+    }
+
     protected function updatePhase () :void
     {
         switch (_logic.getPhase()) {
@@ -150,8 +156,7 @@ public class PictionaryMode extends ModeSprite
                 setTicker(PictionaryLogic.DELAY_INTERMISSION);
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_intermission"));
 
-                DisplayUtil.setContains(_panel, _inviteButton, false);
-                _canvas.enabled = true;
+                setDrawingEnabled(true);
 
                 break;
 
@@ -159,18 +164,18 @@ public class PictionaryMode extends ModeSprite
                 clearTicker();
                 Game.ctrl.local.feedback("= Pause");
 
-                _canvas.enabled = false;
+                setDrawingEnabled(false);
 
                 break;
 
             case PictionaryLogic.PHASE_PLAYING:
                 setTicker(PictionaryLogic.DELAY_PLAYING);
 
-                var amDrawing :Boolean = 
+                var isDrawing :Boolean = 
                     _logic.getPlayerId(_logic.getTurnHolder()) == Game.ctrl.player.getPlayerId();
 
-                _canvas.enabled = amDrawing;
-                DisplayUtil.setContains(_panel, _wordField, !amDrawing);
+                setDrawingEnabled(isDrawing);
+                DisplayUtil.setContains(_panel, _wordField, !isDrawing);
 
                 break;
 
@@ -178,7 +183,7 @@ public class PictionaryMode extends ModeSprite
                 clearTicker();
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_not_enough_players"));
 
-                _canvas.enabled = true;
+                setDrawingEnabled(true);
                 DisplayUtil.setContains(_panel, _inviteButton, true);
 
                 break;
@@ -272,6 +277,14 @@ public class PictionaryMode extends ModeSprite
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_pass",
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
                 break;
+
+            case Codes.msgCorrect(_prefix):
+                Game.ctrl.local.feedback(Messages.en.xlate("picto_correct",
+                    Game.getName(event.value[0]),
+                    Game.getName(_logic.getPlayerId(_logic.getTurnHolder())),
+                    666, // TODO: Maybe remove this from the message
+                    event.value[1]));
+                break;
         }
     }
 
@@ -286,6 +299,8 @@ public class PictionaryMode extends ModeSprite
     protected var _roster :RosterSprite = new RosterSprite();
     protected var _tickerContainer :Sprite = new Sprite();
     protected var _canvas :CanvasSprite;
+
+    protected var _toolbox :Sprite;
 
     [Embed(source="../../../res/invite.png")]
     protected static const ICON_INVITE :Class;
