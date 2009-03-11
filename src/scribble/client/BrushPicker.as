@@ -1,7 +1,10 @@
 package scribble.client {
 
+import flash.display.Bitmap;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
+
+import com.gskinner.motion.GTween;
 
 import com.threerings.util.Command;
 import com.threerings.util.ValueEvent;
@@ -14,7 +17,6 @@ public class BrushPicker extends Sprite
 
     public function BrushPicker ()
     {
-        //var cursor :Shape = new Sprite();
         for (var brushId :int = 0; brushId < Codes.BRUSH_COLORS.length; ++brushId) {
             var color :int = Codes.BRUSH_COLORS[brushId];
             var button :Sprite = new Sprite();
@@ -27,13 +29,22 @@ public class BrushPicker extends Sprite
 
             addChild(button);
         }
+
+        _cursor.y = -_cursor.height;
+        addChild(_cursor);
     }
 
     public function setBrush (brushId :int) :void
     {
+        var toX :Number = brushId*24 + 24/2 - _cursor.width/2
+        new GTween(_cursor, 0.2, {x: toX});
+
         dispatchEvent(new ValueEvent(BRUSH_CHANGED, brushId));
-        // TODO: Animate cursor
     }
+
+    [Embed(source="../../../res/arrow_down.png")]
+    protected static const CURSOR :Class;
+    protected var _cursor :Bitmap = new CURSOR();
 }
 
 }
