@@ -13,6 +13,8 @@ import com.threerings.util.Command;
 import com.threerings.util.SortedHashMap;
 import com.threerings.util.ValueEvent;
 
+import aduros.display.DisplayUtil;
+
 import scribble.data.Codes;
 import scribble.data.Stroke;
 
@@ -77,7 +79,7 @@ public class CanvasSprite extends Sprite
 
     public function set enabled (on :Boolean) :void
     {
-        GraphicsUtil.setContains(this, _overlay, on);
+        DisplayUtil.setContains(this, _overlay, on);
     }
 
     protected function onRoomElementChanged (event :ElementChangedEvent) :void

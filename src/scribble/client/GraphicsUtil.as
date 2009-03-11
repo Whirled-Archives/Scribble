@@ -47,23 +47,6 @@ public class GraphicsUtil
         }
     }
 
-    public static function removeAllChildren (container :DisplayObjectContainer) :void
-    {
-        while (container.numChildren > 0) {
-            container.removeChildAt(0);
-        }
-    }
-
-    public static function setContains (
-        parent :DisplayObjectContainer, child :DisplayObject, add :Boolean) :void
-    {
-        if (parent.contains(child) && !add) {
-            parent.removeChild(child);
-        } else if (!parent.contains(child) && add) {
-            parent.addChild(child);
-        }
-    }
-
     /** Like GTween.reverse(), but always ensures playback. */
     public static function flip (tween :GTween) :void
     {

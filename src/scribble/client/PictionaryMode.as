@@ -20,6 +20,7 @@ import com.threerings.util.Command;
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
+import aduros.display.DisplayUtil;
 import aduros.display.ImageButton;
 import aduros.net.REMOTE;
 
@@ -139,7 +140,7 @@ public class PictionaryMode extends ModeSprite
 
     protected function clearTicker () :void
     {
-        GraphicsUtil.removeAllChildren(_tickerContainer);
+        DisplayUtil.removeAllChildren(_tickerContainer);
     }
 
     protected function updatePhase () :void
@@ -149,7 +150,7 @@ public class PictionaryMode extends ModeSprite
                 setTicker(PictionaryLogic.DELAY_INTERMISSION);
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_intermission"));
 
-                GraphicsUtil.setContains(_panel, _inviteButton, false);
+                DisplayUtil.setContains(_panel, _inviteButton, false);
                 _canvas.enabled = true;
 
                 break;
@@ -169,7 +170,7 @@ public class PictionaryMode extends ModeSprite
                     _logic.getPlayerId(_logic.getTurnHolder()) == Game.ctrl.player.getPlayerId();
 
                 _canvas.enabled = amDrawing;
-                GraphicsUtil.setContains(_panel, _wordField, !amDrawing);
+                DisplayUtil.setContains(_panel, _wordField, !amDrawing);
 
                 break;
 
@@ -178,7 +179,7 @@ public class PictionaryMode extends ModeSprite
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_not_enough_players"));
 
                 _canvas.enabled = true;
-                GraphicsUtil.setContains(_panel, _inviteButton, true);
+                DisplayUtil.setContains(_panel, _inviteButton, true);
 
                 break;
         }
