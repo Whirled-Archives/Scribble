@@ -48,6 +48,18 @@ public class RoomManager
         return _players; // TODO: Necessary?
     }
 
+    /** Counts the number of players in this room that are in the given mode. */
+    public function playersInMode (mode :int) :int
+    {
+        var count :int = 0;
+        for each (var m :int in _ctrl.props.get(Codes.PLAYER_MODES)) {
+            if (m == mode) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
     protected function onPlayerLeft (event :AVRGameRoomEvent) :void
     {
         setMode(int(event.value), null);

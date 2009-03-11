@@ -50,6 +50,11 @@ public class Server extends ServerObject
         return _players[playerId];
     }
 
+    public function getRooms () :Object
+    {
+        return _rooms;
+    }
+
     protected function onPlayerJoin (event :AVRGameControlEvent) :void
     {
         var playerId :int = int(event.value);

@@ -12,6 +12,7 @@ public class Messages
         t_pass: "Skip turn",
         t_invite: "Invite friends to play",
         t_clear: "Clear canvas",
+        t_locate: "Find other players like me",
 
         broadcast: "Scribble broadcast by {0}: {1}",
         trophy: "{0} earned the {1} trophy!",
@@ -27,7 +28,14 @@ public class Messages
         picto_correct: "{0} and {1} get {2} points for \"{3}\"!",
         picto_invite: "(TODO)",
         picto_guess: "{0}: {1}",
-        picto_fail: "{0} ran out of time on \"{1}\"."
+        picto_fail: "{0} ran out of time on \"{1}\".",
+
+        // TODO: Get better names
+        l_mode0: "Backdrop Mode",
+        l_mode1: "Pictionary Mode",
+
+        m_locate_success: "Found a {0} game with {1} players! Join them at http://www.whirled.com/#world-s{1}",
+        m_locate_fail: "No other games of {0} were found. Why not invite a friend?"
     });
 }
 

@@ -35,6 +35,25 @@ public class GameManager
         _gameService.apply("broadcast", MessageUtil.pack("broadcast", player.getName(), text));
     }
 
+    REMOTE function locatePeers (playerId :int, mode :int) :void
+    {
+        var bestRoom :RoomManager = null;
+        var bestPop :int = 0;
+
+        for each (var room :RoomManager in _server.getRooms()) {
+            var pop :int = room.playersInMode(mode);
+            if (!(playerId in room.players) && pop > bestPop) {
+                bestRoom = room;
+                bestPop = pop;
+            }
+        }
+
+        // Respond to client request
+        _gameService.apply("peersLocated", mode,
+            (bestRoom != null) ? bestRoom.ctrl.getRoomId() : 0,
+            bestPop);
+    }
+
     public function feed (key :String, ... msg) :void
     {
         _gameService.apply("feed", MessageUtil.pack(key, msg));

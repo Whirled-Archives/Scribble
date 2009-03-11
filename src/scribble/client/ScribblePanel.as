@@ -13,6 +13,8 @@ import com.threerings.util.ValueEvent;
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
+import aduros.display.ImageButton;
+
 import scribble.data.Codes;
 
 public class ScribblePanel extends Sprite
@@ -31,6 +33,13 @@ public class ScribblePanel extends Sprite
                 return null;
             }
         });
+
+        var locator :ImageButton = new ImageButton(new SEARCH_ICON(),
+            Messages.en.xlate("t_locate"));
+        locator.addEventListener(MouseEvent.CLICK, function (... _) :void {
+            Command.dispatch(locator, ScribbleController.LOCATE_PEERS, _localMode);
+        });
+        addChild(locator);
 
         // Test stuff
         var switcher :Sprite = new Sprite();
@@ -98,6 +107,9 @@ public class ScribblePanel extends Sprite
     {
         return _modeSprites[_localMode];
     }
+
+    [Embed(source="../../../res/search.png")]
+    protected static const SEARCH_ICON :Class;
 
     /** Manages transitions. */
     protected const _modeSprites :Dictionary = new Dictionary(); // mode -> ModeSprite

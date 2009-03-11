@@ -25,6 +25,7 @@ public class ScribbleController extends Controller
     public static const PICTIONARY_PASS :String = "PictionaryPass";
     public static const PICTIONARY_GUESS :String = "PictionaryGuess";
     public static const TOGGLE_LOCK :String = "ToggleLock";
+    public static const LOCATE_PEERS :String = "LocatePeers";
 
     public var panel :ScribblePanel;
 
@@ -103,6 +104,11 @@ public class ScribbleController extends Controller
         Game.ctrl.local.feedback(Messages.en.xlate("lock_missing"));
     }
 
+    public function handleLocatePeers (mode :int) :void
+    {
+        _gameService.locatePeers(mode);
+    }
+
     REMOTE function broadcast (message :Array) :void
     {
         Game.ctrl.local.feedback("Broadcast: " + Messages.en.xlate(message));
@@ -112,6 +118,14 @@ public class ScribbleController extends Controller
     {
         // TODO: Put into a feed ticker sprite
         Game.ctrl.local.feedback("Feed: " + Messages.en.xlate(message));
+    }
+
+    REMOTE function peersLocated (mode :int, roomId :int, population :int) :void
+    {
+        var modeName :String = Messages.en.xlate("l_mode"+mode);
+        Game.ctrl.local.feedback((roomId > 0) ?
+            Messages.en.xlate("m_locate_success", modeName, population, roomId) :
+            Messages.en.xlate("m_locate_fail", modeName));
     }
 
     protected var _roomService :RemoteProxy;
