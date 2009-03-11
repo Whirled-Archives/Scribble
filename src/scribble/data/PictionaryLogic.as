@@ -75,8 +75,11 @@ public class PictionaryLogic
     
     public function canDraw (playerId :int) :Boolean
     {
-        // TODO: Convert playerId to rosterId, check phase and turnholder
-        return true;
+        var phase :int = getPhase();
+
+        return phase == PHASE_INTERMISSION ||
+            phase == PHASE_NOT_ENOUGH_PLAYERS ||
+            getPlayerId(getTurnHolder()) == playerId;
     }
 
     protected var _prefix :String;

@@ -143,20 +143,17 @@ public class PictionaryMode extends ModeSprite
         DisplayUtil.removeAllChildren(_tickerContainer);
     }
 
-    protected function setDrawingEnabled (on :Boolean) :void
-    {
-        DisplayUtil.setContains(_panel, _toolbox, on);
-        _canvas.enabled = on;
-    }
-
     protected function updatePhase () :void
     {
+        var canDraw :Boolean = _logic.canDraw(Game.ctrl.player.getPlayerId());
+
+        DisplayUtil.setContains(_panel, _toolbox, canDraw);
+        _canvas.enabled = canDraw;
+
         switch (_logic.getPhase()) {
             case PictionaryLogic.PHASE_INTERMISSION:
                 setTicker(PictionaryLogic.DELAY_INTERMISSION);
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_intermission"));
-
-                setDrawingEnabled(true);
 
                 break;
 
@@ -164,18 +161,12 @@ public class PictionaryMode extends ModeSprite
                 clearTicker();
                 Game.ctrl.local.feedback("= Pause");
 
-                setDrawingEnabled(false);
-
                 break;
 
             case PictionaryLogic.PHASE_PLAYING:
                 setTicker(PictionaryLogic.DELAY_PLAYING);
 
-                var isDrawing :Boolean = 
-                    _logic.getPlayerId(_logic.getTurnHolder()) == Game.ctrl.player.getPlayerId();
-
-                setDrawingEnabled(isDrawing);
-                DisplayUtil.setContains(_panel, _wordField, !isDrawing);
+                DisplayUtil.setContains(_panel, _wordField, !canDraw);
 
                 break;
 
@@ -183,7 +174,6 @@ public class PictionaryMode extends ModeSprite
                 clearTicker();
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_not_enough_players"));
 
-                setDrawingEnabled(true);
                 DisplayUtil.setContains(_panel, _inviteButton, true);
 
                 break;
