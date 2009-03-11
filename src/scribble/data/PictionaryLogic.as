@@ -79,7 +79,7 @@ public class PictionaryLogic
 
         return phase == PHASE_INTERMISSION ||
             phase == PHASE_NOT_ENOUGH_PLAYERS ||
-            getPlayerId(getTurnHolder()) == playerId;
+            (phase == PHASE_PLAYING && getPlayerId(getTurnHolder()) == playerId);
     }
 
     protected var _prefix :String;
