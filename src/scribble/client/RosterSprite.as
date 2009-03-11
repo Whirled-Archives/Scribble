@@ -36,7 +36,7 @@ public class RosterSprite extends Sprite
             var newRow :RowSprite = _sprites[rosterId];
             if (_turnHolder >= 0) {
                 _turnArrow.y = _sprites[_turnHolder].y - newRow.y;
-                new GTween(_turnArrow, 1, {y: 0});
+                new GTween(_turnArrow, 0.2, {y: 0});
             } else {
                 _turnArrow.y = 0;
             }
@@ -56,15 +56,12 @@ public class RosterSprite extends Sprite
 
         var row :RowSprite = new RowSprite();
         row.nameLabel.text = name;
-        row.x = 25;
-
-        trace("Added: rosterId="+rosterId+", name="+name);
 
         for (var ii :String in _sprites) {
             if (int(ii) > rosterId) {
-                _sprites[ii].y += 20;
+                _sprites[ii].y += RowSprite.HEIGHT;
             } else {
-                row.y += 20;
+                row.y += RowSprite.HEIGHT;
             }
         }
         _sprites[rosterId] = row;
@@ -91,7 +88,7 @@ public class RosterSprite extends Sprite
         // Bump up all the sprites after it
         for (var ii :String in _sprites) {
             if (int(ii) > rosterId) {
-                _sprites[ii].y -= 20;
+                _sprites[ii].y -= RowSprite.HEIGHT;
             }
         }
     }
@@ -132,19 +129,21 @@ class RosterEntry
 
 class RowSprite extends Sprite
 {
+    public static const HEIGHT :int = 14;
+
     public var nameLabel :TextField;
     public var scoreLabel :TextField;
 
     public function RowSprite ()
     {
         nameLabel = TextFieldUtil.createField("",
-            { textColor: 0xffffff, selectable: false,
-                width: 200, outlineColor: 0x00000 },
-            { font: "_sans", size: 24, bold: true });
+            { x: 20, textColor: 0xffffff, selectable: false,
+                width: 100, outlineColor: 0x00000 },
+            { font: "_sans", size: 12, bold: true });
         scoreLabel = TextFieldUtil.createField("",
-            { textColor: 0x0000ff, selectable: false,
-                x: 200, width: 100, outlineColor: 0x00000 },
-            { font: "_sans", size: 24, bold: true });
+            { textColor: 0x00ff00, selectable: false,
+                x: 120, outlineColor: 0x00000, autoSize: TextFieldAutoSize.RIGHT },
+            { font: "_sans", size: 12, bold: true });
 
         addChild(nameLabel);
         addChild(scoreLabel);
