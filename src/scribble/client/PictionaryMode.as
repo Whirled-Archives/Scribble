@@ -50,15 +50,13 @@ public class PictionaryMode extends ModeSprite
         _roster.x = 400;
         _panel.addChild(_roster);
 
-        var guesser :TextField = TextFieldUtil.createField("Type here",
-            { borderColor: 0, type: TextFieldType.INPUT, restrict: "A-Za-z " });
-        guesser.addEventListener(KeyboardEvent.KEY_DOWN, function (event :KeyboardEvent) :void {
+        _guessField.addEventListener(KeyboardEvent.KEY_DOWN, function (event :KeyboardEvent) :void {
             if (event.keyCode == Keyboard.ENTER) {
-                Command.dispatch(guesser, ScribbleController.PICTIONARY_GUESS, guesser.text);
-                guesser.text = "";
+                Command.dispatch(_guessField, ScribbleController.PICTIONARY_GUESS, _guessField.text);
+                _guessField.text = "";
             }
         });
-        _panel.addChild(guesser);
+        _panel.addChild(_guessField);
 
         _toolbox = _canvas.createToolbox();
         _toolbox.y = _canvas.height - _toolbox.height;
@@ -150,50 +148,37 @@ public class PictionaryMode extends ModeSprite
         DisplayUtil.setContains(_panel, _toolbox, canDraw);
         _canvas.enabled = canDraw;
 
-        switch (_logic.getPhase()) {
+        var phase :int = _logic.getPhase();
+
+        switch (phase) {
             case PictionaryLogic.PHASE_INTERMISSION:
                 setTicker(PictionaryLogic.DELAY_INTERMISSION);
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_intermission"));
-
-                DisplayUtil.setContains(_panel, _inviteButton, false);
-
                 break;
 
             case PictionaryLogic.PHASE_PAUSE:
                 clearTicker();
                 Game.ctrl.local.feedback("= Pause");
-
                 break;
 
             case PictionaryLogic.PHASE_PLAYING:
                 setTicker(PictionaryLogic.DELAY_PLAYING);
-
-                DisplayUtil.setContains(_panel, _wordField, !canDraw);
-
                 break;
 
             case PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS:
                 clearTicker();
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_not_enough_players"));
-
-                DisplayUtil.setContains(_panel, _inviteButton, true);
-
                 break;
         }
-    }
 
-    protected function updateTurnHolder () :void
-    {
-        var turnHolder :int = _logic.getTurnHolder();
+        DisplayUtil.setContains(_panel, _inviteButton,
+            phase == PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS);
 
-        // If I'm the turn holder
-        if (_logic.getPlayerId(turnHolder) == Game.ctrl.player.getPlayerId()) {
-            _panel.addChild(_wordField);
-            _canvas.enabled = true;
-        } else if (_panel.contains(_wordField)) {
-            _panel.removeChild(_wordField);
-            _canvas.enabled = false;
-        }
+        DisplayUtil.setContains(_panel, _guessField,
+            phase == PictionaryLogic.PHASE_PLAYING && !canDraw);
+
+        DisplayUtil.setContains(_panel, _wordField,
+            phase == PictionaryLogic.PHASE_PLAYING && canDraw);
     }
 
     protected function initRoster () :void
@@ -307,6 +292,9 @@ public class PictionaryMode extends ModeSprite
         { textColor: 0xffffff, selectable: false,
             autoSize: TextFieldAutoSize.RIGHT, outlineColor: 0x00000 },
         { font: "_sans", size: 24, bold: true });
+
+    protected var _guessField :TextField = TextFieldUtil.createField("Type here",
+        { borderColor: 0, type: TextFieldType.INPUT, restrict: "A-Za-z " });
 
     protected var _prefix :String;
     protected var _logic :PictionaryLogic;
