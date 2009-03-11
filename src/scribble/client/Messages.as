@@ -18,7 +18,8 @@ public class Messages
         picto_pass: "{0} passed on \"{1}\".",
         picto_correct: "{0} and {1} get {2} points for \"{3}\"!",
         picto_invite: "(TODO)",
-        picto_guess: "{0}: {1}"
+        picto_guess: "{0}: {1}",
+        picto_fail: "{0} ran out of time on \"{1}\"."
     });
 }
 

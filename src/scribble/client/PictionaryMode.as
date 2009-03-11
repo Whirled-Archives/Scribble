@@ -285,6 +285,11 @@ public class PictionaryMode extends ModeSprite
                     666, // TODO: Maybe remove this from the message
                     event.value[1]));
                 break;
+            
+            case Codes.msgFail(_prefix):
+                Game.ctrl.local.feedback(Messages.en.xlate("picto_fail",
+                    Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
+                break;
         }
     }
 

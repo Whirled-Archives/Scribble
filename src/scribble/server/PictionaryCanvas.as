@@ -50,6 +50,7 @@ public class PictionaryCanvas extends Canvas
 
             case PictionaryLogic.PHASE_PLAYING:
                 _ticker.start(PictionaryLogic.DELAY_PLAYING, true, function () :void {
+                    _room.ctrl.sendMessage(Codes.msgFail(_prefix), WORD_LIST[_wordId]);
                     setPhase(PictionaryLogic.PHASE_PAUSE);
                 });
                 break;
