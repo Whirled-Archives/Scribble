@@ -15,7 +15,7 @@ public class GameManager
         _server = server;
         _ctrl = ctrl;
 
-        _gameService = new RemoteCaller(ctrl, "game");
+        _gameReceiver = new RemoteCaller(ctrl, "game");
     }
 
     protected function requireAdmin (playerId :int) :void
@@ -32,7 +32,7 @@ public class GameManager
 
         var player :Player = _server.getPlayer(playerId);
         
-        _gameService.apply("broadcast", MessageUtil.pack("broadcast", player.getName(), text));
+        _gameReceiver.apply("broadcast", MessageUtil.pack("broadcast", player.getName(), text));
     }
 
     REMOTE function locatePeers (playerId :int, mode :int) :void
@@ -49,17 +49,17 @@ public class GameManager
         }
 
         // Respond to client request
-        _gameService.apply("peersLocated", mode,
+        _server.getPlayer(playerId).playerReceiver.apply("peersLocated", mode,
             (bestRoom != null) ? bestRoom.ctrl.getRoomId() : 0,
             bestPop);
     }
 
     public function feed (key :String, ... msg) :void
     {
-        _gameService.apply("feed", MessageUtil.pack(key, msg));
+        _gameReceiver.apply("feed", MessageUtil.pack(key, msg));
     }
 
-    protected var _gameService :RemoteCaller;
+    protected var _gameReceiver :RemoteCaller;
 
     protected var _server :Server;
     protected var _ctrl :GameSubControlServer;

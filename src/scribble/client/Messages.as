@@ -34,7 +34,7 @@ public class Messages
         l_mode0: "Backdrop Mode",
         l_mode1: "Pictionary Mode",
 
-        m_locate_success: "Found a {0} game with {1} players! Join them at http://www.whirled.com/#world-s{1}",
+        m_locate_success: "Found a {0} game with {1} players! Join them at http://www.whirled.com/#world-s{2}",
         m_locate_fail: "No other games of {0} were found. Why not invite a friend?"
     });
 }

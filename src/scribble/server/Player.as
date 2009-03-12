@@ -11,13 +11,15 @@ public class Player
 {
     public var room :RoomManager;
 
-    public var mode :RemoteCaller;
+    public var modeReceiver :RemoteCaller;
+    public var playerReceiver :RemoteCaller;
 
     public function Player (ctrl :PlayerSubControlServer)
     {
         _ctrl = ctrl;
 
-        mode = new RemoteCaller(_ctrl, "mode");
+        modeReceiver = new RemoteCaller(_ctrl, "mode");
+        playerReceiver = new RemoteCaller(_ctrl, "player");
     }
 
     public function get ctrl () :PlayerSubControlServer

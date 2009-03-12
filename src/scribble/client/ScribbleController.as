@@ -38,6 +38,7 @@ public class ScribbleController extends Controller
         setControlledPanel(panel);
 
         new RemoteProvider(Game.ctrl.player, "mode", panel.getModeSprite);
+        new RemoteProvider(Game.ctrl.player, "player", F.konst(this));
         new RemoteProvider(Game.ctrl.game, "game", F.konst(this));
     }
 

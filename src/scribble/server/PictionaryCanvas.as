@@ -136,7 +136,7 @@ public class PictionaryCanvas extends Canvas
         _wordClean = cleanupWord(WORD_LIST[_wordId]);
 
         var player :Player = _room.players[roster[turnHolder]];
-        player.mode.apply("sendWord", WORD_LIST[_wordId]);
+        player.modeReceiver.apply("sendWord", WORD_LIST[_wordId]);
 
         _props.set(Codes.keyTurnHolder(_prefix), turnHolder, true);
 
