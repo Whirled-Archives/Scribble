@@ -41,11 +41,17 @@ public class ScribblePanel extends Sprite
         });
         addChild(locator);
 
+        var invite :ImageButton = new ImageButton(new ICON_INVITE(),
+            Messages.en.xlate("t_invite"));
+        Command.bind(invite, MouseEvent.CLICK, ScribbleController.INVITE);
+        addChild(invite);
+        invite.x = 32;
+
         var quit :ImageButton = new ImageButton(new EXIT_ICON(),
             Messages.en.xlate("t_quit"));
         Command.bind(quit, MouseEvent.CLICK, ScribbleController.QUIT);
         addChild(quit);
-        quit.x = 32;
+        quit.x = 64;
 
         // Test stuff
         var switcher :Sprite = new Sprite();
@@ -114,8 +120,11 @@ public class ScribblePanel extends Sprite
         return _modeSprites[_localMode];
     }
 
+    // Control bar buttons
     [Embed(source="../../../res/search.png")]
     protected static const SEARCH_ICON :Class;
+    [Embed(source="../../../res/invite.png")]
+    protected static const ICON_INVITE :Class;
     [Embed(source="../../../res/exit.png")]
     protected static const EXIT_ICON :Class;
 

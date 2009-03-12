@@ -27,6 +27,7 @@ public class ScribbleController extends Controller
     public static const TOGGLE_LOCK :String = "ToggleLock";
     public static const LOCATE_PEERS :String = "LocatePeers";
     public static const QUIT :String = "Quit";
+    public static const INVITE :String = "Invite";
 
     public var panel :ScribblePanel;
 
@@ -116,6 +117,11 @@ public class ScribbleController extends Controller
         // TODO: Put up an ARE YOU SURE? dialog
         Game.ctrl.local.feedback(Messages.en.xlate("m_bye"));
         Game.ctrl.player.deactivateGame();
+    }
+
+    public function handleInvite () :void
+    {
+        Game.ctrl.local.showInvitePage(Messages.en.xlate("m_invite"));
     }
 
     REMOTE function broadcast (message :Array) :void

@@ -64,11 +64,6 @@ public class PictionaryMode extends ModeSprite
 
         addChild(_panel);
 
-        _inviteButton.y = _panel.height-_inviteButton.height;
-        _inviteButton.addEventListener(MouseEvent.CLICK, function(... _) :void {
-            Game.ctrl.local.showInvitePage(Messages.en.xlate("picto_invite"));
-        });
-
         Command.bind(_passButton, MouseEvent.CLICK, ScribbleController.PICTIONARY_PASS);
 
         _wordField.x = _panel.width;
@@ -172,9 +167,6 @@ public class PictionaryMode extends ModeSprite
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_not_enough_players"));
                 break;
         }
-
-        DisplayUtil.setContains(_panel, _inviteButton,
-            phase == PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS);
 
         DisplayUtil.setContains(_panel, _guessField,
             phase == PictionaryLogic.PHASE_PLAYING && !canDraw);
@@ -288,11 +280,6 @@ public class PictionaryMode extends ModeSprite
     protected var _canvas :CanvasSprite;
 
     protected var _toolbox :Sprite;
-
-    [Embed(source="../../../res/invite.png")]
-    protected static const ICON_INVITE :Class;
-    protected var _inviteButton :ImageButton = new ImageButton(
-        new ICON_INVITE(), Messages.en.xlate("t_invite"));
 
     [Embed(source="../../../res/pass.png")]
     protected static const ICON_PASS :Class;
