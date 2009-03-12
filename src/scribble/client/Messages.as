@@ -13,6 +13,7 @@ public class Messages
         t_invite: "Invite friends to play",
         t_clear: "Clear canvas",
         t_locate: "Find other players like me",
+        t_quit: "Quit Scribble",
 
         broadcast: "Scribble broadcast by {0}: {1}",
         trophy: "{0} earned the {1} trophy!",
@@ -35,7 +36,8 @@ public class Messages
         l_mode1: "Pictionary Mode",
 
         m_locate_success: "Found a {0} game with {1} players! Join them at http://www.whirled.com/#world-s{2}",
-        m_locate_fail: "No other games of {0} were found. Why not invite a friend?"
+        m_locate_fail: "No other games of {0} were found. Why not invite a friend?",
+        m_bye: "Thanks for playing Scribble. Come back soon!"
     });
 }
 

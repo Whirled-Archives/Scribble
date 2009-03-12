@@ -41,6 +41,12 @@ public class ScribblePanel extends Sprite
         });
         addChild(locator);
 
+        var quit :ImageButton = new ImageButton(new EXIT_ICON(),
+            Messages.en.xlate("t_quit"));
+        Command.bind(quit, MouseEvent.CLICK, ScribbleController.QUIT);
+        addChild(quit);
+        quit.x = 32;
+
         // Test stuff
         var switcher :Sprite = new Sprite();
         switcher.graphics.beginFill(0x00ff00);
@@ -110,6 +116,8 @@ public class ScribblePanel extends Sprite
 
     [Embed(source="../../../res/search.png")]
     protected static const SEARCH_ICON :Class;
+    [Embed(source="../../../res/exit.png")]
+    protected static const EXIT_ICON :Class;
 
     /** Manages transitions. */
     protected const _modeSprites :Dictionary = new Dictionary(); // mode -> ModeSprite

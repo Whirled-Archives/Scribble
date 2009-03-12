@@ -26,6 +26,7 @@ public class ScribbleController extends Controller
     public static const PICTIONARY_GUESS :String = "PictionaryGuess";
     public static const TOGGLE_LOCK :String = "ToggleLock";
     public static const LOCATE_PEERS :String = "LocatePeers";
+    public static const QUIT :String = "Quit";
 
     public var panel :ScribblePanel;
 
@@ -108,6 +109,13 @@ public class ScribbleController extends Controller
     public function handleLocatePeers (mode :int) :void
     {
         _gameService.locatePeers(mode);
+    }
+
+    public function handleQuit () :void
+    {
+        // TODO: Put up an ARE YOU SURE? dialog
+        Game.ctrl.local.feedback(Messages.en.xlate("m_bye"));
+        Game.ctrl.player.deactivateGame();
     }
 
     REMOTE function broadcast (message :Array) :void
