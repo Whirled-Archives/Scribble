@@ -164,21 +164,12 @@ public class PictionaryCanvas extends Canvas
 
     public function guess (playerId :int, guess :String) :void
     {
-        if (_logic.getPhase() != PictionaryLogic.PHASE_PLAYING) {
-            throw new Error("Game should be in the PLAYING phase");
+        if (!_logic.canGuess(playerId)) {
+            throw new Error("Not allowed to guess");
         }
 
         var turnHolder :int = _logic.getTurnHolder();
         var rosterId :int = _logic.getRosterId(playerId);
-
-        if (rosterId < 0) {
-            throw new Error("Guesser was not in the roster");
-        } else if (rosterId == turnHolder) {
-            throw new Error("Guesser was the turn holder");
-        }
-
-        // Send the guess to the other clients to see
-        _room.ctrl.sendMessage(Codes.msgGuess(_prefix), [playerId, guess]);
 
         if (cleanupWord(guess) == _wordClean) {
             var roster :Dictionary = _logic.getRoster();

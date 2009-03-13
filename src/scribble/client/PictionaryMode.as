@@ -8,7 +8,6 @@ import flash.filters.DropShadowFilter;
 import flash.geom.Rectangle;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
-import flash.text.TextFieldType;
 import flash.ui.Keyboard;
 import flash.utils.Dictionary;
 
@@ -17,6 +16,7 @@ import com.gskinner.motion.GTween;
 import com.threerings.flash.TextFieldUtil;
 import com.threerings.util.Command;
 
+import com.whirled.*;
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
@@ -50,14 +50,6 @@ public class PictionaryMode extends ModeSprite
         _roster.x = 400;
         _panel.addChild(_roster);
 
-        _guessField.addEventListener(KeyboardEvent.KEY_DOWN, function (event :KeyboardEvent) :void {
-            if (event.keyCode == Keyboard.ENTER) {
-                Command.dispatch(_guessField, ScribbleController.PICTIONARY_GUESS, _guessField.text);
-                _guessField.text = "";
-            }
-        });
-        _panel.addChild(_guessField);
-
         _toolbox = _canvas.createToolbox();
         _toolbox.y = _canvas.height - _toolbox.height;
         _panel.addChild(_toolbox);
@@ -86,12 +78,14 @@ public class PictionaryMode extends ModeSprite
             Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
             Game.ctrl.room.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onRoomMessage);
             Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
+            Game.ctrl.room.addEventListener(ControlEvent.CHAT_RECEIVED, onChat);
         });
         addEventListener(Event.REMOVED_FROM_STAGE, function (... _) :void {
             Game.ctrl.room.props.removeEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
             Game.ctrl.room.props.removeEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
             Game.ctrl.room.removeEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, onRoomMessage);
             Game.ctrl.local.removeEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
+            Game.ctrl.room.removeEventListener(ControlEvent.CHAT_RECEIVED, onChat);
         });
     }
 
@@ -168,9 +162,6 @@ public class PictionaryMode extends ModeSprite
                 break;
         }
 
-        DisplayUtil.setContains(_panel, _guessField,
-            phase == PictionaryLogic.PHASE_PLAYING && !canDraw);
-
         DisplayUtil.setContains(_panel, _wordField,
             phase == PictionaryLogic.PHASE_PLAYING && canDraw);
 
@@ -242,11 +233,6 @@ public class PictionaryMode extends ModeSprite
     protected function onRoomMessage (event :MessageReceivedEvent) :void
     {
         switch (event.name) {
-            case Codes.msgGuess(_prefix):
-                Game.ctrl.local.feedback(Messages.en.xlate("picto_guess",
-                    Game.getName(event.value[0]), event.value[1]));
-                break;
-
             case Codes.msgPass(_prefix):
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_pass",
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
@@ -264,6 +250,15 @@ public class PictionaryMode extends ModeSprite
                 Game.ctrl.local.feedback(Messages.en.xlate("picto_fail",
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
                 break;
+        }
+    }
+
+    protected function onChat (event :ControlEvent) :void
+    {
+        var playerId :int = Game.ctrl.player.getPlayerId();
+        if (Game.ctrl.room.getEntityProperty(EntityControl.PROP_MEMBER_ID, event.name) == playerId
+            && _logic.canGuess(playerId)) {
+            Command.dispatch(this, ScribbleController.PICTIONARY_GUESS, event.value);
         }
     }
 
@@ -290,9 +285,6 @@ public class PictionaryMode extends ModeSprite
         { textColor: 0xffffff, selectable: false,
             autoSize: TextFieldAutoSize.RIGHT, outlineColor: 0x00000 },
         { font: "_sans", size: 24, bold: true });
-
-    protected var _guessField :TextField = TextFieldUtil.createField("Type here",
-        { borderColor: 0, type: TextFieldType.INPUT, restrict: "A-Za-z " });
 
     protected var _prefix :String;
     protected var _logic :PictionaryLogic;

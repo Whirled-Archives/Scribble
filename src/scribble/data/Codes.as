@@ -89,11 +89,6 @@ public class Codes
         return prefix + "cleared"; // int
     }
 
-    public static function msgGuess (prefix :String) :String
-    {
-        return prefix + "guess"; // [int, String]
-    }
-
     public static function msgPass (prefix :String) :String
     {
         return prefix + "pass"; // String

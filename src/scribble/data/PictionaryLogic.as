@@ -82,6 +82,11 @@ public class PictionaryLogic
             (phase == PHASE_PLAYING && getPlayerId(getTurnHolder()) == playerId);
     }
 
+    public function canGuess (playerId :int) :Boolean
+    {
+        return getPhase() == PHASE_PLAYING && getPlayerId(getTurnHolder()) != playerId;
+    }
+
     protected var _prefix :String;
     protected var _props :PropertyGetSubControl;
 }
