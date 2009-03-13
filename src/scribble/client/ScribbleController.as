@@ -118,7 +118,7 @@ public class ScribbleController extends Controller
 
     REMOTE function broadcast (message :Array) :void
     {
-        Game.ctrl.local.feedback("Broadcast: " + Messages.en.xlate(message));
+        Game.ctrl.local.feedback(Messages.en.xlate(message));
     }
 
     REMOTE function feed (message :Array) :void

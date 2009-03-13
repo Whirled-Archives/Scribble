@@ -10,6 +10,7 @@ import flash.utils.Dictionary; // TODO: temp
 import com.threerings.util.Command;
 import com.threerings.util.ValueEvent;
 
+import com.whirled.*;
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
@@ -24,6 +25,7 @@ public class ScribblePanel extends Sprite
         Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.LEFT_ROOM, onLeftRoom);
+        Game.ctrl.room.addEventListener(ControlEvent.CHAT_RECEIVED, onChat);
 
         Game.ctrl.local.setMobSpriteExporter(function (name :String) :Sprite {
             if (name == Codes.MOB_FOREGROUND) {
@@ -113,6 +115,27 @@ public class ScribblePanel extends Sprite
     protected function onEnteredRoom (event :AVRGamePlayerEvent) :void
     {
         Command.dispatch(this, ScribbleController.CHANGE_MODE, Codes.CANVAS_ROOM);
+    }
+
+    protected function onChat (event :ControlEvent) :void
+    {
+        var playerId :int = Game.ctrl.player.getPlayerId();
+        if (Codes.isAdmin(playerId) &&
+            Game.ctrl.room.getEntityProperty(EntityControl.PROP_MEMBER_ID, event.name) == playerId) {
+
+            var command :Array = event.value.match(/^!(\w*)\s+(.*)/);
+            if (command != null) {
+                switch (command[1]) {
+                    case "broadcast":
+                        Command.dispatch(this, ScribbleController.BROADCAST, command[2]);
+                        break;
+
+                    default:
+                        Game.ctrl.local.feedback("Not a command: " + command[1]);
+                        break;
+                }
+            }
+        }
     }
 
     public function getModeSprite () :ModeSprite

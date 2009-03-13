@@ -9,6 +9,8 @@ import com.whirled.avrg.AVRGameControlEvent;
 
 import aduros.display.ToolTipManager;
 
+import scribble.data.Codes;
+
 public class Game extends Sprite
 {
     public static var ctrl :AVRGameControl;
