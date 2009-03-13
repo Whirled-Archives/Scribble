@@ -28,14 +28,14 @@ public class Game extends Sprite
 
     public function Game ()
     {
-        var msg :String = "Scribble, compiled at " + BuildConfig.WHEN;
-        log.info(msg, "debug", BuildConfig.DEBUG);
-
         ctrl = new AVRGameControl(this);
         if (!ctrl.isConnected()) {
+            log.error("Not connected. Bailing!");
             return;
         }
 
+        var msg :String = "Scribble, compiled at " + BuildConfig.WHEN;
+        log.info(msg, "debug", BuildConfig.DEBUG);
         if (BuildConfig.DEBUG) {
             ctrl.local.feedback(msg);
         }
