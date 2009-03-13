@@ -19,6 +19,11 @@ public class Game extends Sprite
         return ctrl.room.getAvatarInfo(playerId).name;
     }
 
+    public static function canLock () :Boolean
+    {
+        return ctrl.room.canManageRoom() || Codes.isAdmin(ctrl.player.getPlayerId());
+    }
+
     public function Game ()
     {
         var msg :String = "Scribble, compiled at " + BuildConfig.WHEN;

@@ -33,7 +33,7 @@ public class BackdropMode extends ModeSprite
         addChild(_toolbox);
 
         Command.bind(_lockButton, MouseEvent.CLICK, ScribbleController.TOGGLE_LOCK);
-        _lockButton.mouseEnabled = Game.ctrl.room.canManageRoom();
+        _lockButton.mouseEnabled = Game.canLock();
         addChild(_lockButton);
 
         onResize();

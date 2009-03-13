@@ -92,7 +92,7 @@ public class ScribbleController extends Controller
 
     public function handleToggleLock () :void
     {
-        if (Game.ctrl.room.canManageRoom()) {
+        if (Game.canLock()) {
             _roomService.toggleLock();
         } else {
             Game.log.error("Ignored request to lock unowned room.");
