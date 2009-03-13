@@ -45,8 +45,8 @@ public class StrokeContainer extends Sprite
             p2 = points[ii++]; // TODO: Never send dots
         }
 
-        if (p0 == null || p1 == null || p2 == null) {
-            Game.log.warning("Wacky Stroke/ContinuationInfo detected. Bailing");
+        if (p0 == null || p1 == null || p2 == null || points[ii] == null) {
+            Game.log.warning("Wacky Stroke/ContinuationInfo detected. Voodoo programming says: Bail!");
             return;
         }
 
