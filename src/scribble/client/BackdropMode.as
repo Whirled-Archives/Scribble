@@ -32,8 +32,9 @@ public class BackdropMode extends ModeSprite
         _toolbox = _canvas.createToolbox();
         addChild(_toolbox);
 
-        Command.bind(_lock, MouseEvent.CLICK, ScribbleController.TOGGLE_LOCK);
-        addChild(_lock);
+        Command.bind(_lockButton, MouseEvent.CLICK, ScribbleController.TOGGLE_LOCK);
+        _lockButton.mouseEnabled = Game.ctrl.room.canManageRoom();
+        addChild(_lockButton);
 
         onResize();
         _toolbox.y += _toolbox.height;
@@ -124,8 +125,8 @@ public class BackdropMode extends ModeSprite
             _toolbox.y = screen.height-_toolbox.height;
 
             // Bind to top right
-            _lock.x = screen.width-_lock.width;
-            _lock.y = 0;
+            _lockButton.x = screen.width-_lockButton.width;
+            _lockButton.y = 0;
         }
     }
 
@@ -143,7 +144,7 @@ public class BackdropMode extends ModeSprite
 
         _toolbox.visible = enabled;
         _canvas.enabled = enabled;
-        _lock.toggled = locked;
+        _lockButton.toggled = locked;
     }
 
     override public function didLeave () :void
@@ -170,7 +171,7 @@ public class BackdropMode extends ModeSprite
     protected static var _canvas :CanvasSprite;
     protected var _toolbox :Sprite;
 
-    protected var _lock :ImageButton = new ImageButton(
+    protected var _lockButton :ImageButton = new ImageButton(
         new ICON_LOCK(), Messages.en.xlate("t_lock"), new ICON_UNLOCK());
 
     // Transitions

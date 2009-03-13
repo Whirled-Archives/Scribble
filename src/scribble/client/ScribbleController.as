@@ -92,19 +92,11 @@ public class ScribbleController extends Controller
 
     public function handleToggleLock () :void
     {
-        for each (var id :String in Game.ctrl.room.getEntityIds()) {
-            var lockable :Object = Game.ctrl.room.getEntityProperty(Codes.PUBLIC_LOCKABLE, id);
-            if (lockable is Boolean) {
-                if (lockable) {
-                    _roomService.toggleLock();
-                } else {
-                    Game.ctrl.local.feedback(Messages.en.xlate("lock_denied"));
-                }
-                return;
-            }
+        if (Game.ctrl.room.canManageRoom()) {
+            _roomService.toggleLock();
+        } else {
+            Game.log.error("Ignored request to lock unowned room.");
         }
-
-        Game.ctrl.local.feedback(Messages.en.xlate("lock_missing"));
     }
 
     public function handleLocatePeers (mode :int) :void

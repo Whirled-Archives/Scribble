@@ -20,9 +20,6 @@ public class Messages
         joined: "{0} entered a room!",
         erased: "{0} cleared the canvas.",
 
-        lock_denied: "There was a LockToy present, but you do not own this room.",
-        lock_missing: "No LockToy found. Buy one at (TODO).",
-
         picto_not_enough_players: "Not enough players to play (TODO). Why not invite a friend?",
         picto_intermission: "Get ready! The next round of (TODO) will soon begin.",
         picto_pass: "{0} passed on \"{1}\".",
