@@ -28,6 +28,8 @@ public class Codes
         4,
     ];
 
+    public static const TICKER_GRANULARITY :int = 5000;
+
     // Different canvases/modes within a room, don't mess with these numbers
     public static const CANVAS_ROOM :int = 0;
     public static const CANVAS_PICTIONARY :int = 1;

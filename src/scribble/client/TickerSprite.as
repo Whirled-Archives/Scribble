@@ -8,6 +8,8 @@ import com.gskinner.motion.GTween;
 
 import com.whirled.net.*;
 
+import scribble.data.Codes;
+
 /** A smart component for showing a clock. */
 public class TickerSprite extends Sprite
 {
@@ -51,7 +53,8 @@ public class TickerSprite extends Sprite
         if (_tween != null) {
             _tween.pause();
         }
-        _tween = (_wedge.arc != 0) ? new GTween(_wedge, _max-now, {arc: 0}) : null;
+        _tween = (_wedge.arc != 0) ?
+            new GTween(_wedge, Codes.TICKER_GRANULARITY*(_max-now)/1000, {arc: 0}) : null;
     }
 
     protected var _name :String;

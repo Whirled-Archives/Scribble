@@ -5,6 +5,8 @@ import flash.utils.Timer;
 
 import com.whirled.net.PropertySubControl;
 
+import scribble.data.Codes;
+
 public class Ticker
 {
     public function Ticker (props :PropertySubControl, name :String) :void
@@ -24,7 +26,7 @@ public class Ticker
 
         stop();
 
-        _timer = new Timer(1000, duration);
+        _timer = new Timer(Codes.TICKER_GRANULARITY, duration);
 
         if (networked) {
             _timer.addEventListener(TimerEvent.TIMER, tick);

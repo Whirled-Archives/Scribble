@@ -16,9 +16,11 @@ public class PictionaryLogic
     public static const PHASE_PLAYING :int = 2;
     public static const PHASE_PAUSE :int = 3;
 
-    public static const DELAY_INTERMISSION :int = 10;
-    public static const DELAY_PLAYING :int = 20;
-    public static const DELAY_PAUSE :int = 5;
+    public static const SECONDS :Number = 1000/Codes.TICKER_GRANULARITY;
+
+    public static const DELAY_INTERMISSION :int = 10*SECONDS;
+    public static const DELAY_PLAYING :int = 20*SECONDS;
+    public static const DELAY_PAUSE :int = 5*SECONDS;
 
     public static const ROUNDS :int = 3;
 
