@@ -8,13 +8,14 @@ public class Messages
 
         t_undo: "Undo",
         t_redo: "Redo",
-        t_lock: "Lock/unlock backdrop canvas",
+        t_lock: "Lock/unlock canvas",
         t_pass: "Skip turn",
         t_invite: "Invite friends to play",
         t_clear: "Clear canvas",
         t_locate: "Find other players like me",
         t_quit: "Quit Scribble",
         t_turnHolder: "It is this person's turn to draw",
+        t_walk: "Toggle walking/drawing",
 
         m_broadcast: "Scribble broadcast by {0}: {1}",
         m_trophy: "{0} earned the {1} trophy!",

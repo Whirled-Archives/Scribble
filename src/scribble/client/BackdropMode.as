@@ -36,6 +36,12 @@ public class BackdropMode extends ModeSprite
         _lockButton.mouseEnabled = Game.canLock();
         addChild(_lockButton);
 
+        _walkButton.addEventListener(MouseEvent.CLICK, function (... _) :void {
+            _walkButton.toggled = !_walkButton.toggled;
+            updateEnabled();
+        });
+        addChild(_walkButton);
+
         onResize();
         _toolbox.y += _toolbox.height;
 
@@ -127,6 +133,9 @@ public class BackdropMode extends ModeSprite
             // Bind to top right
             _lockButton.x = screen.width-_lockButton.width;
             _lockButton.y = 0;
+
+            _walkButton.x = _lockButton.x - _walkButton.width;
+            _walkButton.y = 0;
         }
     }
 
@@ -140,11 +149,12 @@ public class BackdropMode extends ModeSprite
     protected function updateEnabled () :void
     {
         var locked :Boolean = Game.ctrl.room.props.get(Codes.keyLock(_prefix));
-        var enabled :Boolean = _active && !locked;
+        var enabled :Boolean = !_walkButton.toggled && !locked;
 
         _toolbox.visible = enabled;
         _canvas.enabled = enabled;
         _lockButton.toggled = locked;
+        _walkButton.visible = !locked;
     }
 
     override public function didLeave () :void
@@ -163,16 +173,20 @@ public class BackdropMode extends ModeSprite
     protected static const ICON_LOCK :Class;
     [Embed(source="../../../res/unlock.png")]
     protected static const ICON_UNLOCK :Class;
+    protected var _lockButton :ImageButton = new ImageButton(
+        new ICON_LOCK(), Messages.en.xlate("t_lock"), new ICON_UNLOCK());
+
+    [Embed(source="../../../res/backdrop_off.png")]
+    protected static const ICON_WALK :Class;
+    [Embed(source="../../../res/backdrop_on.png")]
+    protected static const ICON_EDIT :Class;
+    protected var _walkButton :ImageButton = new ImageButton(
+        new ICON_WALK(), Messages.en.xlate("t_walk"), new ICON_EDIT());
 
     protected var _prefix :String;
 
-    protected var _active :Boolean = true; // TODO
-
     protected static var _canvas :CanvasSprite;
     protected var _toolbox :Sprite;
-
-    protected var _lockButton :ImageButton = new ImageButton(
-        new ICON_LOCK(), Messages.en.xlate("t_lock"), new ICON_UNLOCK());
 
     // Transitions
     protected var _slideIn :GTween;
