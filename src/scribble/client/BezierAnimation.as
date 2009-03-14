@@ -30,7 +30,7 @@ public class BezierAnimation extends EventDispatcher
 
     protected function add (curve :BezierCurve) :void
     {
-        var tween :GTween = new GTween(null, 0.1, null, { autoPlay: false });
+        var tween :GTween = new GTween(null, 0.05, null, { autoPlay: false });
 
         // On tick, inch along the curve
         tween.addEventListener(Event.CHANGE, function (... _) :void {
