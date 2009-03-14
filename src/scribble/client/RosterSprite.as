@@ -124,7 +124,7 @@ public class RosterSprite extends Sprite
 
     protected var _sprites :Object = {}; // rosterId -> RowSprite
 
-    [Embed(source="../../../res/arrow.png")]
+    [Embed(source="../../../res/pencil.png")]
     protected static const TURN_ICON :Class;
     protected var _turnArrow :Bitmap = Bitmap(new TURN_ICON());
 }
