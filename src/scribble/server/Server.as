@@ -99,8 +99,7 @@ public class Server extends ServerObject
             _rooms[roomId] = room;
         }
 
-//        room.setMode(playerId, Codes.CANVAS_ROOM); // TODO: Move this out?
-//        room.ctrl.props.setIn(Codes.PLAYER_MODES, playerId, Codes.CANVAS_ROOM, true);
+        var firstRoom :Boolean = (player.room == null);
 
         player.room = room;
         if (playerId in room.players) {
@@ -108,7 +107,9 @@ public class Server extends ServerObject
         }
         room.players[playerId] = player;
 
-        _gameManager.feed("joined", player.getName());
+        if (firstRoom) {
+            _gameManager.feed("m_joined", player.getName());
+        }
     }
 
     protected function onRoomUnloaded (event :AVRGameRoomEvent) :void

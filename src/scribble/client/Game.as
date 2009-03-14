@@ -1,6 +1,7 @@
 package scribble.client {
 
 import flash.display.Sprite;
+import flash.geom.Rectangle;
 
 import com.threerings.util.Log;
 
@@ -53,7 +54,11 @@ public class Game extends Sprite
 
     protected function updateToolTipBounds () :void
     {
-        ToolTipManager.instance.bounds = ctrl.local.getPaintableArea();
+        var bounds :Rectangle = ctrl.local.getPaintableArea();
+
+        if (bounds != null) {
+            ToolTipManager.instance.bounds = bounds;
+        }
     }
 }
 

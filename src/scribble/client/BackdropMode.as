@@ -100,7 +100,7 @@ public class BackdropMode extends ModeSprite
     protected function onRoomMessage (event :MessageReceivedEvent) :void
     {
         if (event.name == Codes.msgCleared(_prefix)) {
-            Game.ctrl.local.feedback(Messages.en.xlate("erased", Game.getName(int(event.value))));
+            Game.ctrl.local.feedback(Messages.en.xlate("m_erased", Game.getName(int(event.value))));
         }
     }
 

@@ -131,8 +131,8 @@ public class ScribbleController extends Controller
     {
         var modeName :String = Messages.en.xlate("l_mode"+mode);
         Game.ctrl.local.feedback((roomId > 0) ?
-            Messages.en.xlate("m_locate_success", modeName, population, roomId) :
-            Messages.en.xlate("m_locate_fail", modeName));
+            Messages.en.xlate("m_locateSuccess", modeName, population, roomId) :
+            Messages.en.xlate("m_locateFail", modeName));
     }
 
     protected var _roomService :RemoteProxy;

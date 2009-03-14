@@ -152,7 +152,7 @@ public class PictionaryMode extends ModeSprite
         switch (phase) {
             case PictionaryLogic.PHASE_INTERMISSION:
                 setTicker(PictionaryLogic.DELAY_INTERMISSION);
-                Game.ctrl.local.feedback(Messages.en.xlate("picto_intermission"));
+                Game.ctrl.local.feedback(Messages.en.xlate("m_picto_intermission"));
                 break;
 
             case PictionaryLogic.PHASE_PAUSE:
@@ -166,7 +166,7 @@ public class PictionaryMode extends ModeSprite
 
             case PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS:
                 clearTicker();
-                Game.ctrl.local.feedback(Messages.en.xlate("picto_not_enough_players"));
+                Game.ctrl.local.feedback(Messages.en.xlate("m_picto_notEnoughPlayers"));
                 break;
         }
 
@@ -242,12 +242,12 @@ public class PictionaryMode extends ModeSprite
     {
         switch (event.name) {
             case Codes.msgPass(_prefix):
-                Game.ctrl.local.feedback(Messages.en.xlate("picto_pass",
+                Game.ctrl.local.feedback(Messages.en.xlate("m_picto_pass",
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
                 break;
 
             case Codes.msgCorrect(_prefix):
-                Game.ctrl.local.feedback(Messages.en.xlate("picto_correct",
+                Game.ctrl.local.feedback(Messages.en.xlate("m_picto_correct",
                     Game.getName(event.value[0]),
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())),
                     666, // TODO: Maybe remove this from the message
@@ -255,7 +255,7 @@ public class PictionaryMode extends ModeSprite
                 break;
             
             case Codes.msgFail(_prefix):
-                Game.ctrl.local.feedback(Messages.en.xlate("picto_fail",
+                Game.ctrl.local.feedback(Messages.en.xlate("m_picto_fail",
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
                 break;
         }

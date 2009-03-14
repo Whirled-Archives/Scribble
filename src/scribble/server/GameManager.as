@@ -32,7 +32,7 @@ public class GameManager
 
         var player :Player = _server.getPlayer(playerId);
         
-        _gameReceiver.apply("broadcast", MessageUtil.pack("broadcast", player.getName(), text));
+        _gameReceiver.apply("broadcast", MessageUtil.pack("m_broadcast", player.getName(), text));
     }
 
     REMOTE function locatePeers (playerId :int, mode :int) :void

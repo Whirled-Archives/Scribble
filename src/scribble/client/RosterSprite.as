@@ -25,7 +25,7 @@ public class RosterSprite extends Sprite
         _sprites[rosterId].nameLabel.text = name;
 
         _turnArrow.addChild(new TURN_ICON());
-        ToolTipManager.instance.attach(_turnArrow, Messages.en.xlate("t_picto_turnHolder"));
+        ToolTipManager.instance.attach(_turnArrow, Messages.en.xlate("t_turnHolder"));
         updateUI();
     }
 
