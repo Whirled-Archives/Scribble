@@ -15,6 +15,7 @@ import com.whirled.avrg.*;
 import com.whirled.net.*;
 
 import aduros.display.ImageButton;
+import aduros.display.ToolTipManager;
 
 import scribble.data.Codes;
 
@@ -60,6 +61,8 @@ public class ScribblePanel extends Sprite
         switcher.graphics.beginFill(0x00ff00);
         switcher.graphics.drawRect(0, 0, 50, 50);
         switcher.graphics.endFill();
+        ToolTipManager.instance.attach(switcher, "foooo");
+
         var rect :Rectangle = Game.ctrl.local.getPaintableArea();
         switcher.x = rect.width - 60;
         switcher.y = rect.height - 60;

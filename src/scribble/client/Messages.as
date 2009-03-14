@@ -14,6 +14,7 @@ public class Messages
         t_clear: "Clear canvas",
         t_locate: "Find other players like me",
         t_quit: "Quit Scribble",
+        t_picto_turnHolder: "It is this person's turn to draw",
 
         broadcast: "Scribble broadcast by {0}: {1}",
         trophy: "{0} earned the {1} trophy!",

@@ -1,6 +1,5 @@
 package scribble.client {
 
-import flash.display.Bitmap;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.filters.DropShadowFilter;
@@ -11,6 +10,8 @@ import com.gskinner.motion.GTween;
 
 import com.threerings.flash.TextFieldUtil;
 import com.threerings.util.SortedHashMap;
+
+import aduros.display.ToolTipManager;
 
 /** A component for rendering a list of people. */
 public class RosterSprite extends Sprite
@@ -23,6 +24,8 @@ public class RosterSprite extends Sprite
         _entries[rosterId].name = name;
         _sprites[rosterId].nameLabel.text = name;
 
+        _turnArrow.addChild(new TURN_ICON());
+        ToolTipManager.instance.attach(_turnArrow, Messages.en.xlate("t_picto_turnHolder"));
         updateUI();
     }
 
@@ -126,7 +129,7 @@ public class RosterSprite extends Sprite
 
     [Embed(source="../../../res/pencil.png")]
     protected static const TURN_ICON :Class;
-    protected var _turnArrow :Bitmap = Bitmap(new TURN_ICON());
+    protected var _turnArrow :Sprite = new Sprite();
 }
 
 }
