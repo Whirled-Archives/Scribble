@@ -17,13 +17,19 @@ public class RosterSprite extends Sprite
 {
     public function setName (rosterId :int, name :String) :void
     {
+        _entries[rosterId].name = name;
         _sprites[rosterId].nameLabel.text = name;
+
+        updateUI();
     }
 
     public function setScore (rosterId :int, score :int) :void
     {
+        _entries[rosterId].score = score;
         // TODO: Look at the original score, calculate the delta and show a nice little animation
         _sprites[rosterId].scoreLabel.text = String(score);
+
+        updateUI();
     }
 
     public function setTurnHolder (rosterId :int) :void
@@ -55,7 +61,6 @@ public class RosterSprite extends Sprite
         _entries[rosterId] = new RosterEntry(name);
 
         var row :RowSprite = new RowSprite();
-        row.nameLabel.text = name;
 
         for (var ii :String in _sprites) {
             if (int(ii) > rosterId) {
@@ -67,6 +72,8 @@ public class RosterSprite extends Sprite
         _sprites[rosterId] = row;
 
         addChild(row);
+
+        setName(rosterId, name);
     }
 
     public function remove (rosterId :int) :void
@@ -91,6 +98,17 @@ public class RosterSprite extends Sprite
                 _sprites[ii].y -= RowSprite.HEIGHT;
             }
         }
+
+        updateUI();
+    }
+
+    protected function updateUI () :void
+    {
+        graphics.clear();
+
+        graphics.beginFill(0xc0c0c0);
+        graphics.drawRect(0, 0, RowSprite.WIDTH, height);
+        graphics.endFill();
     }
 
     public function clear () :void
@@ -129,7 +147,11 @@ class RosterEntry
 
 class RowSprite extends Sprite
 {
+    /** Height of this sprite, plus padding. */
     public static const HEIGHT :int = 14;
+
+    /** Because right aligned fields don't seem to affect sprite width... */
+    public static const WIDTH :int = 180;
 
     public var nameLabel :TextField;
     public var scoreLabel :TextField;
@@ -138,11 +160,11 @@ class RowSprite extends Sprite
     {
         nameLabel = TextFieldUtil.createField("",
             { x: 20, textColor: 0xffffff, selectable: false,
-                width: 100, outlineColor: 0x00000 },
+                autoSize: TextFieldAutoSize.LEFT, outlineColor: 0x00000 },
             { font: "_sans", size: 12, bold: true });
-        scoreLabel = TextFieldUtil.createField("",
+        scoreLabel = TextFieldUtil.createField("test",
             { textColor: 0x00ff00, selectable: false,
-                x: 120, outlineColor: 0x00000, autoSize: TextFieldAutoSize.RIGHT },
+                outlineColor: 0x00000, width: 0, x: WIDTH, autoSize: TextFieldAutoSize.RIGHT },
             { font: "_sans", size: 12, bold: true });
 
         addChild(nameLabel);

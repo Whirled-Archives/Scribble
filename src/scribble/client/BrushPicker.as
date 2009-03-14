@@ -25,12 +25,13 @@ public class BrushPicker extends Sprite
             button.graphics.drawRect(0, 0, 24, 24);
             button.graphics.endFill();
             button.x = brushId*24;
+            button.y = _cursor.height;
             Command.bind(button, MouseEvent.CLICK, setBrush, brushId);
 
             addChild(button);
         }
 
-        _cursor.y = -_cursor.height;
+//        _cursor.y = -_cursor.height;
         addChild(_cursor);
     }
 

@@ -29,6 +29,10 @@ import scribble.data.PictionaryLogic;
 
 public class PictionaryMode extends ModeSprite
 {
+    public static const CANVAS_WIDTH :int = 400;
+    public static const CANVAS_HEIGHT :int = 300;
+//    public static const SPACING :int = 4;
+
     public function PictionaryMode ()
     {
         _prefix = Codes.CANVAS_PREFIXES[Codes.CANVAS_PICTIONARY];
@@ -36,24 +40,28 @@ public class PictionaryMode extends ModeSprite
 
         _panel = new Sprite();
         _panel.graphics.beginFill(0xffffff);
-        _panel.graphics.drawRect(0, 0, 640, 480);
+        _panel.graphics.drawRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         _panel.graphics.endFill();
-        _panel.filters = [ new DropShadowFilter() ];
 
-        _canvas = new CanvasSprite(_prefix, 640, 480);
+        _canvas = new CanvasSprite(_prefix, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         _panel.addChild(_canvas);
 
         _tickerContainer.x = 200;
         _panel.addChild(_tickerContainer);
 
-        _roster.x = 400;
+        _roster.x = CANVAS_WIDTH;
         _panel.addChild(_roster);
 
         _toolbox = _canvas.createToolbox();
-        _toolbox.y = _canvas.height - _toolbox.height;
+        _toolbox.y = CANVAS_HEIGHT;
         _panel.addChild(_toolbox);
 
+        _panel.graphics.beginFill(0xc0c0c0);
+        _panel.graphics.drawRect(0, CANVAS_HEIGHT, CANVAS_WIDTH, _toolbox.height);
+        _panel.graphics.endFill();
+
+        _panel.filters = [ new DropShadowFilter() ];
         addChild(_panel);
 
         Command.bind(_passButton, MouseEvent.CLICK, ScribbleController.PICTIONARY_PASS);
@@ -195,7 +203,7 @@ public class PictionaryMode extends ModeSprite
                 break;
 
             case Codes.keyTurnHolder(_prefix):
-                _roster.setTurnHolder(int(event.newValue));
+                _roster.setTurnHolder(event.newValue != null ? int(event.newValue) : -1);
                 break;
 
             case Codes.keyScores(_prefix):
