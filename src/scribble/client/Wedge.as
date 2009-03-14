@@ -20,7 +20,7 @@ public class Wedge extends Sprite
     }
 
     /** Punked from http://code.google.com/p/leebrimelow/source/browse/trunk/as3/com/theflashblog/drawing/Wedge.as */
-    protected function redraw () :void 
+    protected function redraw () :void
     {
         graphics.clear();
         graphics.beginGradientFill(GradientType.LINEAR, [0xff6600, 0xffdd00], [1, 1], [0, 255]);

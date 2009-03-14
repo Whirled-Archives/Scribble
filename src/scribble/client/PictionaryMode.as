@@ -31,7 +31,7 @@ public class PictionaryMode extends ModeSprite
 {
     public static const CANVAS_WIDTH :int = 400;
     public static const CANVAS_HEIGHT :int = 300;
-//    public static const SPACING :int = 4;
+    public static const SPACING :int = 8;
 
     public function PictionaryMode ()
     {
@@ -43,14 +43,17 @@ public class PictionaryMode extends ModeSprite
         _panel.graphics.drawRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         _panel.graphics.endFill();
 
-        _canvas = new CanvasSprite(_prefix, CANVAS_WIDTH, CANVAS_HEIGHT);
+        _panel.addChild(_wordField);
 
+        _canvas = new CanvasSprite(_prefix, CANVAS_WIDTH, CANVAS_HEIGHT);
         _panel.addChild(_canvas);
 
-        _tickerContainer.x = 200;
+        _tickerContainer.x = CANVAS_WIDTH + RosterSprite.WIDTH/2 - TickerSprite.RADIUS;
+        _tickerContainer.y = SPACING;
         _panel.addChild(_tickerContainer);
 
         _roster.x = CANVAS_WIDTH;
+        _roster.y = 2*TickerSprite.RADIUS + 2*SPACING + 1;
         _panel.addChild(_roster);
 
         _toolbox = _canvas.createToolbox();
@@ -59,6 +62,7 @@ public class PictionaryMode extends ModeSprite
 
         _panel.graphics.beginFill(0xc0c0c0);
         _panel.graphics.drawRect(0, CANVAS_HEIGHT, CANVAS_WIDTH, _toolbox.height);
+        _panel.graphics.drawRect(CANVAS_WIDTH, 0, RosterSprite.WIDTH, 2*SPACING + 2*TickerSprite.RADIUS);
         _panel.graphics.endFill();
 
         _panel.filters = [ new DropShadowFilter() ];
@@ -66,11 +70,7 @@ public class PictionaryMode extends ModeSprite
 
         Command.bind(_passButton, MouseEvent.CLICK, ScribbleController.PICTIONARY_PASS);
 
-        _wordField.x = _panel.width;
-        _wordField.y = _panel.height - 24;
-
         var screen :Rectangle = Game.ctrl.local.getPaintableArea();
-
         _panel.y = -_panel.height;
         _slideIn = new GTween(_panel, 2, {y: (screen.height-_panel.height)/2}, {autoPlay: false});
         _slideIn.addEventListener(Event.COMPLETE, onSlideComplete);
@@ -170,8 +170,8 @@ public class PictionaryMode extends ModeSprite
                 break;
         }
 
-        DisplayUtil.setContains(_panel, _wordField,
-            phase == PictionaryLogic.PHASE_PLAYING && canDraw);
+        // Use visible here instead of setContains to not mess with the z-order
+        _wordField.visible = (phase == PictionaryLogic.PHASE_PLAYING && canDraw);
 
         DisplayUtil.setContains(_panel, _passButton,
             phase == PictionaryLogic.PHASE_PLAYING && canDraw);
@@ -290,7 +290,8 @@ public class PictionaryMode extends ModeSprite
         new ICON_PASS(), Messages.en.xlate("t_pass"));
 
     protected var _wordField :TextField = TextFieldUtil.createField("",
-        { textColor: 0xffffff, selectable: false,
+        { textColor: 0xffffff, selectable: false, width: 0,
+            x: CANVAS_WIDTH-SPACING, y: CANVAS_HEIGHT-24-SPACING,
             autoSize: TextFieldAutoSize.RIGHT, outlineColor: 0x00000 },
         { font: "_sans", size: 24, bold: true });
 

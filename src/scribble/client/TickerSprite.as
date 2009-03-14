@@ -11,6 +11,8 @@ import com.whirled.net.*;
 /** A smart component for showing a clock. */
 public class TickerSprite extends Sprite
 {
+    public static const RADIUS :int = 50;
+
     public function TickerSprite (props :PropertyGetSubControl, name :String, max :int) :void
     {
         _name = name;
@@ -61,7 +63,7 @@ public class TickerSprite extends Sprite
 //            autoSize: TextFieldAutoSize.LEFT, outlineColor: 0x00000 },
 //        { font: "_sans", size: 24, bold: true });
 
-    protected var _wedge :Wedge = new Wedge(50);
+    protected var _wedge :Wedge = new Wedge(RADIUS);
     protected var _tween :GTween;
 }
 

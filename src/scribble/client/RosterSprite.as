@@ -15,6 +15,9 @@ import com.threerings.util.SortedHashMap;
 /** A component for rendering a list of people. */
 public class RosterSprite extends Sprite
 {
+    /** Because right aligned fields don't seem to affect sprite width... */
+    public static const WIDTH :int = 180;
+
     public function setName (rosterId :int, name :String) :void
     {
         _entries[rosterId].name = name;
@@ -107,7 +110,7 @@ public class RosterSprite extends Sprite
         graphics.clear();
 
         graphics.beginFill(0xc0c0c0);
-        graphics.drawRect(0, 0, RowSprite.WIDTH, height);
+        graphics.drawRect(0, 0, WIDTH, height);
         graphics.endFill();
     }
 
@@ -134,6 +137,8 @@ import flash.text.TextFieldAutoSize;
 
 import com.threerings.flash.TextFieldUtil;
 
+import scribble.client.RosterSprite;
+
 class RosterEntry
 {
     public var score :int;
@@ -150,9 +155,6 @@ class RowSprite extends Sprite
     /** Height of this sprite, plus padding. */
     public static const HEIGHT :int = 14;
 
-    /** Because right aligned fields don't seem to affect sprite width... */
-    public static const WIDTH :int = 180;
-
     public var nameLabel :TextField;
     public var scoreLabel :TextField;
 
@@ -164,7 +166,8 @@ class RowSprite extends Sprite
             { font: "_sans", size: 12, bold: true });
         scoreLabel = TextFieldUtil.createField("test",
             { textColor: 0x00ff00, selectable: false,
-                outlineColor: 0x00000, width: 0, x: WIDTH, autoSize: TextFieldAutoSize.RIGHT },
+                outlineColor: 0x00000, width: 0, x: RosterSprite.WIDTH,
+                autoSize: TextFieldAutoSize.RIGHT },
             { font: "_sans", size: 12, bold: true });
 
         addChild(nameLabel);
