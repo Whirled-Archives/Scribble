@@ -58,8 +58,12 @@ public class StrokeComposer extends EventDispatcher
     {
         _stroke.brush = _brushId;
 
-        // Don't do anything with "dots"
-        if (_stroke.isBeginning && _stroke.points.length < 2) {
+        if (_stroke.points.length < 1) {
+            // It happens
+            dispatchEvent(new Event(STROKE_REJECTED));
+
+        } else if (_stroke.isBeginning && _stroke.points.length < 2) {
+            // Don't do anything with "dots"
             dispatchEvent(new Event(STROKE_REJECTED));
 
         } else {
