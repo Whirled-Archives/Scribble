@@ -176,7 +176,6 @@ public class PictionaryMode extends ModeSprite
 
             case PictionaryLogic.PHASE_PAUSE:
                 clearTicker();
-                Game.ctrl.local.feedback("= Pause");
                 break;
 
             case PictionaryLogic.PHASE_PLAYING:
@@ -187,12 +186,14 @@ public class PictionaryMode extends ModeSprite
             case PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS:
                 clearTicker();
                 Game.ctrl.local.feedback(Messages.en.xlate("m_picto_notEnoughPlayers"));
+                setHint(null);
                 break;
         }
 
         // Use visible here instead of setContains to not mess with the z-order
         _wordField.visible = (phase == PictionaryLogic.PHASE_PLAYING && canDraw);
 
+        setHint(_logic.getHint());
         DisplayUtil.setContains(_panel, _turnHolderControls,
             phase == PictionaryLogic.PHASE_PLAYING && canDraw);
     }
