@@ -3,8 +3,12 @@ package scribble.client {
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.filters.DropShadowFilter;
+import flash.text.TextField;
+import flash.text.TextFieldAutoSize;
 
 import com.gskinner.motion.GTween;
+
+import com.threerings.flash.TextFieldUtil;
 
 import com.whirled.net.*;
 
@@ -32,7 +36,7 @@ public class TickerSprite extends Sprite
         _wedge.filters = [ new DropShadowFilter() ];
         addChild(_wedge);
 
-//        addChild(_time);
+        addChild(_timeField);
 
         update();
     }
@@ -52,19 +56,28 @@ public class TickerSprite extends Sprite
 
         if (_tween != null) {
             _tween.pause();
+            _tween = null;
         }
-        _tween = (_wedge.arc != 0) ?
-            new GTween(_wedge, Codes.TICKER_GRANULARITY*(_max-now)/1000, {arc: 0}) : null;
+
+        if (_wedge.arc != 0) {
+            _tween = new GTween(_wedge, Codes.TICKER_GRANULARITY*(_max-now)/1000, {arc: 0});
+            _tween.addEventListener(Event.CHANGE, function (... _) :void {
+                var p :Number = _wedge.arc/360;
+                var minutes :int = Codes.TICKER_GRANULARITY/1000*(_max*p)/60;
+                var seconds :int = Codes.TICKER_GRANULARITY/1000*(_max*p)%60;
+                _timeField.text = minutes + ":" + (seconds >= 10 ? seconds : "0"+seconds);
+            });
+        }
     }
 
     protected var _name :String;
     protected var _max :int;
     protected var _props :PropertyGetSubControl;
 
-//    protected var _time :TextField = TextFieldUtil.createField("",
-//        { textColor: 0xffffff, selectable: false,
-//            autoSize: TextFieldAutoSize.LEFT, outlineColor: 0x00000 },
-//        { font: "_sans", size: 24, bold: true });
+    protected var _timeField :TextField = TextFieldUtil.createField("",
+        { textColor: 0xffffff, selectable: false, alpha: 0.5,
+            x: RADIUS, y: RADIUS, autoSize: TextFieldAutoSize.CENTER, outlineColor: 0x00000 },
+        { font: "_sans", size: 24, bold: true });
 
     protected var _wedge :Wedge = new Wedge(RADIUS);
     protected var _tween :GTween;

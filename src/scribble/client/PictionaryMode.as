@@ -69,6 +69,7 @@ public class PictionaryMode extends ModeSprite
         _panel.filters = [ new DropShadowFilter() ];
         addChild(_panel);
 
+        _passButton.x = CANVAS_WIDTH;
         Command.bind(_passButton, MouseEvent.CLICK, ScribbleController.PICTIONARY_PASS);
 
         var screen :Rectangle = Game.ctrl.local.getPaintableArea();

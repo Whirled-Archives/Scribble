@@ -112,14 +112,14 @@ public class PictionaryCanvas extends Canvas
 
     protected function hintLetter (hint :String, n :int = -1) :String
     {
-        if (hint.indexOf("_") == -1) {
+        if (hint.indexOf("-") == -1) {
             return hint;
         }
 
         if (n < 0) {
             do {
                 n = Math.random()*hint.length;
-            } while (hint.charAt(n) != "_" && hint.charAt(n) != " ");
+            } while (hint.charAt(n) != "-" && hint.charAt(n) != " ");
         }
 
         return hint.substr(0, n) + WORD_LIST[_wordId].charAt(n) + hint.substr(n+1);
@@ -133,7 +133,7 @@ public class PictionaryCanvas extends Canvas
                 var hint :String = _props.get(Codes.keyHint(_prefix)) as String;
 
                 if (hint == null) {
-                    hint = WORD_LIST[_wordId].replace(/[^ ]/g, "_");
+                    hint = WORD_LIST[_wordId].replace(/[^ ]/g, "-");
                     hint = hintLetter(hint, 0);
                 } else {
                     hint = hintLetter(hint);
