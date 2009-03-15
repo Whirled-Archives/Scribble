@@ -61,10 +61,12 @@ public class PictionaryMode extends ModeSprite
 
         _toolbox = _canvas.createToolbox();
         _toolbox.y = CANVAS_HEIGHT;
+        _toolbox.graphics.beginFill(0xc0c0c0);
+        _toolbox.graphics.drawRect(0, 0, CANVAS_WIDTH, _toolbox.height);
+        _toolbox.graphics.endFill();
         _panel.addChild(_toolbox);
 
         _panel.graphics.beginFill(0xc0c0c0);
-        _panel.graphics.drawRect(0, CANVAS_HEIGHT, CANVAS_WIDTH, _toolbox.height);
         _panel.graphics.drawRect(CANVAS_WIDTH, 0, RosterSprite.WIDTH, 2*SPACING + 2*TickerSprite.RADIUS);
         _panel.graphics.endFill();
 
