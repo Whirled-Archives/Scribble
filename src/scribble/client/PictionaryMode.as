@@ -6,6 +6,8 @@ import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.filters.DropShadowFilter;
 import flash.geom.Rectangle;
+import flash.net.URLRequest;
+import flash.net.URLVariables;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.ui.Keyboard;
@@ -69,8 +71,23 @@ public class PictionaryMode extends ModeSprite
         _panel.filters = [ new DropShadowFilter() ];
         addChild(_panel);
 
-        _passButton.x = CANVAS_WIDTH;
+        _turnHolderControls.x = CANVAS_WIDTH;
+
         Command.bind(_passButton, MouseEvent.CLICK, ScribbleController.PICTIONARY_PASS);
+        _turnHolderControls.addChild(_passButton);
+
+        _referenceButton.x = _passButton.width;
+        _referenceButton.addEventListener(MouseEvent.CLICK, function (... _) :void {
+            var data :URLVariables = new URLVariables();
+            data.hl = "en";
+            data.q = _wordField.text;
+
+            var url :URLRequest = new URLRequest("http://images.google.com/images");
+            url.data = data;
+
+            flash.net.navigateToURL(url, "_blank");
+        });
+        _turnHolderControls.addChild(_referenceButton);
 
         var screen :Rectangle = Game.ctrl.local.getPaintableArea();
         _panel.y = -_panel.height;
@@ -176,7 +193,7 @@ public class PictionaryMode extends ModeSprite
         // Use visible here instead of setContains to not mess with the z-order
         _wordField.visible = (phase == PictionaryLogic.PHASE_PLAYING && canDraw);
 
-        DisplayUtil.setContains(_panel, _passButton,
+        DisplayUtil.setContains(_panel, _turnHolderControls,
             phase == PictionaryLogic.PHASE_PLAYING && canDraw);
     }
 
@@ -308,6 +325,13 @@ public class PictionaryMode extends ModeSprite
     protected static const ICON_PASS :Class;
     protected var _passButton :ImageButton = new ImageButton(
         new ICON_PASS(), Messages.en.xlate("t_pass"));
+
+    [Embed(source="../../../res/image.png")]
+    protected static const ICON_REFERENCE :Class;
+    protected var _referenceButton :ImageButton = new ImageButton(
+        new ICON_REFERENCE(), Messages.en.xlate("t_reference"));
+
+    protected var _turnHolderControls :Sprite = new Sprite();
 
     protected var _wordField :TextField = TextFieldUtil.createField("",
         { textColor: 0xffffff, selectable: false, width: 0,

@@ -16,6 +16,7 @@ public class Messages
         t_quit: "Quit Scribble",
         t_turnHolder: "It is this person's turn to draw",
         t_walk: "Toggle walking/drawing",
+        t_reference: "Google Image Search this word",
 
         m_broadcast: "Scribble broadcast by {0}: {1}",
         m_trophy: "{0} earned the {1} trophy!",
