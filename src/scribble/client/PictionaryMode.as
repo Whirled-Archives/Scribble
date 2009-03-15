@@ -82,6 +82,7 @@ public class PictionaryMode extends ModeSprite
             _canvas.init(false);
             updatePhase();
             initRoster();
+            setHint(_logic.getHint());
 
             Game.ctrl.room.props.addEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
             Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
@@ -218,7 +219,7 @@ public class PictionaryMode extends ModeSprite
                 break;
 
             case Codes.keyHint(_prefix):
-                setHint(String(event.newValue));
+                setHint(_logic.getHint());
                 break;
         }
     }
@@ -249,7 +250,7 @@ public class PictionaryMode extends ModeSprite
             case Codes.msgPass(_prefix):
                 Game.ctrl.local.feedback(Messages.en.xlate("m_picto_pass",
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
-                setHint(String(event.value));
+                setHint(event.value as String);
                 break;
 
             case Codes.msgCorrect(_prefix):
@@ -258,13 +259,13 @@ public class PictionaryMode extends ModeSprite
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())),
                     666, // TODO: Maybe remove this from the message
                     event.value[1]));
-                setHint(String(event.value[1]));
+                setHint(event.value[1] as String);
                 break;
             
             case Codes.msgFail(_prefix):
                 Game.ctrl.local.feedback(Messages.en.xlate("m_picto_fail",
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
-                setHint(String(event.value));
+                setHint(event.value as String);
                 break;
         }
     }

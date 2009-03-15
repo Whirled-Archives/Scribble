@@ -74,6 +74,11 @@ public class PictionaryLogic
         var scores :Dictionary = Dictionary(_props.get(Codes.keyScores(_prefix)));
         return (scores != null) ? scores : new Dictionary();
     }
+
+    public function getHint () :String
+    {
+        return (getPhase() == PHASE_PLAYING) ? _props.get(Codes.keyHint(_prefix)) as String : null;
+    }
     
     public function canDraw (playerId :int) :Boolean
     {

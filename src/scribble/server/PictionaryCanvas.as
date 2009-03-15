@@ -110,9 +110,33 @@ public class PictionaryCanvas extends Canvas
         }
     }
 
+    protected function hintLetter (hint :String, n :int = -1) :String
+    {
+        if (hint.indexOf("_") == -1) {
+            return hint;
+        }
+
+        if (n < 0) {
+            do {
+                n = Math.random()*hint.length;
+            } while (hint.charAt(n) != "_" && hint.charAt(n) != " ");
+        }
+
+        return hint.substr(0, n) + WORD_LIST[_wordId].charAt(n) + hint.substr(n+1);
+    }
+
     protected function onPlayProgress (count :int) :void
     {
-        _props.set(Codes.keyHint(_prefix), "Hint"+count+"!!");
+        var hint :String = _props.get(Codes.keyHint(_prefix)) as String;
+
+        if (hint == null) {
+            hint = WORD_LIST[_wordId].replace(/[^ ]/g, "_");
+            hint = hintLetter(hint, 0);
+        } else {
+            hint = hintLetter(hint);
+        }
+
+        _props.set(Codes.keyHint(_prefix), hint);
     }
 
     protected function nextTurn () :void
