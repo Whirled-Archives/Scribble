@@ -37,7 +37,7 @@ public class BackdropMode extends ModeSprite
         addChild(_lockButton);
 
         _walkButton.addEventListener(MouseEvent.CLICK, function (... _) :void {
-            _walkButton.toggled = !_walkButton.toggled;
+            _walkingEnabled = !_walkingEnabled;
             updateEnabled();
         });
         addChild(_walkButton);
@@ -149,12 +149,14 @@ public class BackdropMode extends ModeSprite
     protected function updateEnabled () :void
     {
         var locked :Boolean = Game.ctrl.room.props.get(Codes.keyLock(_prefix));
-        var enabled :Boolean = !_walkButton.toggled && !locked;
+        var enabled :Boolean = !_walkingEnabled && !locked;
 
         _toolbox.visible = enabled;
         _canvas.enabled = enabled;
         _lockButton.toggled = locked;
         _walkButton.visible = !locked;
+
+        _walkButton.toggled = _walkingEnabled;
     }
 
     override public function didLeave () :void
@@ -187,6 +189,9 @@ public class BackdropMode extends ModeSprite
 
     protected static var _canvas :CanvasSprite;
     protected var _toolbox :Sprite;
+
+    /** Local preference. This could also be a player prop, but this is better. */
+    protected static var _walkingEnabled :Boolean;
 
     // Transitions
     protected var _slideIn :GTween;
