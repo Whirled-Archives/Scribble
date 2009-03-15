@@ -19,10 +19,13 @@ public class PictionaryLogic
     public static const SECONDS :Number = 1000/Codes.TICKER_GRANULARITY;
 
     public static const DELAY_INTERMISSION :int = 10*SECONDS;
-    public static const DELAY_PLAYING :int = 20*SECONDS;
+    public static const DELAY_PLAYING :int = 90*SECONDS;
     public static const DELAY_PAUSE :int = 5*SECONDS;
 
     public static const ROUNDS :int = 3;
+
+//    public static const HINTS_PER_TURN :int = 10;
+    public static const FIRST_HINT_AT :int = 4;
 
     public function PictionaryLogic (prefix :String, props :PropertyGetSubControl)
     {
@@ -77,7 +80,7 @@ public class PictionaryLogic
 
     public function getHint () :String
     {
-        return (getPhase() == PHASE_PLAYING) ? _props.get(Codes.keyHint(_prefix)) as String : null;
+        return _props.get(Codes.keyHint(_prefix)) as String;
     }
     
     public function canDraw (playerId :int) :Boolean

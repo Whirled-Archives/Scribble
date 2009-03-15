@@ -125,18 +125,23 @@ public class PictionaryCanvas extends Canvas
         return hint.substr(0, n) + WORD_LIST[_wordId].charAt(n) + hint.substr(n+1);
     }
 
-    protected function onPlayProgress (count :int) :void
+    protected function onPlayProgress (tick :int) :void
     {
-        var hint :String = _props.get(Codes.keyHint(_prefix)) as String;
+        if (tick/PictionaryLogic.DELAY_PLAYING > (1/3)) {
+            var hintPoint :int = (2/3)*(PictionaryLogic.DELAY_PLAYING/(0.75*_wordClean.length));
+            if (tick%hintPoint == 0) {
+                var hint :String = _props.get(Codes.keyHint(_prefix)) as String;
 
-        if (hint == null) {
-            hint = WORD_LIST[_wordId].replace(/[^ ]/g, "_");
-            hint = hintLetter(hint, 0);
-        } else {
-            hint = hintLetter(hint);
+                if (hint == null) {
+                    hint = WORD_LIST[_wordId].replace(/[^ ]/g, "_");
+                    hint = hintLetter(hint, 0);
+                } else {
+                    hint = hintLetter(hint);
+                }
+
+                _props.set(Codes.keyHint(_prefix), hint);
+            }
         }
-
-        _props.set(Codes.keyHint(_prefix), hint);
     }
 
     protected function nextTurn () :void
@@ -206,11 +211,15 @@ public class PictionaryCanvas extends Canvas
             var guesser :Player = _room.players[roster[turnHolder]];
             var drawer :Player = _room.players[roster[rosterId]];
 
-            addScore(rosterId, 1);
-            addScore(turnHolder, 2);
+            var frac :Number = int(_props.get(Codes.keyTicker(_prefix)))/PictionaryLogic.DELAY_PLAYING;
+            var points :int = 9*(1-frac) + 1;
+
+            addScore(rosterId, points);
+            addScore(turnHolder, points);
 
             // Notify correct guess
-            _room.ctrl.sendMessage(Codes.msgCorrect(_prefix), [ playerId, WORD_LIST[_wordId] ]);
+            _room.ctrl.sendMessage(
+                Codes.msgCorrect(_prefix), [ playerId, WORD_LIST[_wordId], points ]);
 
             // TODO: Payout guesser and drawer
 

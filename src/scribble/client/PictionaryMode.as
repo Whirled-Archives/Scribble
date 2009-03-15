@@ -82,7 +82,6 @@ public class PictionaryMode extends ModeSprite
             _canvas.init(false);
             updatePhase();
             initRoster();
-            setHint(_logic.getHint());
 
             Game.ctrl.room.props.addEventListener(PropertyChangedEvent.PROPERTY_CHANGED, onRoomPropertyChanged);
             Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
@@ -164,6 +163,7 @@ public class PictionaryMode extends ModeSprite
 
             case PictionaryLogic.PHASE_PLAYING:
                 setTicker(PictionaryLogic.DELAY_PLAYING);
+                setHint(_logic.getHint());
                 break;
 
             case PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS:
@@ -257,7 +257,7 @@ public class PictionaryMode extends ModeSprite
                 Game.ctrl.local.feedback(Messages.en.xlate("m_picto_correct",
                     Game.getName(event.value[0]),
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())),
-                    666, // TODO: Maybe remove this from the message
+                    event.value[2],
                     event.value[1]));
                 setHint(event.value[1] as String);
                 break;
