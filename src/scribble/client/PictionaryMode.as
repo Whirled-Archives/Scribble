@@ -44,6 +44,7 @@ public class PictionaryMode extends ModeSprite
         _panel.graphics.endFill();
 
         _panel.addChild(_wordField);
+        _panel.addChild(_hintField);
 
         _canvas = new CanvasSprite(_prefix, CANVAS_WIDTH, CANVAS_HEIGHT);
         _panel.addChild(_canvas);
@@ -215,6 +216,10 @@ public class PictionaryMode extends ModeSprite
                     Game.log.warning("Scores set to something other than null?", "value", event.newValue);
                 }
                 break;
+
+            case Codes.keyHint(_prefix):
+                setHint(String(event.newValue));
+                break;
         }
     }
 
@@ -244,6 +249,7 @@ public class PictionaryMode extends ModeSprite
             case Codes.msgPass(_prefix):
                 Game.ctrl.local.feedback(Messages.en.xlate("m_picto_pass",
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
+                setHint(String(event.value));
                 break;
 
             case Codes.msgCorrect(_prefix):
@@ -252,12 +258,24 @@ public class PictionaryMode extends ModeSprite
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())),
                     666, // TODO: Maybe remove this from the message
                     event.value[1]));
+                setHint(String(event.value[1]));
                 break;
             
             case Codes.msgFail(_prefix):
                 Game.ctrl.local.feedback(Messages.en.xlate("m_picto_fail",
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
+                setHint(String(event.value));
                 break;
+        }
+    }
+
+    protected function setHint (hint :String) :void
+    {
+        if (hint == null) {
+            _hintField.visible = false;
+        } else {
+            _hintField.visible = true;
+            _hintField.text = hint;
         }
     }
 
@@ -293,6 +311,12 @@ public class PictionaryMode extends ModeSprite
         { textColor: 0xffffff, selectable: false, width: 0,
             x: CANVAS_WIDTH-SPACING, y: CANVAS_HEIGHT-24-SPACING,
             autoSize: TextFieldAutoSize.RIGHT, outlineColor: 0x00000 },
+        { font: "_sans", size: 24, bold: true });
+
+    protected var _hintField :TextField = TextFieldUtil.createField("",
+        { textColor: 0xffffff, selectable: false, width: 0,
+            x: 0, y: 0,
+            autoSize: TextFieldAutoSize.LEFT, outlineColor: 0x00000 },
         { font: "_sans", size: 24, bold: true });
 
     protected var _prefix :String;

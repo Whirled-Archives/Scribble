@@ -83,6 +83,11 @@ public class Codes
         return prefix + "lock"; // Boolean
     }
 
+    public static function keyHint (prefix :String) :String
+    {
+        return prefix + "hint"; // Boolean
+    }
+
     public static function msgCleared (prefix :String) :String
     {
         return prefix + "cleared"; // int

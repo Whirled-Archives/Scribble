@@ -52,7 +52,7 @@ public class PictionaryCanvas extends Canvas
                 _ticker.start(PictionaryLogic.DELAY_PLAYING, true, function () :void {
                     _room.ctrl.sendMessage(Codes.msgFail(_prefix), WORD_LIST[_wordId]);
                     setPhase(PictionaryLogic.PHASE_PAUSE);
-                });
+                }, onPlayProgress);
                 break;
 
             case PictionaryLogic.PHASE_NOT_ENOUGH_PLAYERS:
@@ -110,9 +110,15 @@ public class PictionaryCanvas extends Canvas
         }
     }
 
+    protected function onPlayProgress (count :int) :void
+    {
+        _props.set(Codes.keyHint(_prefix), "Hint"+count+"!!");
+    }
+
     protected function nextTurn () :void
     {
         clear();
+        _props.set(Codes.keyHint(_prefix), null);
 
         var turnHolder :int = _logic.getTurnHolder();
         var roster :Dictionary = _logic.getRoster();
