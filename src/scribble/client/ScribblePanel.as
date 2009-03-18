@@ -57,29 +57,41 @@ public class ScribblePanel extends Sprite
         quit.x = 64;
 
         // Test stuff
-        var switcher :Sprite = new Sprite();
-        switcher.graphics.beginFill(0x00ff00);
-        switcher.graphics.drawRect(0, 0, 50, 50);
-        switcher.graphics.endFill();
-        ToolTipManager.instance.attach(switcher, "foooo");
 
-        var rect :Rectangle = Game.ctrl.local.getPaintableArea();
-        switcher.x = rect.width - 60;
-        switcher.y = rect.height - 60;
-        const self :ScribblePanel = this;
-        switcher.addEventListener(MouseEvent.CLICK, function (... _) :void {
-            Command.dispatch(self, ScribbleController.CHANGE_MODE,
-                _localMode == Codes.CANVAS_ROOM ? Codes.CANVAS_PICTIONARY : Codes.CANVAS_ROOM);
-        });
-        addChild(switcher);
+        addChild(_switchBackdrop);
+        addChild(_switchPictionary);
+
+//        var rect :Rectangle = Game.ctrl.local.getPaintableArea();
+//        switcher.x = rect.width - 60;
+//        switcher.y = rect.height - 60;
+//        const self :ScribblePanel = this;
+//        switcher.addEventListener(MouseEvent.CLICK, function (... _) :void {
+//            Command.dispatch(self, ScribbleController.CHANGE_MODE,
+//                _localMode == Codes.CANVAS_ROOM ? Codes.CANVAS_PICTIONARY : Codes.CANVAS_ROOM);
+//        });
+//        addChild(switcher);
+
+        Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
+        onResize();
+    }
+
+    protected function onResize (... _) :void
+    {
+        var screen :Rectangle = Game.ctrl.local.getPaintableArea();
+        if (screen != null) {
+            _switchBackdrop.x = 0;
+            _switchBackdrop.y = 100;
+
+            _switchPictionary.x = 0;
+            _switchPictionary.y = 180;
+        }
     }
 
     protected function onRoomElementChanged (event :ElementChangedEvent) :void
     {
         // Has the server put us in a new mode?
-        if (event.name == Codes.PLAYER_MODES && event.key == Game.ctrl.player.getPlayerId()) {
-
-            Game.log.info("Transition", "oldMode", event.oldValue, "newMode", event.newValue);
+        if (event.name == Codes.PLAYER_MODES && event.key == Game.ctrl.player.getPlayerId()
+            && event.newValue != event.oldValue) {
 
             // Transition out of the old mode
             if (_localMode in _modeSprites) {
@@ -97,6 +109,7 @@ public class ScribblePanel extends Sprite
                     _modeSprites[newMode] = ms;
                     ms.addEventListener(Event.REMOVED_FROM_STAGE, function (... _) :void {
                         trace("Cleaning out " + newMode);
+                        Game.log.info("Transition finished", "mode", newMode);
                         delete _modeSprites[newMode];
                     });
                     addChild(ms);
@@ -156,6 +169,9 @@ public class ScribblePanel extends Sprite
 
     /** Manages transitions. */
     protected const _modeSprites :Dictionary = new Dictionary(); // mode -> ModeSprite
+
+    protected var _switchBackdrop :ModeSwitcher = new ModeSwitcher(Codes.CANVAS_ROOM);
+    protected var _switchPictionary :ModeSwitcher = new ModeSwitcher(Codes.CANVAS_PICTIONARY);
 
     /** The mode the client is running. */
     protected var _localMode :int;

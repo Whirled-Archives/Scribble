@@ -17,6 +17,11 @@ public class Messages
         t_turnHolder: "It is this person's turn to draw",
         t_walk: "Toggle walking/drawing",
         t_reference: "Google Image Search this word",
+        t_mode0: "Play BackdropThing TODO",
+        t_mode1: "Play Pictionary TODO",
+
+        b_mode0: "Backdrop ({0})",
+        b_mode1: "Pictionary ({0})",
 
         m_broadcast: "Scribble broadcast by {0}: {1}",
         m_trophy: "{0} earned the {1} trophy!",
