@@ -136,10 +136,12 @@ public class CanvasSprite extends Sprite
             _composer.setBrush(brushId);
             _overlay.setBrush(brushId);
         });
+        picker.setBrush(1); // Init
         toolbox.addChild(picker);
 
         var clearButton :ClearButton = new ClearButton();
-        clearButton.x = toolbox.width;
+        clearButton.x = toolbox.width+16;
+        clearButton.y = toolbox.height/2 - clearButton.height/2;
         toolbox.addChild(clearButton);
 
         var undo :UndoSprite = new UndoSprite(this);
@@ -151,6 +153,7 @@ public class CanvasSprite extends Sprite
             undo.clearRedo();
         });
         undo.x = toolbox.width;
+        undo.y = toolbox.height/2 - undo.height/2;
         toolbox.addChild(undo);
 
         return toolbox;
