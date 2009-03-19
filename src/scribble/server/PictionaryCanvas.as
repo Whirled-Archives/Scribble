@@ -127,14 +127,14 @@ public class PictionaryCanvas extends Canvas
 
     protected function onPlayProgress (tick :int) :void
     {
-        if (tick/PictionaryLogic.DELAY_PLAYING > (1/3)) {
+        if (tick/PictionaryLogic.DELAY_PLAYING > (1/4)) {
             var hintPoint :int = (2/3)*(PictionaryLogic.DELAY_PLAYING/(0.75*_wordClean.length));
             if (tick%hintPoint == 0) {
                 var hint :String = _props.get(Codes.keyHint(_prefix)) as String;
 
                 if (hint == null) {
                     hint = WORD_LIST[_wordId].replace(/[^ ]/g, "-");
-                    hint = hintLetter(hint, 0);
+//                    hint = hintLetter(hint, 0);
                 } else {
                     hint = hintLetter(hint);
                 }
