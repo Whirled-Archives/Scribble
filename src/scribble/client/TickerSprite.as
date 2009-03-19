@@ -33,7 +33,7 @@ public class TickerSprite extends Sprite
         });
 
         _wedge.arc = 360;
-        _wedge.filters = [ new DropShadowFilter() ];
+//        _wedge.filters = [ new DropShadowFilter() ];
         addChild(_wedge);
 
         addChild(_timeField);
@@ -75,8 +75,8 @@ public class TickerSprite extends Sprite
     protected var _props :PropertyGetSubControl;
 
     protected var _timeField :TextField = TextFieldUtil.createField("",
-        { textColor: 0xffffff, selectable: false, alpha: 0.5,
-            x: RADIUS, y: RADIUS, autoSize: TextFieldAutoSize.CENTER, outlineColor: 0x00000 },
+        { textColor: 0xffffff, selectable: false, alpha: 0.3,
+            x: RADIUS+20, y: RADIUS+25, autoSize: TextFieldAutoSize.LEFT, outlineColor: 0x00000 },
         { font: "_sans", size: 24, bold: true });
 
     protected var _wedge :Wedge = new Wedge(RADIUS);

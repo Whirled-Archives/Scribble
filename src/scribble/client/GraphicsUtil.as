@@ -45,6 +45,9 @@ public class GraphicsUtil
             shape.blendMode = BlendMode.ERASE;
             shape.graphics.lineStyle(24, 0xffffff);
         }
+
+        // Optimization
+        shape.cacheAsBitmap = true;
     }
 
     /** Like GTween.reverse(), but always ensures playback. */

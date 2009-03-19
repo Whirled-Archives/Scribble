@@ -5,6 +5,7 @@ import flash.events.Event;
 import flash.filters.DropShadowFilter;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
+import flash.text.TextFormat;
 
 import com.gskinner.motion.GTween;
 
@@ -58,7 +59,7 @@ public class RosterSprite extends Sprite
         _turnHolder = rosterId;
     }
 
-    public function add (rosterId :int, name :String) :void
+    public function add (rosterId :int, name :String, emphasize :Boolean = false) :void
     {
         if (rosterId in _entries) {
             throw new Error("Player is already in this roster.");
@@ -66,7 +67,7 @@ public class RosterSprite extends Sprite
 
         _entries[rosterId] = new RosterEntry(name);
 
-        var row :RowSprite = new RowSprite();
+        var row :RowSprite = new RowSprite(emphasize);
 
         for (var ii :String in _sprites) {
             if (int(ii) > rosterId) {
@@ -112,9 +113,19 @@ public class RosterSprite extends Sprite
     {
         graphics.clear();
 
-        graphics.beginFill(0xc0c0c0);
+        graphics.beginFill(0, 0.6);
+        graphics.lineStyle(1, 0xc0c0c0);
         graphics.drawRect(0, 0, WIDTH, height);
         graphics.endFill();
+
+        var maxScore :int;
+        for each (var entry :RosterEntry in _entries) {
+            maxScore = Math.max(entry.score, maxScore);
+        }
+        for (var rosterId :String in _entries) {
+            _sprites[rosterId].scoreLabel.textColor =
+                (maxScore > 0 && _entries[rosterId].score == maxScore) ?  0xffff00 : 0xff9900;
+        }
     }
 
     public function clear () :void
@@ -161,12 +172,12 @@ class RowSprite extends Sprite
     public var nameLabel :TextField;
     public var scoreLabel :TextField;
 
-    public function RowSprite ()
+    public function RowSprite (italic :Boolean)
     {
         nameLabel = TextFieldUtil.createField("",
             { x: 20, textColor: 0xffffff, selectable: false,
                 autoSize: TextFieldAutoSize.LEFT, outlineColor: 0x00000 },
-            { font: "_sans", size: 12, bold: true });
+            { font: "_sans", size: 12, bold: true, italic: italic });
         scoreLabel = TextFieldUtil.createField("test",
             { textColor: 0x00ff00, selectable: false,
                 outlineColor: 0x00000, width: 0, x: RosterSprite.WIDTH,

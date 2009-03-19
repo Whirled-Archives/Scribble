@@ -35,6 +35,7 @@ public class Messages
         m_picto_invite: "(TODO)",
         m_picto_guess: "{0}: {1}",
         m_picto_fail: "{0} ran out of time on \"{1}\".",
+        t_picto_close: "Close Pictionary",
 
         // TODO: Get better names
         l_mode0: "Backdrop Mode",

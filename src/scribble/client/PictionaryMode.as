@@ -50,6 +50,7 @@ public class PictionaryMode extends ModeSprite
 
         _canvas = new CanvasSprite(_prefix, CANVAS_WIDTH, CANVAS_HEIGHT);
         _panel.addChild(_canvas);
+        _panel.filters = [ new DropShadowFilter() ];
 
         _tickerContainer.x = CANVAS_WIDTH + RosterSprite.WIDTH/2 - TickerSprite.RADIUS;
         _tickerContainer.y = SPACING;
@@ -61,16 +62,17 @@ public class PictionaryMode extends ModeSprite
 
         _toolbox = _canvas.createToolbox();
         _toolbox.y = CANVAS_HEIGHT;
-        _toolbox.graphics.beginFill(0xc0c0c0);
+        _toolbox.graphics.beginFill(0, 0.6);
+        _toolbox.graphics.lineStyle(1, 0xc0c0c0);
         _toolbox.graphics.drawRect(0, 0, CANVAS_WIDTH, _toolbox.height);
         _toolbox.graphics.endFill();
         _panel.addChild(_toolbox);
 
-        _panel.graphics.beginFill(0xc0c0c0);
+        _panel.graphics.beginFill(0, 0.6);
+        _panel.graphics.lineStyle(1, 0xc0c0c0);
         _panel.graphics.drawRect(CANVAS_WIDTH, 0, RosterSprite.WIDTH, 2*SPACING + 2*TickerSprite.RADIUS);
         _panel.graphics.endFill();
 
-        _panel.filters = [ new DropShadowFilter() ];
         addChild(_panel);
 
         _turnHolderControls.x = CANVAS_WIDTH;
@@ -91,7 +93,15 @@ public class PictionaryMode extends ModeSprite
         });
         _turnHolderControls.addChild(_referenceButton);
 
+        // Button to return to backdrop drawing mode
+        _closeButton.x = _panel.width - _closeButton.width - 6;
+        _closeButton.y = 2;
+        Command.bind(_closeButton, MouseEvent.CLICK,
+            ScribbleController.CHANGE_MODE, Codes.CANVAS_ROOM);
+        _panel.addChild(_closeButton);
+
         var screen :Rectangle = Game.ctrl.local.getPaintableArea();
+
         _panel.y = -_panel.height;
         _slideIn = new GTween(_panel, 2, {y: (screen.height-_panel.height)/2}, {autoPlay: false});
         _slideIn.addEventListener(Event.COMPLETE, onSlideComplete);
@@ -211,7 +221,8 @@ public class PictionaryMode extends ModeSprite
             var playerId :int = roster[rosterId];
             var scores :Dictionary = _logic.getScores();
             if (playerId in modes && modes[playerId] == Codes.CANVAS_PICTIONARY) {
-                _roster.add(rosterId, Game.getName(playerId));
+                _roster.add(rosterId, Game.getName(playerId),
+                    playerId == Game.ctrl.player.getPlayerId());
                 _roster.setScore(rosterId, scores[rosterId]);
             }
         }
@@ -253,7 +264,8 @@ public class PictionaryMode extends ModeSprite
                     _roster.remove(rosterId);
                 }
                 if (event.newValue == Codes.CANVAS_PICTIONARY) {
-                    _roster.add(rosterId, Game.getName(event.key));
+                    _roster.add(rosterId, Game.getName(event.key),
+                        event.key == Game.ctrl.player.getPlayerId());
                     _roster.setScore(rosterId, _logic.getScores()[rosterId]);
                 }
                 break;
@@ -332,6 +344,11 @@ public class PictionaryMode extends ModeSprite
     protected static const ICON_REFERENCE :Class;
     protected var _referenceButton :ImageButton = new ImageButton(
         new ICON_REFERENCE(), Messages.en.xlate("t_reference"));
+
+    [Embed(source="../../../res/close.png")]
+    protected static const ICON_CLOSE :Class;
+    protected var _closeButton :ImageButton = new ImageButton(
+        new ICON_CLOSE(), Messages.en.xlate("t_picto_close"));
 
     protected var _turnHolderControls :Sprite = new Sprite();
 
