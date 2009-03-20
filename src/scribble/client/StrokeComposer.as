@@ -67,6 +67,11 @@ public class StrokeComposer extends EventDispatcher
             dispatchEvent(new Event(STROKE_REJECTED));
 
         } else {
+            // Prevent fuckups with distance calculation
+            var lastPoint :Point = Point(_stroke.points[_stroke.points.length-1]);
+            if(_stroke.points[0].equals(lastPoint)) {
+                lastPoint.offset(1, 0);
+            }
             simplify(0, _stroke.points.length-1);
 
             if (!_stroke.isBeginning) {

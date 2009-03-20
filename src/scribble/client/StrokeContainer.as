@@ -59,11 +59,6 @@ public class StrokeContainer extends Sprite
         while (ii < points.length) {
             p3 = points[ii++];
 
-            // Guard against NaN later
-            if (p1.equals(p2)) {
-                p2.offset(1, 0);
-            }
-
             // Midpoints
             var xc1 :Number = (p0.x + p1.x)/2;
             var yc1 :Number = (p0.y + p1.y)/2;

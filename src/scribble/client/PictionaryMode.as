@@ -61,10 +61,11 @@ public class PictionaryMode extends ModeSprite
         _panel.addChild(_roster);
 
         _toolbox = _canvas.createToolbox();
+        _toolbox.x = 4;
         _toolbox.y = CANVAS_HEIGHT;
         _toolbox.graphics.beginFill(0, 0.6);
         _toolbox.graphics.lineStyle(1, 0xc0c0c0);
-        _toolbox.graphics.drawRect(0, 0, CANVAS_WIDTH, _toolbox.height);
+        _toolbox.graphics.drawRect(-_toolbox.x, 0, CANVAS_WIDTH, _toolbox.height);
         _toolbox.graphics.endFill();
         _panel.addChild(_toolbox);
 
@@ -352,17 +353,20 @@ public class PictionaryMode extends ModeSprite
 
     protected var _turnHolderControls :Sprite = new Sprite();
 
+    [Embed(source="../../../res/scribble.ttf", fontFamily="scribble")]
+    protected static const FONT_SCRIBBLE :String;
+
     protected var _wordField :TextField = TextFieldUtil.createField("",
-        { textColor: 0xffffff, selectable: false, width: 0,
+        { embedFonts: true, textColor: 0x999999, selectable: false, //width: 0,
             x: CANVAS_WIDTH-SPACING, y: CANVAS_HEIGHT-24-SPACING,
-            autoSize: TextFieldAutoSize.RIGHT, outlineColor: 0x00000 },
-        { font: "_sans", size: 24, bold: true });
+            autoSize: TextFieldAutoSize.RIGHT },
+        { font: "scribble", size: 24 });
 
     protected var _hintField :TextField = TextFieldUtil.createField("",
-        { textColor: 0xffffff, selectable: false, width: 0,
+        { embedFonts: true, textColor: 0, selectable: false, width: 0,
             x: 0, y: 0,
-            autoSize: TextFieldAutoSize.LEFT, outlineColor: 0x00000 },
-        { font: "_sans", size: 24, bold: true });
+            autoSize: TextFieldAutoSize.LEFT },
+        { font: "scribble", size: 24 });
 
     protected var _prefix :String;
     protected var _logic :PictionaryLogic;

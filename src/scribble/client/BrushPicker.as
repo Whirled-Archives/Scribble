@@ -17,6 +17,11 @@ public class BrushPicker extends Sprite
 
     public function BrushPicker ()
     {
+        // Just force a height
+        graphics.beginFill(0, 0);
+        graphics.drawRect(0, 0, 1, 40);
+        graphics.endFill();
+
         for (var brushId :int = 0; brushId < Codes.BRUSH_COLORS.length; ++brushId) {
             var button :Sprite = new Sprite();
 
