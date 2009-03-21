@@ -357,7 +357,7 @@ public class PictionaryMode extends ModeSprite
     protected static const FONT_SCRIBBLE :String;
 
     protected var _wordField :TextField = TextFieldUtil.createField("",
-        { embedFonts: true, textColor: 0x999999, selectable: false, //width: 0,
+        { embedFonts: true, textColor: 0x999999, selectable: false, width: 0,
             x: CANVAS_WIDTH-SPACING, y: CANVAS_HEIGHT-24-SPACING,
             autoSize: TextFieldAutoSize.RIGHT },
         { font: "scribble", size: 24 });
