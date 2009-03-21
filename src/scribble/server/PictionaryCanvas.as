@@ -11,6 +11,8 @@ import scribble.data.PictionaryLogic;
 
 public class PictionaryCanvas extends Canvas
 {
+    public static const RECENT_WORDS_CAPACITY :int = 100;
+
     public function PictionaryCanvas (mode :int, room :RoomManager)
     {
         super(mode, room.ctrl.props);
@@ -167,7 +169,15 @@ public class PictionaryCanvas extends Canvas
             }
         } while (!_players.contains(roster[turnHolder]));
 
-        _wordId = Math.random()*WORD_LIST.length;
+        do {
+            _wordId = Math.random()*WORD_LIST.length;
+        } while (_recentWords.indexOf(_wordId) != -1);
+
+        if (_recentWords.length >= RECENT_WORDS_CAPACITY) {
+            _recentWords.shift();
+        }
+        _recentWords.push(_wordId);
+
         _wordNormalized = PictionaryLogic.normalizeWord(WORD_LIST[_wordId]);
 
         var player :Player = _room.players[roster[turnHolder]];
@@ -249,6 +259,9 @@ public class PictionaryCanvas extends Canvas
 
     protected var _wordId :int; // An index into WORD_LIST
     protected var _wordNormalized :String; // A normalized up version of the current secret word
+
+    /** List (queue) of wordIds recently chosen. */
+    protected var _recentWords :Array = [];
 
     protected var _room :RoomManager;
     protected var _ticker :Ticker;
