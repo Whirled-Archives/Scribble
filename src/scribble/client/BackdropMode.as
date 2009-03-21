@@ -30,6 +30,10 @@ public class BackdropMode extends ModeSprite
         _canvas = new CanvasSprite(_prefix, bounds[0], bounds[1], this);
 
         _toolbox = _canvas.createToolbox();
+        _toolbox.graphics.beginFill(0, 0.6);
+        _toolbox.graphics.lineStyle(1, 0xc0c0c0);
+        _toolbox.graphics.drawRoundRect(-16, 0, _toolbox.width+100, _toolbox.height+100, 16);
+        _toolbox.graphics.endFill();
         addChild(_toolbox);
 
         Command.bind(_lockButton, MouseEvent.CLICK, ScribbleController.TOGGLE_LOCK);
@@ -43,9 +47,9 @@ public class BackdropMode extends ModeSprite
         addChild(_walkButton);
 
         onResize();
-        _toolbox.y += _toolbox.height;
+        _toolbox.y += _toolbox.height-100;
 
-        _slideIn = new GTween(_toolbox, 2, {y: _toolbox.y-_toolbox.height}, {autoPlay: false});
+        _slideIn = new GTween(_toolbox, 2, {y: _toolbox.y-_toolbox.height+100}, {autoPlay: false});
 
         _fadeOut = new GTween(null, 2, null, {autoPlay: false});
         _fadeOut.addEventListener(Event.COMPLETE, onFadeComplete);
@@ -127,15 +131,15 @@ public class BackdropMode extends ModeSprite
         var screen :Rectangle = Game.ctrl.local.getPaintableArea();
         if (screen != null) {
             // Bind to bottom right
-            _toolbox.x = screen.width-_toolbox.width;
-            _toolbox.y = screen.height-_toolbox.height;
+            _toolbox.x = screen.width-_toolbox.width+100;
+            _toolbox.y = screen.height-_toolbox.height+100;
 
             // Bind to top right
             _lockButton.x = screen.width-_lockButton.width;
-            _lockButton.y = 0;
+            _lockButton.y = 64;
 
             _walkButton.x = _lockButton.x - _walkButton.width;
-            _walkButton.y = 0;
+            _walkButton.y = 64;
         }
     }
 

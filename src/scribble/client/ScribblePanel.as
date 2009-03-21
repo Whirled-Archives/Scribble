@@ -42,19 +42,26 @@ public class ScribblePanel extends Sprite
         locator.addEventListener(MouseEvent.CLICK, function (... _) :void {
             Command.dispatch(locator, ScribbleController.LOCATE_PEERS, _localMode);
         });
-        addChild(locator);
+        _buttonBar.addChild(locator);
 
         var invite :ImageButton = new ImageButton(new ICON_INVITE(),
             Messages.en.xlate("t_invite"));
         Command.bind(invite, MouseEvent.CLICK, ScribbleController.INVITE);
-        addChild(invite);
-        invite.x = 32;
+        invite.x = _buttonBar.width;
+        _buttonBar.addChild(invite);
 
         var quit :ImageButton = new ImageButton(new EXIT_ICON(),
             Messages.en.xlate("t_quit"));
         Command.bind(quit, MouseEvent.CLICK, ScribbleController.QUIT);
-        addChild(quit);
-        quit.x = 64;
+        quit.x = _buttonBar.width;
+        _buttonBar.addChild(quit);
+
+        _buttonBar.graphics.beginFill(0, 0.6);
+        _buttonBar.graphics.lineStyle(1, 0xc0c0c0);
+        _buttonBar.graphics.drawRoundRect(-16, -100, _buttonBar.width+100, _buttonBar.height+100, 16);
+        _buttonBar.graphics.endFill();
+
+        addChild(_buttonBar);
 
         // Test stuff
 
@@ -84,6 +91,9 @@ public class ScribblePanel extends Sprite
 
             _switchPictionary.x = 0;
             _switchPictionary.y = 180;
+
+            _buttonBar.x = screen.width-_buttonBar.width+100-8;
+            _buttonBar.y = 0;
         }
     }
 
@@ -175,6 +185,8 @@ public class ScribblePanel extends Sprite
 
     /** The mode the client is running. */
     protected var _localMode :int;
+
+    protected var _buttonBar :Sprite = new Sprite();
 }
 
 }
