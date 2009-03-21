@@ -1,28 +1,3 @@
-Apache
-Australia
-Beast
-Brazil
-Canada
-China
-Coke
-Dad
-Doug
-Earth
-Halloween
-Heaven
-Hell
-Himalayas
-Humpty Dumpty
-Japan
-Orc
-Paris
-Russia
-Spain
-Swiss
-Three Rings
-Thursday
-Valentine
-Viking
 able
 account
 ace
@@ -54,6 +29,7 @@ answer
 ant
 antenna
 anvil
+apache
 apartment
 ape
 apparatus
@@ -76,6 +52,7 @@ attack
 attempt
 attention
 attraction
+australia
 authority
 automatic
 awake
@@ -116,6 +93,7 @@ beak
 bean
 bear
 beard
+beast
 beautiful
 bed
 bee
@@ -138,8 +116,8 @@ bib
 bid
 big
 big ben
-big hand
 bigfoot
+big hand
 bike
 biking
 bile
@@ -179,8 +157,8 @@ boot
 bottle
 bottle cap
 bow
-bow tie
 bowl
+bow tie
 box
 boy
 boys
@@ -189,6 +167,7 @@ brake
 branch
 brass
 brave
+brazil
 bread
 break
 breath
@@ -242,6 +221,7 @@ camel
 camera
 camp
 can
+canada
 candle
 candy cane
 cane
@@ -315,6 +295,7 @@ chilli
 chimney
 chimp
 chin
+china
 chip
 chisel
 chocolate
@@ -363,6 +344,7 @@ cod
 coffee
 cog
 coin
+coke
 cold
 collar
 collector
@@ -444,6 +426,7 @@ curve
 cushion
 cut
 cyclops
+dad
 daffodil
 daisy
 dale
@@ -520,6 +503,7 @@ doorbell
 doorstep
 dot
 doubt
+doug
 dough
 dove
 down
@@ -552,6 +536,7 @@ ear
 early
 earmuff
 earring
+earth
 earth
 east
 eat
@@ -590,9 +575,9 @@ expansion
 experience
 expert
 eye
-eye patch
 eyeball
 eyebrow pencil
+eye patch
 eyes
 face
 fact
@@ -633,8 +618,8 @@ field
 fifth
 fiftieth
 fig
-fig leaf
 fight
+fig leaf
 file
 fill
 fin
@@ -680,11 +665,11 @@ foolish
 foot
 football
 footprints
-for sale
 force
 forest
 fork
 form
+for sale
 fort
 forward
 found
@@ -785,6 +770,7 @@ hairdresser
 half
 half hour
 hall
+halloween
 hamburger
 hammer
 hammock
@@ -817,9 +803,11 @@ hearing
 heart
 hearth
 heat
+heaven
 heel
 height
 helicopter
+hell
 helmet
 help
 hen
@@ -829,6 +817,7 @@ high
 hike
 hilarious
 hill
+himalayas
 hip
 hippopotamus
 hiss
@@ -868,9 +857,10 @@ housekeeper
 housewarming
 hug
 hum
+humongous
 humor
 hump
-humongous
+humpty dumpty
 hurt
 hush
 hut
@@ -879,9 +869,9 @@ hydrangea
 hydrogen
 hymn
 ice
-ice skate
 iceberg
 icecream cone
+ice skate
 icicle
 idea
 igloo
@@ -907,12 +897,13 @@ iron
 island
 itch
 jack
-jack in the box
 jacket
+jack in the box
 jade
 jaguar
 jalopy
 jam
+japan
 jar
 jazz
 jeans
@@ -1218,8 +1209,8 @@ noise
 noose
 normal
 north
-north pole
 northeast
+north pole
 northstar
 northwest
 nose
@@ -1249,6 +1240,7 @@ opinion
 opposite
 orange
 orb
+orc
 orchestra
 order
 organization
@@ -1270,8 +1262,8 @@ padlock
 page
 pain
 paint
-paint can
 paintbrush
+paint can
 palm
 pan
 panda
@@ -1281,6 +1273,7 @@ paper clip
 parachute
 parallel
 parcel
+paris
 park
 part
 pass
@@ -1531,6 +1524,7 @@ rule
 ruler
 run
 rung
+russia
 rye
 sack
 sad
@@ -1756,12 +1750,13 @@ sound
 soup
 sour
 south
-south pole
 southeast
+south pole
 southwest
 space
 spade
 spaghetti
+spain
 span
 spark
 speak
@@ -1873,11 +1868,11 @@ swim
 swing
 swipe
 swish
+swiss
 switch
 sword
 swordfish
 system
-t shirt
 table
 tablespoon
 tack
@@ -1898,9 +1893,9 @@ tart
 taste
 tax
 tea
-tea kettle
 teach
 teaching
+tea kettle
 team
 tear
 teardrop
@@ -1949,6 +1944,7 @@ thought
 thoughtful
 thread
 three
+three rings
 throat
 through
 thud
@@ -1956,9 +1952,10 @@ thug
 thumb
 thump
 thunder
-tic tac toe
+thursday
 tick
 ticket
+tic tac toe
 tie
 tight
 time
@@ -2010,6 +2007,7 @@ trousers
 true
 trunk
 try
+t shirt
 tub
 tube
 tug
@@ -2035,6 +2033,7 @@ unzip
 upside down
 upstairs
 use
+valentine
 value
 vampire
 van
@@ -2049,6 +2048,7 @@ vest
 vet
 vice
 view
+viking
 vim
 vine
 violent
@@ -2151,13 +2151,13 @@ yen
 yes
 yesterday
 yet
-yo yo
 yoga
 yogurt
 you
 young
 youth
 yowie
+yo yo
 yucky
 zap
 zebra
