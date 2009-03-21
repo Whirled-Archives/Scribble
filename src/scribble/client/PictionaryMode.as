@@ -207,11 +207,15 @@ public class PictionaryMode extends ModeSprite
 
         // Use visible here instead of setContains to not mess with the z-order
         _wordField.visible = isMyTurn;
-
         DisplayUtil.setContains(_panel, _turnHolderControls, isMyTurn);
 
         if (canDraw) {
             _toolbox.reset();
+        }
+
+        // Auto-pass when idle
+        if (isMyTurn && Game.ctrl.room.getAvatarInfo(Game.ctrl.player.getPlayerId()).isIdle) {
+            Command.dispatch(this, ScribbleController.PICTIONARY_PASS);
         }
     }
 
