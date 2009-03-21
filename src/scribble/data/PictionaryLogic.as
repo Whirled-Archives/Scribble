@@ -97,6 +97,11 @@ public class PictionaryLogic
         return getPhase() == PHASE_PLAYING && getPlayerId(getTurnHolder()) != playerId;
     }
 
+    public static function normalizeWord (word :String) :String
+    {
+        return word.toLowerCase().replace(/[^a-z]/g, "");
+    }
+
     protected var _prefix :String;
     protected var _props :PropertyGetSubControl;
 }

@@ -318,7 +318,8 @@ public class PictionaryMode extends ModeSprite
         var playerId :int = Game.ctrl.player.getPlayerId();
         if (Game.ctrl.room.getEntityProperty(EntityControl.PROP_MEMBER_ID, event.name) == playerId
             && _logic.canGuess(playerId)) {
-            Command.dispatch(this, ScribbleController.PICTIONARY_GUESS, event.value);
+            Command.dispatch(this, ScribbleController.PICTIONARY_GUESS,
+                PictionaryLogic.normalizeWord(event.value as String));
         }
     }
 

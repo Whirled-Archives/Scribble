@@ -128,7 +128,7 @@ public class PictionaryCanvas extends Canvas
     protected function onPlayProgress (tick :int) :void
     {
         if (tick/PictionaryLogic.DELAY_PLAYING > (1/4)) {
-            var hintPoint :int = (2/3)*(PictionaryLogic.DELAY_PLAYING/(0.75*_wordClean.length));
+            var hintPoint :int = (2/3)*(PictionaryLogic.DELAY_PLAYING/(0.75*_wordNormalized.length));
             if (tick%hintPoint == 0) {
                 var hint :String = _props.get(Codes.keyHint(_prefix)) as String;
 
@@ -168,7 +168,7 @@ public class PictionaryCanvas extends Canvas
         } while (!_players.contains(roster[turnHolder]));
 
         _wordId = Math.random()*WORD_LIST.length;
-        _wordClean = cleanupWord(WORD_LIST[_wordId]);
+        _wordNormalized = PictionaryLogic.normalizeWord(WORD_LIST[_wordId]);
 
         var player :Player = _room.players[roster[turnHolder]];
         player.modeReceiver.apply("sendWord", WORD_LIST[_wordId]);
@@ -206,10 +206,10 @@ public class PictionaryCanvas extends Canvas
         var turnHolder :int = _logic.getTurnHolder();
         var rosterId :int = _logic.getRosterId(playerId);
 
-        if (cleanupWord(guess) == _wordClean) {
+        if (guess == _wordNormalized) {
             var roster :Dictionary = _logic.getRoster();
-            var guesser :Player = _room.players[roster[turnHolder]];
-            var drawer :Player = _room.players[roster[rosterId]];
+            var drawer :Player = _room.players[roster[turnHolder]];
+            var guesser :Player = _room.players[roster[rosterId]];
 
             var frac :Number = int(_props.get(Codes.keyTicker(_prefix)))/PictionaryLogic.DELAY_PLAYING;
             var points :int = 9*(1-frac) + 1;
@@ -225,11 +225,6 @@ public class PictionaryCanvas extends Canvas
 
             setPhase(PictionaryLogic.PHASE_PAUSE);
         }
-    }
-
-    protected function cleanupWord (word :String) :String
-    {
-        return word.replace(" ", "").toLowerCase();
     }
 
     protected function onRoomUnloaded (event :AVRGameRoomEvent) :void
@@ -253,7 +248,7 @@ public class PictionaryCanvas extends Canvas
     protected static var WORD_LIST :Array; // of String
 
     protected var _wordId :int; // An index into WORD_LIST
-    protected var _wordClean :String; // A cleaned up version of the current secret word
+    protected var _wordNormalized :String; // A normalized up version of the current secret word
 
     protected var _room :RoomManager;
     protected var _ticker :Ticker;
