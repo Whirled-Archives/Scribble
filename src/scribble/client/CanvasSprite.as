@@ -126,35 +126,22 @@ public class CanvasSprite extends Sprite
         Command.dispatch(_source, ScribbleController.SEND_STROKE, Stroke(event.value));
     }
 
-    public function createToolbox () :Sprite
+    public function createToolbox () :ToolboxSprite
     {
-        var toolbox :Sprite = new Sprite();
+        var toolbox :ToolboxSprite = new ToolboxSprite(this);
 
-        var picker :BrushPicker = new BrushPicker();
-        picker.addEventListener(BrushPicker.BRUSH_CHANGED, function (event :ValueEvent) :void {
+        toolbox.picker.addEventListener(BrushPicker.BRUSH_CHANGED, function (event :ValueEvent) :void {
             var brushId :int = int(event.value);
             _composer.setBrush(brushId);
             _overlay.setBrush(brushId);
         });
-        picker.setBrush(1); // Init
-        toolbox.addChild(picker);
 
-        var clearButton :ClearButton = new ClearButton();
-        clearButton.x = toolbox.width+16;
-        clearButton.y = toolbox.height/2 - clearButton.height/2;
-        toolbox.addChild(clearButton);
-
-        var undo :UndoSprite = new UndoSprite(this);
-        this.addEventListener(CanvasSprite.CANVAS_CLEARED, function (... _) :void {
-            undo.reset();
-        });
         _overlay.addEventListener(DrawingOverlay.BRUSH_DOWN, function (... _) :void {
             // Clear redo history on canvas click
-            undo.clearRedo();
+            toolbox.undo.clearRedo();
         });
-        undo.x = toolbox.width;
-        undo.y = toolbox.height/2 - undo.height/2;
-        toolbox.addChild(undo);
+
+        toolbox.reset();
 
         return toolbox;
     }

@@ -192,7 +192,7 @@ public class BackdropMode extends ModeSprite
     protected var _prefix :String;
 
     protected var _canvas :CanvasSprite;
-    protected var _toolbox :Sprite;
+    protected var _toolbox :ToolboxSprite;
 
     /** Local preference. This could also be a player prop, but this is better. */
     protected static var _walkingEnabled :Boolean;

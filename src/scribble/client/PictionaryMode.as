@@ -203,11 +203,16 @@ public class PictionaryMode extends ModeSprite
                 break;
         }
 
-        // Use visible here instead of setContains to not mess with the z-order
-        _wordField.visible = (phase == PictionaryLogic.PHASE_PLAYING && canDraw);
+        var isMyTurn :Boolean = (phase == PictionaryLogic.PHASE_PLAYING && canDraw);
 
-        DisplayUtil.setContains(_panel, _turnHolderControls,
-            phase == PictionaryLogic.PHASE_PLAYING && canDraw);
+        // Use visible here instead of setContains to not mess with the z-order
+        _wordField.visible = isMyTurn;
+
+        DisplayUtil.setContains(_panel, _turnHolderControls, isMyTurn);
+
+        if (canDraw) {
+            _toolbox.reset();
+        }
     }
 
     protected function initRoster () :void
@@ -335,7 +340,7 @@ public class PictionaryMode extends ModeSprite
     protected var _tickerContainer :Sprite = new Sprite();
     protected var _canvas :CanvasSprite;
 
-    protected var _toolbox :Sprite;
+    protected var _toolbox :ToolboxSprite;
 
     [Embed(source="../../../res/pass.png")]
     protected static const ICON_PASS :Class;

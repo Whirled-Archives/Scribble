@@ -27,6 +27,9 @@ public class UndoSprite extends Sprite
                     }
                 }
             });
+        canvas.addEventListener(CanvasSprite.CANVAS_CLEARED, function (... _) :void {
+            reset();
+        });
 
         _undoButton = new ImageButton(Bitmap(new ICON_UNDO()), Messages.en.xlate("t_undo"));
 //        var un :Sprite = new Sprite();
