@@ -246,7 +246,6 @@ public class PictionaryCanvas extends Canvas
     public static function createWordList (ba :ByteArray) :void
     {
         try {
-            ba.position = 0; // TODO: Remove once Whirled rewinds for you
             WORD_LIST = ba.readUTFBytes(ba.length).split("\n");
             Server.log.info("Word list created", "length", WORD_LIST.length);
 
