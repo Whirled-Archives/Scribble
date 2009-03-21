@@ -1,4 +1,3 @@
-a
 able
 about
 above
@@ -42,7 +41,6 @@ along
 alphabet
 also
 always
-am
 amazing
 ambulance
 america
@@ -50,7 +48,6 @@ american
 among
 amount
 amusement
-an
 anchor
 and
 angle
@@ -2726,7 +2723,6 @@ shut
 shy
 sick
 sickle
-sid
 side
 sideburns
 sidewalk
