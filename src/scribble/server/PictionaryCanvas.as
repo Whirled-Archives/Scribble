@@ -12,6 +12,7 @@ import scribble.data.PictionaryLogic;
 public class PictionaryCanvas extends Canvas
 {
     public static const RECENT_WORDS_CAPACITY :int = 100;
+    public static const AVERAGE_MATCH_DURATION :int = 10 * 60*1000;
 
     public function PictionaryCanvas (mode :int, room :RoomManager)
     {
@@ -42,12 +43,15 @@ public class PictionaryCanvas extends Canvas
                 _ticker.start(PictionaryLogic.DELAY_INTERMISSION, true, function () :void {
                     purgeMissingPlayers();
                     _props.set(Codes.keyScores(_prefix), null, true);
-                    nextTurn();
+                    _matchStart = flash.utils.getTimer();
+                    _room.ctrl.doBatch(nextTurn);
                 });
                 break;
 
             case PictionaryLogic.PHASE_PAUSE:
-                _ticker.start(PictionaryLogic.DELAY_PAUSE, false, nextTurn);
+                _ticker.start(PictionaryLogic.DELAY_PAUSE, false, function () :void {
+                    _room.ctrl.doBatch(nextTurn);
+                });
                 break;
 
             case PictionaryLogic.PHASE_PLAYING:
@@ -154,14 +158,40 @@ public class PictionaryCanvas extends Canvas
         var turnHolder :int = _logic.getTurnHolder();
         var roster :Dictionary = _logic.getRoster();
         var end :int = getInsertIndex(Codes.keyRoster(_prefix));
+        var scores :Dictionary = _logic.getScores();
 
         do {
             turnHolder += 1;
             if (turnHolder == end) {
                 _round += 1;
                 if (_round == PictionaryLogic.ROUNDS) {
-                    setPhase(PictionaryLogic.PHASE_INTERMISSION);
                     // TODO: Declare winner, payouts, etc
+
+                    var maxScore :int;
+                    for each (var score :int in scores) {
+                        maxScore = Math.max(score, maxScore);
+                    }
+                    var now :int = flash.utils.getTimer();
+                    for (var key :String in roster) {
+                        var rosterId :int = int(key);
+                        score = scores[rosterId];
+                        Server.log.info("Ending match", "rosterId", rosterId, "score", score);
+                        if (score > 0) {
+                            var player :Player = _room.players[roster[rosterId]];
+                            player.ctrl.doBatch(function () :void {
+                                player.stats.submit("pictoRounds", 1);
+                                player.stats.submit("pictoScore", score);
+                                if (score == maxScore) {
+                                    player.stats.submit("pictoWins", 1);
+                                }
+
+                                player.ctrl.completeTask("pictoRound",
+                                    score/maxScore * (now-_matchStart)/AVERAGE_MATCH_DURATION);
+                            });
+                        }
+                    }
+
+                    setPhase(PictionaryLogic.PHASE_INTERMISSION);
                     return;
                 } else {
                     turnHolder = 0;
@@ -180,8 +210,8 @@ public class PictionaryCanvas extends Canvas
 
         _wordNormalized = PictionaryLogic.normalizeWord(WORD_LIST[_wordId]);
 
-        var player :Player = _room.players[roster[turnHolder]];
-        player.modeReceiver.apply("sendWord", WORD_LIST[_wordId]);
+        var newTurnHolder :Player = _room.players[roster[turnHolder]];
+        newTurnHolder.modeReceiver.apply("sendWord", WORD_LIST[_wordId]);
 
         _props.set(Codes.keyTurnHolder(_prefix), turnHolder, true);
 
@@ -216,13 +246,17 @@ public class PictionaryCanvas extends Canvas
         var turnHolder :int = _logic.getTurnHolder();
         var rosterId :int = _logic.getRosterId(playerId);
 
+        if (guess == "boobs") { // Test
+            _room.players[playerId].stats.submit("pictoBoobed", true);
+        }
+
         if (guess == _wordNormalized) {
             var roster :Dictionary = _logic.getRoster();
             var drawer :Player = _room.players[roster[turnHolder]];
             var guesser :Player = _room.players[roster[rosterId]];
 
             var frac :Number = int(_props.get(Codes.keyTicker(_prefix)))/PictionaryLogic.DELAY_PLAYING;
-            var points :int = 9*(1-frac) + 1;
+            var points :int = 10*(1-frac) + 1;
 
             addScore(rosterId, points);
             addScore(turnHolder, points);
@@ -232,6 +266,15 @@ public class PictionaryCanvas extends Canvas
                 Codes.msgCorrect(_prefix), [ playerId, WORD_LIST[_wordId], points ]);
 
             // TODO: Payout guesser and drawer
+
+            drawer.ctrl.doBatch(function () :void {
+                drawer.stats.submit("pictoDraws", 1);
+                drawer.ctrl.completeTask("pictoDraw", 0.015*points);
+            });
+            guesser.ctrl.doBatch(function () :void {
+                guesser.stats.submit("pictoGuesses", 1);
+                guesser.ctrl.completeTask("pictoGuess", 0.015*points);
+            });
 
             setPhase(PictionaryLogic.PHASE_PAUSE);
         }
@@ -268,6 +311,8 @@ public class PictionaryCanvas extends Canvas
 
     /** Matches are made up of multiple rounds. This property isn't distributed. */
     protected var _round :int;
+
+    protected var _matchStart :int;
 }
 
 }
