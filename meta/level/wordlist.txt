@@ -63,7 +63,6 @@ angry
 animal
 animals
 ankle
-ann
 annoy
 another
 answer
@@ -115,8 +114,8 @@ at
 ate
 atmosphere
 at risk
+attach
 attack
-attatch
 attempt
 attention
 attic
@@ -228,13 +227,11 @@ bell
 belly
 below
 belt
-ben
 bench
 bend
 bent
 beret
 berry
-bess
 best
 bet
 beth
@@ -329,7 +326,7 @@ boost
 boot
 booth
 bore
-boredly
+bored
 boring
 born
 both
@@ -420,7 +417,6 @@ bunt
 burn
 burnt
 burst
-burt
 bus
 buses
 bush
@@ -470,7 +466,6 @@ card
 cardboard
 care
 careful
-carmen
 carpenter
 carpet
 carriage
@@ -483,7 +478,6 @@ carve
 case
 cash
 cask
-cass
 cassette
 cast
 castle
@@ -506,7 +500,6 @@ center
 century
 cereal
 certain
-chad
 chai
 chain
 chainsaw
@@ -552,7 +545,6 @@ children
 chill
 chilli
 chime
-chiminey
 chimney
 chimp
 chin
@@ -594,7 +586,6 @@ clan
 clang
 clap
 clapped
-clark
 clash
 clasp
 class
@@ -781,7 +772,6 @@ curl
 curly
 current
 curtain
-curtis
 curve
 cushion
 custom
@@ -800,11 +790,9 @@ damage
 dame
 damn
 damp
-dan
 dance
 danger
 dangle
-danny
 dare
 dark
 dart
@@ -826,7 +814,6 @@ dear
 death
 debt
 december
-decend
 decent
 decide
 decision
@@ -842,6 +829,7 @@ dent
 dentist
 department
 dependent
+descend
 desert
 design
 desire
@@ -906,11 +894,9 @@ door
 doorbell
 doorstep
 dope
-doris
 dot
 double
 doubt
-doug
 dough
 dove
 down
@@ -997,10 +983,9 @@ elephant
 elevator
 elf
 elk
-ellen
 elm
 else
-embassassedly
+embarrass
 emergency
 empty
 encounter
@@ -1076,7 +1061,7 @@ fantastic
 far
 farm
 farmer
-fascinatedly
+fascinate
 fast
 fat
 father
@@ -1142,7 +1127,6 @@ fishing
 fishing pole
 fist
 fit
-fitch
 five
 fix
 fixed
@@ -1220,12 +1204,10 @@ fourth
 fowl
 fox
 frame
-fran
 frank
 fraud
 fray
 freaking out
-fred
 free
 freed
 free of charge
@@ -1257,7 +1239,6 @@ funeral
 funnel
 funny
 fur
-fureplace
 furniture
 fuse
 fuss
@@ -1286,7 +1267,6 @@ general
 gentle
 germ
 germs
-gert
 gesture
 get
 get up
@@ -1296,7 +1276,6 @@ gift
 gig
 giggle
 ginger
-giraff
 giraffe
 girl
 girlfriend
@@ -1327,7 +1306,6 @@ gluestick
 glum
 go
 goal
-goanna
 goat
 gobble
 goblin
@@ -1360,7 +1338,6 @@ grade
 graduation
 grain
 gram
-gramp
 grand
 granddad
 grandfather
@@ -1415,7 +1392,6 @@ gulp
 gum
 gumball
 gun
-gus
 gush
 gust
 gut
@@ -1445,7 +1421,6 @@ handle
 handwriting
 hang
 hanging
-hangingly
 hank
 happen
 happening
@@ -1610,7 +1585,6 @@ hutch
 hydrangea
 hydrogen
 hymn
-i
 ice
 iceberg
 ice cream
@@ -1677,11 +1651,8 @@ jack in the box
 jade
 jaguar
 jail
-jake
 jalopy
 jam
-jan
-jane
 january
 japan
 jar
@@ -1694,7 +1665,6 @@ jeep
 jelly
 jelly beans
 jellyfish
-jen
 jerk
 jet
 jetty
@@ -1703,11 +1673,8 @@ jeweller
 jib
 jig
 jiggle
-jim
 jimmy
 jingle
-jo
-joan
 job
 joey
 jog
@@ -1755,7 +1722,6 @@ kickball
 kicked
 kid
 kill
-kim
 kin
 kind
 kindergarten
@@ -1968,10 +1934,8 @@ lute
 lychee
 lyre
 ma
-mabel
 machine
 mack
-mackrel
 mad
 made
 magician
@@ -2041,7 +2005,6 @@ met
 metal
 meth
 mice
-mick
 mid
 middle
 might
@@ -2059,13 +2022,12 @@ mint
 minute
 mirror
 mirth
-mischievious
+mischievous
 miserly
 miss
 missed
 missile
 mist
-mitch
 mite
 mitt
 mitten
@@ -2140,8 +2102,6 @@ napkin
 napper
 narrow
 nasty
-nat
-nate
 nation
 nationalist
 natural
@@ -2152,7 +2112,6 @@ necessary
 neck
 necklace
 necktie
-ned
 need
 needle
 negative
@@ -2291,7 +2250,6 @@ pair
 pajamas
 pal
 palm
-pam
 pan
 pancake
 panda
@@ -2359,7 +2317,6 @@ peseta
 pest
 pet
 petal
-pete
 pharmacist
 phone
 photo
@@ -2441,7 +2398,7 @@ poke
 pole
 polish
 political
-polute
+pollute
 pomp
 pond
 pong
@@ -2564,7 +2521,6 @@ quicksand
 quiet
 quill
 quilt
-quinn
 quit
 quoit
 quotation marks
@@ -2622,7 +2578,6 @@ red
 reef
 reek
 reel
-refridgerator
 refrigerator
 refund
 regret
@@ -2642,7 +2597,7 @@ repair
 representation
 representative
 request
-resevoir
+reservoir
 respect
 responsibility
 responsible
@@ -2654,7 +2609,6 @@ resuscitate
 return
 reverse
 reward
-rex
 rhinoceros
 rhyme
 rhythm
@@ -2681,7 +2635,6 @@ ripe
 rise
 risk
 river
-rivera
 road
 roam
 roast
@@ -2699,7 +2652,6 @@ roll
 roller skate
 rome
 romp
-ron
 roof
 rook
 room
@@ -2713,7 +2665,6 @@ rotten
 rough
 round
 row
-roy
 royal
 rub
 rubber
@@ -2739,9 +2690,8 @@ rye
 sack
 sad
 saddle
-saddly
 safe
-safetypin
+safety pin
 sag
 said
 sail
@@ -2753,10 +2703,8 @@ salad
 sale
 salt
 salute
-sam
 same
 sample
-sanchez
 sand
 sandal
 sandbox
@@ -2841,14 +2789,12 @@ sense
 sent
 sentence
 separate
-seperate
 september
 serious
 servant
 serve
 served
 set
-seth
 settle
 seven
 seventh
@@ -3008,7 +2954,6 @@ sling
 slip
 slit
 slither
-sloan
 slob
 sloop
 slop
@@ -3210,7 +3155,6 @@ step
 step mother
 stereo
 stern
-steve
 stick
 stick figure
 sticky
@@ -3310,7 +3254,6 @@ swallow
 swam
 swamp
 swan
-swang
 swap
 swarm
 swat
@@ -3390,14 +3333,13 @@ tear
 teardrop
 tease
 teat
-ted
 teddy bear
 teeth
 telephone
 telephone pole
 television
 tell
-temperment
+temperament
 ten
 tend
 tendency
@@ -3407,7 +3349,6 @@ tenth
 tepee
 term
 territory
-tess
 test
 texas
 than
@@ -3500,7 +3441,6 @@ toad
 toast
 tock
 today
-todd
 toe
 toffee
 together
@@ -3510,7 +3450,6 @@ toilet paper
 told
 tom
 tomato
-tommorrow
 tomorrow
 ton
 tongue
@@ -3650,7 +3589,6 @@ upstairs
 urge
 urn
 us
-usa
 use
 used
 useful
