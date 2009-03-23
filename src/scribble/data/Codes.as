@@ -21,7 +21,8 @@ public class Codes
 
     public static function isAdmin (playerId :int) :Boolean
     {
-        return playerId == 878; // Aduros' playerId
+        return playerId == 878  // Aduros
+            || playerId == 713; // Silk
     }
 
     public static function keyCanvas (prefix :String) :String
