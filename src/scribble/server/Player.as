@@ -47,6 +47,16 @@ public class Player
         return _ctrl.getPlayerId();
     }
 
+    public function addedBackdropStroke () :void
+    {
+        // Only submit a stat every 10 strokes to save messages
+        _backdropStrokes += 1;
+        if (_backdropStrokes >= 10) {
+            stats.submit("backdropStrokes", 10);
+            _backdropStrokes = 0;
+        }
+    }
+
     protected static const STATS :Object = {
         pictoScore: Stat.MAX, // High score in pictionary
         pictoWins: Stat.ADD, // Pictionary rounds won
@@ -57,6 +67,9 @@ public class Player
         pictoConsecutives: Stat.MAX, // Number of rounds played in a single session
         pictoColors: Stat.MAX, // Number of colors used in a single drawing
 
+        pictoQuickDraw: Stat.SET,
+        pictoQuickGuess: Stat.SET,
+
         //backdropTime: Stat.ADD, // Total minutes spent in backdrop mode
         backdropStrokes: Stat.ADD, // Total strokes sent to backdrop mode
 
@@ -66,33 +79,33 @@ public class Player
     protected static const TROPHIES :Object = {
 //        pictoDraws: [ new Trophy(1, "pictoDraws1"), new Trophy(3, "pictoDraws3") ] // Test
         pictoRounds: [
-            new Trophy(1, "pictoRounds1"),
-            new Trophy(2, "pictoRounds2"),
-            new Trophy(3, "pictoRounds3"),
-            new Trophy(4, "pictoRounds4"),
-            new Trophy(5, "pictoRounds5"),
-            new Trophy(6, "pictoRounds6"),
-            new Trophy(7, "pictoRounds7"),
+            new Trophy(1, "roman1"),
+            new Trophy(2, "roman2"),
+            new Trophy(3, "roman3"),
+            new Trophy(4, "roman4"),
+            new Trophy(5, "roman5"),
+            new Trophy(6, "roman6"),
+            new Trophy(7, "roman7"),
         ],
 
         pictoWins: [
-            new Trophy(1, "pictoWins1"),
-            new Trophy(2, "pictoWins2"),
-            new Trophy(3, "pictoWins3"),
-            new Trophy(4, "pictoWins4"),
-            new Trophy(5, "pictoWins5"),
-            new Trophy(6, "pictoWins6"),
-            new Trophy(7, "pictoWins7"),
+            new Trophy(1, "rainbow1"),
+            new Trophy(2, "rainbow2"),
+            new Trophy(3, "rainbow3"),
+            new Trophy(4, "rainbow4"),
+            new Trophy(5, "rainbow5"),
+            new Trophy(6, "rainbow6"),
+            new Trophy(7, "rainbow7"),
         ],
 
         pictoDraws: [
-            new Trophy(1, "pictoDraws1"),
-            new Trophy(2, "pictoDraws2"),
-            new Trophy(3, "pictoDraws3"),
-            new Trophy(4, "pictoDraws4"),
-            new Trophy(5, "pictoDraws5"),
-            new Trophy(6, "pictoDraws6"),
-            new Trophy(7, "pictoDraws7"),
+            new Trophy(1, "paint1"),
+            new Trophy(2, "paint2"),
+            new Trophy(3, "paint3"),
+            new Trophy(4, "paint4"),
+            new Trophy(5, "paint5"),
+            new Trophy(6, "paint6"),
+            new Trophy(7, "paint7"),
         ],
 
         pictoGuesses: [
@@ -106,18 +119,32 @@ public class Player
         ],
 
         pictoScore: [
-            new Trophy(1, "pictoScore1"),
-            new Trophy(2, "pictoScore2"),
-            new Trophy(3, "pictoScore3"),
+            new Trophy(1, "medal1"),
+            new Trophy(2, "medal2"),
+            new Trophy(3, "medal3"),
         ],
 
-        pictoBoobs: [ new Trophy(true, "pictoBoobs") ],
+        // Only updated in multiples of 10
+        backdropStrokes: [
+            new Trophy(10, "scribble1"), // TODO: Also award a prize
+            new Trophy(20, "scribble2"),
+            new Trophy(30, "scribble3"),
+            new Trophy(40, "scribble4"),
+            new Trophy(50, "scribble5"),
+            new Trophy(60, "scribble6"),
+            new Trophy(70, "scribble7"),
+        ],
 
-        boughtToolbox: [ new Trophy(true, "boughtToolbox") ],
-        killedMonster: [ new Trophy(true, "killedMonster") ]
+        pictoBoobs: [ new Trophy(true, "boobeyes") ],
+        pictoQuickDraw: [ new Trophy(true, "quickdraw") ],
+        pictoQuickGuess: [ new Trophy(true, "quickguess") ],
+        boughtToolbox: [ new Trophy(true, "toolbox") ],
+        killedMonster: [ new Trophy(true, "sword") ]
     };
 
     protected var _ctrl :PlayerSubControlServer;
+
+    protected var _backdropStrokes :int;
 }
 
 

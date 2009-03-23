@@ -12,7 +12,8 @@ import scribble.data.PictionaryLogic;
 public class PictionaryCanvas extends Canvas
 {
     public static const RECENT_WORDS_CAPACITY :int = 100;
-    public static const AVERAGE_MATCH_DURATION :int = 10 * 60*1000;
+    public static const AVERAGE_MATCH_DURATION :int = 10 * 60*1000; // For payout purposes
+    public static const QUICK_POINTS :int = 9; // Points required to get quick draw/guess
 
     public function PictionaryCanvas (mode :int, room :RoomManager)
     {
@@ -267,11 +268,17 @@ public class PictionaryCanvas extends Canvas
             drawer.ctrl.doBatch(function () :void {
                 drawer.stats.submit("pictoScore", addScore(turnHolder, points));
                 drawer.stats.submit("pictoDraws", 1);
+                if (points >= QUICK_POINTS) {
+                    drawer.stats.submit("pictoQuickDraw", true);
+                }
                 drawer.ctrl.completeTask("pictoDraw", 0.015*points);
             });
             guesser.ctrl.doBatch(function () :void {
                 guesser.stats.submit("pictoScore", addScore(guesserId, points));
                 guesser.stats.submit("pictoGuesses", 1);
+                if (points >= QUICK_POINTS) {
+                    guesser.stats.submit("pictoQuickGuess", true);
+                }
                 guesser.ctrl.completeTask("pictoGuess", 0.015*points);
             });
 

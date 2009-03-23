@@ -78,14 +78,21 @@ public class Canvas
     {
         requireWriteAccess(playerId);
 
-        _props.setIn(Codes.keyCanvas(_prefix), _strokeCounter, [ playerId, strokeBytes ]);
+        addStroke(playerId, strokeBytes);
+    }
+
+    protected function addStroke (artistId :int, strokeBytes :ByteArray) :void
+    {
+        _props.setIn(Codes.keyCanvas(_prefix), _strokeCounter, [ artistId, strokeBytes ]);
         _strokeCounter += 1;
     }
 
     public function sendStrokeList (playerId :int, list :Array) :void
     {
+        requireWriteAccess(playerId);
+
         for each (var strokeBytes :ByteArray in list) {
-            sendStroke(playerId, strokeBytes);
+            addStroke(playerId, strokeBytes);
         }
     }
 

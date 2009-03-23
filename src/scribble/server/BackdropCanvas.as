@@ -1,5 +1,7 @@
 package scribble.server {
 
+import flash.utils.ByteArray;
+
 import scribble.data.Codes;
 
 public class BackdropCanvas extends Canvas
@@ -33,6 +35,13 @@ public class BackdropCanvas extends Canvas
         if (_props.get(Codes.keyLock(_prefix))) {
             throw new Error("Permission denied. Canvas is locked.");
         }
+    }
+
+    override public function sendStroke (playerId :int, strokeBytes :ByteArray) :void
+    {
+        super.sendStroke(playerId, strokeBytes);
+
+        Player(_room.players[playerId]).addedBackdropStroke();
     }
 
     override public function toggleLock () :void
