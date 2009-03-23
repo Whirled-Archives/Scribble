@@ -53,7 +53,12 @@ public class Player
         pictoRounds: Stat.ADD, // Pictionary rounds played
         pictoDraws: Stat.ADD, // Pictionary words successfully drawn
         pictoGuesses: Stat.ADD, // Pictionary words successfully guessed
-        pictoBoobed: Stat.SET
+        pictoBoobed: Stat.SET,
+        pictoConsecutives: Stat.MAX, // Number of rounds played in a single session
+        pictoColors: Stat.MAX, // Number of colors used in a single drawing
+
+        //backdropTime: Stat.ADD, // Total minutes spent in backdrop mode
+        backdropStrokes: Stat.ADD // Total strokes sent to backdrop mode
     };
     protected static const TROPHIES :Object = {
         pictoScore: [ new Trophy(20, "pictoScore8") ], // Test
