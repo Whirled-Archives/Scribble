@@ -22,11 +22,6 @@ public class ModeSwitcher extends Sprite
     {
         _mode = mode;
 
-        graphics.beginFill(0x00ff00);
-        graphics.drawRect(0, 0, 50, 50);
-        graphics.endFill();
-        addChild(_label);
-
         ToolTipManager.instance.attach(this, Messages.en.xlate("t_mode"+mode));
         Command.bind(this, MouseEvent.CLICK, ScribbleController.CHANGE_MODE, mode);
 
@@ -42,17 +37,18 @@ public class ModeSwitcher extends Sprite
                 }
             });
 
+        graphics.beginFill(0, 0.6);
+        graphics.drawRect(0, 0, 140, 20);
+        graphics.lineStyle(1, 0xc0c0c0);
+        graphics.lineTo(140, 0);
+        graphics.endFill();
+        addChild(_label);
+
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
     }
 
     protected function onEnteredRoom (event :AVRGamePlayerEvent) :void
     {
-        var o :Object = Game.ctrl.room.props.get(Codes.PLAYER_MODES);
-        trace("onEnteredRoom:"+_mode);
-        for (var s :String in o) {
-            trace(s +" = " + o[s]);
-        }
-
         var n :int = 0;
         for each (var mode :int in Game.ctrl.room.props.get(Codes.PLAYER_MODES)) {
             if (mode == _mode) {
@@ -66,13 +62,14 @@ public class ModeSwitcher extends Sprite
     {
         _population = population;
         _label.text = Messages.en.xlate("b_mode"+_mode, _population);
+        _label.textColor = (_population > 0) ? 0xff9900 : 0xffffff;
     }
 
     protected var _mode :int;
     protected var _population :int;
 
     protected var _label :TextField = TextFieldUtil.createField("",
-        { textColor: 0xffffff, selectable: false, width: 0,
+        { selectable: false, x: 20, width: 0,
             autoSize: TextFieldAutoSize.LEFT, outlineColor: 0x00000 },
         { font: "_sans", size: 12, bold: true });
 }

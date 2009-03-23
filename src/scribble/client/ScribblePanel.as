@@ -7,6 +7,8 @@ import flash.events.MouseEvent; // TODO: temp
 import flash.geom.Rectangle; // TODO: temp
 import flash.utils.Dictionary; // TODO: temp
 
+import com.gskinner.motion.GTween;
+
 import com.threerings.util.Command;
 import com.threerings.util.ValueEvent;
 
@@ -65,18 +67,11 @@ public class ScribblePanel extends Sprite
 
         // Test stuff
 
-        addChild(_switchBackdrop);
-        addChild(_switchPictionary);
+        for each (var switcher :ModeSwitcher in _modeSwitchers) {
+            addChild(switcher);
+        }
 
-//        var rect :Rectangle = Game.ctrl.local.getPaintableArea();
-//        switcher.x = rect.width - 60;
-//        switcher.y = rect.height - 60;
-//        const self :ScribblePanel = this;
-//        switcher.addEventListener(MouseEvent.CLICK, function (... _) :void {
-//            Command.dispatch(self, ScribbleController.CHANGE_MODE,
-//                _localMode == Codes.CANVAS_ROOM ? Codes.CANVAS_PICTIONARY : Codes.CANVAS_ROOM);
-//        });
-//        addChild(switcher);
+        addChild(_modeArrow);
 
         Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
         onResize();
@@ -86,11 +81,12 @@ public class ScribblePanel extends Sprite
     {
         var screen :Rectangle = Game.ctrl.local.getPaintableArea();
         if (screen != null) {
-            _switchBackdrop.x = 0;
-            _switchBackdrop.y = 100;
 
-            _switchPictionary.x = 0;
-            _switchPictionary.y = 180;
+            for (var ii :int = 0; ii < _modeSwitchers.length; ++ii) {
+                _modeSwitchers[ii].x = screen.width - _modeSwitchers[ii].width;
+                _modeSwitchers[ii].y = 45 + 20*ii;
+            }
+            _modeArrow.x = _modeSwitchers[0].x;
 
             _buttonBar.x = screen.width-_buttonBar.width+100-8;
             _buttonBar.y = 0;
@@ -126,6 +122,9 @@ public class ScribblePanel extends Sprite
                     ms.didEnter();
                 }
             }
+
+            var switcher :Sprite = _modeSwitchers[newMode];
+            new GTween(_modeArrow, 0.2, {y: switcher.y + switcher.height/2 - _modeArrow.height/2});
         }
     }
 
@@ -177,11 +176,16 @@ public class ScribblePanel extends Sprite
     [Embed(source="../../../res/exit.png")]
     protected static const EXIT_ICON :Class;
 
+    [Embed(source="../../../res/arrow_right.png")]
+    protected static const MODE_ICON :Class;
+    protected var _modeArrow :Bitmap = Bitmap(new MODE_ICON());
+
     /** Manages transitions. */
     protected const _modeSprites :Dictionary = new Dictionary(); // mode -> ModeSprite
 
-    protected var _switchBackdrop :ModeSwitcher = new ModeSwitcher(Codes.CANVAS_ROOM);
-    protected var _switchPictionary :ModeSwitcher = new ModeSwitcher(Codes.CANVAS_PICTIONARY);
+    protected var _modeSwitchers :Array = [
+        new ModeSwitcher(Codes.CANVAS_ROOM), new ModeSwitcher(Codes.CANVAS_PICTIONARY)
+    ];
 
     /** The mode the client is running. */
     protected var _localMode :int;
