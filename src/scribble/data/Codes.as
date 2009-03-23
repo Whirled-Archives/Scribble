@@ -20,6 +20,8 @@ public class Codes
     /** A dummy mob name and ID used for a correct foreground overlay drawing. */
     public static const MOB_FOREGROUND :String = "fg";
 
+    public static const PUBLIC_TOOLBENCH :String = "scribble:toolbench";
+
     public static function isAdmin (playerId :int) :Boolean
     {
         return playerId == 878  // Aduros

@@ -5,6 +5,7 @@ import flash.geom.Rectangle;
 
 import com.threerings.util.Log;
 
+import com.whirled.EntityControl;
 import com.whirled.avrg.AVRGameControl;
 import com.whirled.avrg.AVRGameControlEvent;
 
@@ -25,6 +26,16 @@ public class Game extends Sprite
     public static function canLock () :Boolean
     {
         return ctrl.room.canManageRoom() || Codes.isAdmin(ctrl.player.getPlayerId());
+    }
+
+    public static function isToolbenchHere () :Boolean
+    {
+        for each (var furni :String in ctrl.room.getEntityIds(EntityControl.TYPE_FURNI)) {
+            if (ctrl.room.getEntityProperty(Codes.PUBLIC_TOOLBENCH, furni) === true) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function Game ()
