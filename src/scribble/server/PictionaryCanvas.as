@@ -180,7 +180,6 @@ public class PictionaryCanvas extends Canvas
                             var player :Player = _room.players[roster[rosterId]];
                             player.ctrl.doBatch(function () :void {
                                 player.stats.submit("pictoRounds", 1);
-                                player.stats.submit("pictoScore", score);
                                 if (score == maxScore) {
                                     player.stats.submit("pictoWins", 1);
                                 }
@@ -231,10 +230,12 @@ public class PictionaryCanvas extends Canvas
         setPhase(PictionaryLogic.PHASE_PAUSE);
     }
 
-    protected function addScore (rosterId :int, delta :int) :void
+    /** Adds points to a player's score and returns the updated score. */
+    protected function addScore (rosterId :int, delta :int) :int
     {
-        _props.setIn(Codes.keyScores(_prefix), rosterId,
-            int(_logic.getScores()[rosterId])+delta, true);
+        var score :int = int(_logic.getScores()[rosterId])+delta;
+        _props.setIn(Codes.keyScores(_prefix), rosterId, score, true);
+        return score;
     }
 
     public function guess (playerId :int, guess :String) :void
@@ -244,35 +245,32 @@ public class PictionaryCanvas extends Canvas
         }
 
         var turnHolder :int = _logic.getTurnHolder();
-        var rosterId :int = _logic.getRosterId(playerId);
+        var guesserId :int = _logic.getRosterId(playerId);
 
-        if (guess == "boobs" && _wordNormalized.indexOf("eye") != -1) {
-            _room.players[playerId].stats.submit("pictoBoobed", true);
+        if (guess == "boob" && _wordNormalized.indexOf("eye") != -1) {
+            _room.players[playerId].stats.submit("pictoBoobs", true);
         }
 
 //        if (guess == _wordNormalized) {
         if (guess.indexOf(_wordNormalized) != -1) {
             var roster :Dictionary = _logic.getRoster();
             var drawer :Player = _room.players[roster[turnHolder]];
-            var guesser :Player = _room.players[roster[rosterId]];
+            var guesser :Player = _room.players[roster[guesserId]];
 
             var frac :Number = int(_props.get(Codes.keyTicker(_prefix)))/PictionaryLogic.DELAY_PLAYING;
             var points :int = 10*(1-frac) + 1;
-
-            addScore(rosterId, points);
-            addScore(turnHolder, points);
 
             // Notify correct guess
             _room.ctrl.sendMessage(
                 Codes.msgCorrect(_prefix), [ playerId, WORD_LIST[_wordId], points ]);
 
-            // TODO: Payout guesser and drawer
-
             drawer.ctrl.doBatch(function () :void {
+                drawer.stats.submit("pictoScore", addScore(turnHolder, points));
                 drawer.stats.submit("pictoDraws", 1);
                 drawer.ctrl.completeTask("pictoDraw", 0.015*points);
             });
             guesser.ctrl.doBatch(function () :void {
+                guesser.stats.submit("pictoScore", addScore(guesserId, points));
                 guesser.stats.submit("pictoGuesses", 1);
                 guesser.ctrl.completeTask("pictoGuess", 0.015*points);
             });

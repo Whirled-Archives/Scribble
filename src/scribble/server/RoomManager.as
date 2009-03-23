@@ -25,6 +25,7 @@ public class RoomManager
         _ctrl.props.set(Codes.PLAYER_MODES, null, true);
 
         _ctrl.addEventListener(AVRGameRoomEvent.PLAYER_LEFT, onPlayerLeft);
+        _ctrl.addEventListener(AVRGameRoomEvent.SIGNAL_RECEIVED, onSignal);
 
         // TODO: Handle this better
         //_ctrl.addEventListener(AVRGameRoomEvent.ROOM_UNLOADED, function (... _) :void {
@@ -63,6 +64,17 @@ public class RoomManager
     protected function onPlayerLeft (event :AVRGameRoomEvent) :void
     {
         setMode(int(event.value), null);
+    }
+
+    protected function onSignal (event :AVRGameRoomEvent) :void
+    {
+        if (event.name == "quest:kill") {
+            var killerId :int = event.value[0];
+            var mode :int = event.value[3];
+            if (killerId in _players && mode == 0) {
+                Player(_players[killerId]).stats.submit("killedMonster", true);
+            }
+        }
     }
 
     protected function getCanvas (playerId :int) :Canvas
