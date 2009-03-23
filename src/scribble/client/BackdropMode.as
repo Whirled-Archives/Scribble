@@ -134,12 +134,11 @@ public class BackdropMode extends ModeSprite
             _toolbox.x = screen.width-_toolbox.width+100;
             _toolbox.y = screen.height-_toolbox.height+100;
 
-            // Bind to top right
-            _lockButton.x = screen.width-_lockButton.width;
-            _lockButton.y = 64;
+            _lockButton.x = screen.width-_lockButton.width-128;
+            _lockButton.y = 0;
 
             _walkButton.x = _lockButton.x - _walkButton.width;
-            _walkButton.y = 64;
+            _walkButton.y = 0;
         }
     }
 
