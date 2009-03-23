@@ -11,7 +11,8 @@ public class ToolboxSprite extends Sprite
 
     public function ToolboxSprite (canvas :CanvasSprite)
     {
-        picker = Codes.isAdmin(Game.ctrl.player.getPlayerId()) ? new DeluxeBrushPicker() : new BrushPicker();
+        picker = Codes.hasToolboxUpgrade(Game.ctrl.player) ?
+            new DeluxeBrushPicker() : new BrushPicker();
         undo = new UndoSprite(canvas);
 
         addChild(picker);

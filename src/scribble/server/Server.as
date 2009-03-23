@@ -108,7 +108,8 @@ public class Server extends ServerObject
         room.players[playerId] = player;
 
         if (firstRoom) {
-            _gameManager.feed("m_joined", player.getName());
+//            _gameManager.feed("m_joined", player.getName());
+            player.stats.submit("boughtToolbox", Codes.hasToolboxUpgrade(player.ctrl));
         }
     }
 

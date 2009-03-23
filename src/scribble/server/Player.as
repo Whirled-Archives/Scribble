@@ -60,6 +60,7 @@ public class Player
         //backdropTime: Stat.ADD, // Total minutes spent in backdrop mode
         backdropStrokes: Stat.ADD, // Total strokes sent to backdrop mode
 
+        boughtToolbox: Stat.SET,
         killedMonster: Stat.SET // o==(--------
     };
     protected static const TROPHIES :Object = {
@@ -112,6 +113,7 @@ public class Player
 
         pictoBoobs: [ new Trophy(true, "pictoBoobs") ],
 
+        boughtToolbox: [ new Trophy(true, "boughtToolbox") ],
         killedMonster: [ new Trophy(true, "killedMonster") ]
     };
 

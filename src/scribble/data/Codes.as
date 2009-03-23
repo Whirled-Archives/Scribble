@@ -1,5 +1,6 @@
 package scribble.data {
 
+import com.whirled.avrg.PlayerSubControlBase;
 import com.whirled.net.NetConstants;
 
 public class Codes
@@ -23,6 +24,16 @@ public class Codes
     {
         return playerId == 878  // Aduros
             || playerId == 713; // Silk
+    }
+
+    public static function hasToolboxUpgrade (ctrl :PlayerSubControlBase) :Boolean
+    {
+        for each (var pack :Object in ctrl.getPlayerItemPacks()) {
+            if (pack.ident == "toolbox") {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static function keyCanvas (prefix :String) :String
