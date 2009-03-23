@@ -22,9 +22,19 @@ public class Stroke
             ba.writeInt(point.x);
             ba.writeInt(point.y);
         }
-        ba.writeBoolean(isBeginning);
-        ba.writeBoolean(isEnding);
-        ba.writeByte(brush);
+
+        var flags :int;
+        if (isBeginning) {
+            flags |= 4;
+        }
+        if (isEnding) {
+            flags |= 2;
+        }
+        if (brush < 0) {
+            flags |= 1;
+        }
+        ba.writeByte(flags);
+        ba.writeByte(Math.abs(brush)-128); // Surprise! This takes a signed byte
 
         return ba;
     }
@@ -37,9 +47,15 @@ public class Stroke
         for (var ii :int = 0; ii < stroke.points.length; ++ii) {
             stroke.points[ii] = new Point(ba.readInt(), ba.readInt());
         }
-        stroke.isBeginning = ba.readBoolean();
-        stroke.isEnding = ba.readBoolean();
-        stroke.brush = ba.readByte();
+
+        var flags :int = ba.readByte();
+        stroke.isBeginning = (flags & 4) != 0;
+        stroke.isEnding = (flags & 2) != 0;
+
+        stroke.brush = ba.readByte()+128;
+        if (flags & 1) {
+            stroke.brush = -stroke.brush;
+        }
 
         ba.position = 0; // Be kind, rewind
 

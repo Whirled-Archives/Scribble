@@ -4,6 +4,8 @@ import flash.display.Bitmap;
 import flash.display.Sprite;
 import flash.events.MouseEvent;
 
+import mx.utils.ColorUtil;
+
 import com.gskinner.motion.GTween;
 
 import com.threerings.util.Command;
@@ -15,7 +17,7 @@ public class BrushPicker extends Sprite
 {
     public static const BRUSH_CHANGED :String = "BrushChanged";
 
-    public static const COLORS :Array = [ -1, 0, 4, 6, 8, 23 ];
+    public static const COLORS :Array = [ -1, 0, 48, 3, 60, 12, 36, 51, 42 ];
 
     public function BrushPicker ()
     {
@@ -36,7 +38,9 @@ public class BrushPicker extends Sprite
             if (brushId < 0) {
                 button.addChild(new ICON_ERASER());
             } else {
-                button.graphics.beginFill(GraphicsUtil.getColor(brushId));
+                var color :int = GraphicsUtil.getColor(brushId);
+                button.graphics.beginFill(color);
+                button.graphics.lineStyle(1, ColorUtil.adjustBrightness(color, 0x33));
                 button.graphics.drawRect(0, 0, 24, 24);
                 button.graphics.endFill();
             }
