@@ -3,11 +3,14 @@ package scribble.server {
 import flash.utils.ByteArray;
 import flash.utils.Dictionary;
 
+import com.threerings.util.HashSet;
+
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
 import scribble.data.Codes;
 import scribble.data.PictionaryLogic;
+import scribble.data.Stroke;
 
 public class PictionaryCanvas extends Canvas
 {
@@ -199,6 +202,7 @@ public class PictionaryCanvas extends Canvas
             }
         } while (!_players.contains(roster[turnHolder]));
 
+        // Pick the next secret word
         do {
             _wordId = Math.random()*WORD_LIST.length;
         } while (_recentWords.indexOf(_wordId) != -1);
@@ -271,6 +275,14 @@ public class PictionaryCanvas extends Canvas
                 if (points >= QUICK_POINTS) {
                     drawer.stats.submit("pictoQuickDraw", true);
                 }
+
+                // Count brush color/styles
+                var brushes :HashSet = new HashSet();
+                for each (var record :Array in _props.get(Codes.keyCanvas(_prefix))) {
+                    brushes.add(Stroke.fromBytes(ByteArray(record[1])).brush);
+                }
+                drawer.stats.submit("colors", brushes.size());
+
                 drawer.ctrl.completeTask("pictoDraw", 0.015*points);
             });
             guesser.ctrl.doBatch(function () :void {

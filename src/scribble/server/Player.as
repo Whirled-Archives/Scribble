@@ -64,20 +64,19 @@ public class Player
         pictoDraws: Stat.ADD, // Pictionary words successfully drawn
         pictoGuesses: Stat.ADD, // Pictionary words successfully guessed
         pictoBoobs: Stat.SET, // ( . Y . )
-        pictoConsecutives: Stat.MAX, // Number of rounds played in a single session
+//        pictoConsecutives: Stat.MAX, // Number of rounds played in a single session
         pictoColors: Stat.MAX, // Number of colors used in a single drawing
 
         pictoQuickDraw: Stat.SET,
         pictoQuickGuess: Stat.SET,
 
-        //backdropTime: Stat.ADD, // Total minutes spent in backdrop mode
+//        backdropTime: Stat.ADD, // Total minutes spent in backdrop mode
         backdropStrokes: Stat.ADD, // Total strokes sent to backdrop mode
 
         boughtToolbox: Stat.SET,
         killedMonster: Stat.SET // o==(--------
     };
     protected static const TROPHIES :Object = {
-//        pictoDraws: [ new Trophy(1, "pictoDraws1"), new Trophy(3, "pictoDraws3") ] // Test
         pictoRounds: [
             new Trophy(1, "roman1"),
             new Trophy(2, "roman2"),
@@ -123,6 +122,8 @@ public class Player
             new Trophy(2, "medal2"),
             new Trophy(3, "medal3"),
         ],
+
+        pictoColors: [ new Trophy(7, "colors") ],
 
         // Only updated in multiples of 10
         backdropStrokes: [
