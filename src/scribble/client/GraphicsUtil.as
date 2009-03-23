@@ -37,13 +37,29 @@ public class GraphicsUtil
         }
     }
 
+    public static function getColor (brushId :int) :int
+    {
+        var r :int = (brushId>>4) & 3;
+        var g :int = (brushId>>2) & 3;
+        var b :int = brushId & 3;
+        return r*0x550000 + g*0x005500 + b*0x000055;
+    }
+
+    public static function getWidth (brushId :int) :int
+    {
+        var width :int = (brushId>>6) & 3;
+        return (brushId < 0) ? 3-width : width;
+    }
+
     public static function setupBrush (shape :Shape, brushId :int) :void
     {
-        if (brushId > 0) {
-            shape.graphics.lineStyle(4, Codes.BRUSH_COLORS[brushId]);
+        var width :int = Math.pow(2, getWidth(brushId)+1);
+        if (brushId >= 0) {
+            shape.graphics.lineStyle(width, getColor(brushId));
         } else {
             shape.blendMode = BlendMode.ERASE;
-            shape.graphics.lineStyle(24, 0xffffff);
+            // Two's complement
+            shape.graphics.lineStyle(2*width, 0xffffff);
         }
 
         // Optimization

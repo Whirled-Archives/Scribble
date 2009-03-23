@@ -2,6 +2,8 @@ package scribble.client {
 
 import flash.display.Sprite;
 
+import scribble.data.Codes;
+
 public class ToolboxSprite extends Sprite
 {
     public var picker :BrushPicker;
@@ -9,7 +11,7 @@ public class ToolboxSprite extends Sprite
 
     public function ToolboxSprite (canvas :CanvasSprite)
     {
-        picker = new BrushPicker();
+        picker = Codes.isAdmin(Game.ctrl.player.getPlayerId()) ? new DeluxeBrushPicker() : new BrushPicker();
         undo = new UndoSprite(canvas);
 
         addChild(picker);
@@ -26,7 +28,7 @@ public class ToolboxSprite extends Sprite
 
     public function reset () :void
     {
-        picker.setBrush(1);
+        picker.reset();
     }
 }
 
