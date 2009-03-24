@@ -178,10 +178,12 @@ public class PictionaryCanvas extends Canvas
                     var now :int = flash.utils.getTimer();
                     for (var key :String in roster) {
                         var rosterId :int = int(key);
+                        var playerId :int = int(roster[rosterId]);
                         score = scores[rosterId];
-                        Server.log.info("Ending match", "rosterId", rosterId, "score", score);
-                        if (score > 0) {
-                            var player :Player = _room.players[roster[rosterId]];
+
+                        // If they're still here and they scored at least a point
+                        if (score > 0 && playerId in _room.players) {
+                            var player :Player = _room.players[playerId];
                             player.ctrl.doBatch(function () :void {
                                 player.stats.submit("pictoRounds", 1);
                                 if (score == maxScore) {
@@ -196,6 +198,7 @@ public class PictionaryCanvas extends Canvas
 
                     setPhase(PictionaryLogic.PHASE_INTERMISSION);
                     return;
+
                 } else {
                     turnHolder = 0;
                 }
@@ -265,10 +268,6 @@ public class PictionaryCanvas extends Canvas
             var frac :Number = int(_props.get(Codes.keyTicker(_prefix)))/PictionaryLogic.DELAY_PLAYING;
             var points :int = 10*(1-frac) + 1;
 
-            // Notify correct guess
-            _room.ctrl.sendMessage(
-                Codes.msgCorrect(_prefix), [ playerId, WORD_LIST[_wordId], points ]);
-
             drawer.ctrl.doBatch(function () :void {
                 drawer.stats.submit("pictoScore", addScore(turnHolder, points));
                 drawer.stats.submit("pictoDraws", 1);
@@ -293,6 +292,10 @@ public class PictionaryCanvas extends Canvas
                 }
                 guesser.ctrl.completeTask("pictoGuess", 0.015*points);
             });
+
+            // Notify correct guess
+            _room.ctrl.sendMessage(
+                Codes.msgCorrect(_prefix), [ playerId, WORD_LIST[_wordId], points ]);
 
             setPhase(PictionaryLogic.PHASE_PAUSE);
         }

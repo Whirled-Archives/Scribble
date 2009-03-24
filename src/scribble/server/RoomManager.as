@@ -63,7 +63,7 @@ public class RoomManager
 
     protected function onPlayerLeft (event :AVRGameRoomEvent) :void
     {
-        setMode(int(event.value), null);
+        _ctrl.doBatch(setMode, event.value, null);
     }
 
     protected function onSignal (event :AVRGameRoomEvent) :void
