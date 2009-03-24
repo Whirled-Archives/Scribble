@@ -281,7 +281,7 @@ public class PictionaryCanvas extends Canvas
                 for each (var record :Array in _props.get(Codes.keyCanvas(_prefix))) {
                     brushes.add(Stroke.fromBytes(ByteArray(record[1])).brush);
                 }
-                drawer.stats.submit("colors", brushes.size());
+                drawer.stats.submit("pictoColors", brushes.size());
 
                 drawer.ctrl.completeTask("pictoDraw", 0.015*points);
             });

@@ -118,12 +118,12 @@ public class Player
         ],
 
         pictoScore: [
-            new Trophy(1, "medal1"),
-            new Trophy(2, "medal2"),
-            new Trophy(3, "medal3"),
+            new Trophy(10, "medal1"),
+            new Trophy(20, "medal2"),
+            new Trophy(30, "medal3"),
         ],
 
-        pictoColors: [ new Trophy(7, "colors") ],
+        pictoColors: [ new Trophy(6, "colors") ],
 
         // Only updated in multiples of 10
         backdropStrokes: [

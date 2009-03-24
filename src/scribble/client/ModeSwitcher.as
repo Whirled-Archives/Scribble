@@ -45,6 +45,8 @@ public class ModeSwitcher extends Sprite
         addChild(_label);
 
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
+
+        this.buttonMode = true;
     }
 
     protected function onEnteredRoom (event :AVRGamePlayerEvent) :void
