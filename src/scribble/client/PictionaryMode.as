@@ -215,6 +215,7 @@ public class PictionaryMode extends ModeSprite
 
         // Auto-pass when idle
         if (isMyTurn && Game.ctrl.room.getAvatarInfo(Game.ctrl.player.getPlayerId()).isIdle) {
+            Game.ctrl.local.feedback(Messages.en.xlate("m_picto_autoPass"));
             Command.dispatch(this, ScribbleController.PICTIONARY_PASS);
         }
     }

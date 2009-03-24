@@ -65,13 +65,32 @@ public class ScribblePanel extends Sprite
 
         addChild(_buttonBar);
 
-        // Test stuff
-
         for each (var switcher :ModeSwitcher in _modeSwitchers) {
             addChild(switcher);
         }
 
         addChild(_modeArrow);
+
+        var welcome :Function = function (... _) :void {
+            var version :String = root.loaderInfo.url.replace(/.*\/([0-9a-f]+).swf$/i, "$1");
+            var last :String = Game.ctrl.player.props.get(Codes.PLAYER_VERSION) as String;
+
+            if (version != last) {
+                Game.log.info("Updated version detected", "hash", version);
+                if (last == null) {
+                    Game.ctrl.local.feedback(Messages.en.xlate("m_welcome_newbie"));
+                } else {
+                    Game.ctrl.local.feedback(Messages.en.xlate("m_updated"));
+                }
+                Game.ctrl.player.props.set(Codes.PLAYER_VERSION, version);
+
+            } else {
+                Game.ctrl.local.feedback(Messages.en.xlate("m_welcome"));
+            }
+
+            removeEventListener(Event.ADDED_TO_STAGE, welcome);
+        };
+        addEventListener(Event.ADDED_TO_STAGE, welcome);
 
         Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
         onResize();

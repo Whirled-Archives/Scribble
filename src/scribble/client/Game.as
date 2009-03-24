@@ -46,11 +46,7 @@ public class Game extends Sprite
             return;
         }
 
-        var msg :String = "Scribble, compiled at " + BuildConfig.WHEN;
-        log.info(msg, "debug", BuildConfig.DEBUG);
-        if (BuildConfig.DEBUG) {
-            ctrl.local.feedback(msg);
-        }
+        log.info("Starting Scribble", "compiled", BuildConfig.WHEN, "debug", BuildConfig.DEBUG);
 
         // Set up the ToolTipManager
         ToolTipManager.instance.screen = this;

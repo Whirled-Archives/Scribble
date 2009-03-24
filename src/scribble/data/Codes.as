@@ -20,6 +20,9 @@ public class Codes
     /** A dummy mob name and ID used for a correct foreground overlay drawing. */
     public static const MOB_FOREGROUND :String = "fg";
 
+    /** Player property storing the last swf MD5 hash played. */
+    public static const PLAYER_VERSION :String = "v";
+
     public static const PUBLIC_TOOLBENCH :String = "scribble:toolbench";
 
     public static function isAdmin (playerId :int) :Boolean
@@ -37,6 +40,8 @@ public class Codes
         }
         return false;
     }
+
+    /** TODO: Shrink these key names. */
 
     public static function keyCanvas (prefix :String) :String
     {
