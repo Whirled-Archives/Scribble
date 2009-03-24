@@ -1247,7 +1247,6 @@ future
 gag
 game
 gang
-gaol
 gap
 garbage
 garden
@@ -2391,7 +2390,6 @@ plums
 plus
 pocket
 pod
-poi
 point
 poison
 poke
