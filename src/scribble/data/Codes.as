@@ -21,7 +21,7 @@ public class Codes
     public static const MOB_FOREGROUND :String = "fg";
 
     /** Player property storing the last swf MD5 hash played. */
-    public static const PLAYER_VERSION :String = "v";
+    public static const PLAYER_VERSION :String = NetConstants.makePersistent("v");
 
     public static const PUBLIC_TOOLBENCH :String = "scribble:toolbench";
 
