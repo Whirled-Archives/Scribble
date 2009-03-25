@@ -108,13 +108,13 @@ public class Player
         ],
 
         pictoGuesses: [
-            new Trophy(1, "pictoGuesses1"),
-            new Trophy(2, "pictoGuesses2"),
-            new Trophy(3, "pictoGuesses3"),
-            new Trophy(4, "pictoGuesses4"),
-            new Trophy(5, "pictoGuesses5"),
-            new Trophy(6, "pictoGuesses6"),
-            new Trophy(7, "pictoGuesses7"),
+            new Trophy(1, "books1"),
+            new Trophy(2, "books2"),
+            new Trophy(3, "books3"),
+            new Trophy(4, "books4"),
+            new Trophy(5, "books5"),
+            new Trophy(6, "books6"),
+            new Trophy(7, "books7"),
         ],
 
         pictoScore: [

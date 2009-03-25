@@ -35,7 +35,17 @@ public class Messages
         m_picto_guess: "{0}: {1}",
         m_picto_fail: "{0} ran out of time on \"{1}\".",
         m_picto_autoPass: "Auto-passing because you were away. Wake up!",
+        m_picto_win: "{0} wins!",
+        m_picto_go: "DRAW!",
+
         t_picto_close: "Close Wordsketch",
+
+        m_picto_score1: "Not Bad!",
+        m_picto_score2: "OK!",
+        m_picto_score3: "Good!",
+        m_picto_score4: "Great!",
+        m_picto_score5: "Marvellous!",
+        //m_picto_score6: "Asshole!",
 
         l_mode0: "Doodle",
         l_mode1: "Wordsketch",
@@ -46,8 +56,8 @@ public class Messages
         m_locateFail: "No other games of {0} were found. Why not invite a friend?",
         m_bye: "Thanks for playing Scribble. Come back soon!",
 
-        m_welcome_newbie: "OMG TODO",
-        m_welcome: "Welcome back to Scribble!",
+        m_welcome_newbie: "Welcome to Scribble. Play Wordsketch with friends or just have fun Doodling!",
+        m_welcome: "Welcome back to Scribble! Join the community and find friends at http://www.whirled.com/#groups-d_10585 .",
         m_updated: "Scribble has been updated since you last played! Check out http://www.whirled.com/#groups-f_10585 for what changed."
     });
 }

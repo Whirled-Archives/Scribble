@@ -102,6 +102,11 @@ public class Codes
     {
         return prefix + "fail"; // String
     }
+
+    public static function msgWinners (prefix :String) :String
+    {
+        return prefix + "winner"; // [String]
+    }
 }
 
 }

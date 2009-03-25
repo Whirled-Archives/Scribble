@@ -72,7 +72,7 @@ public class RoomManager
             var killerId :int = event.value[0];
             var level :int = event.value[2];
             var mode :int = event.value[3];
-            if (killerId in _players && mode == 0 && level > 50) {
+            if (killerId in _players && mode == 0 && level >= 120) {
                 Player(_players[killerId]).stats.submit("killedMonster", true);
             }
         }

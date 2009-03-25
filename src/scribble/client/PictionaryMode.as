@@ -213,10 +213,14 @@ public class PictionaryMode extends ModeSprite
             _toolbox.reset();
         }
 
-        // Auto-pass when idle
-        if (isMyTurn && Game.ctrl.room.getAvatarInfo(Game.ctrl.player.getPlayerId()).isIdle) {
-            Game.ctrl.local.feedback(Messages.en.xlate("m_picto_autoPass"));
-            Command.dispatch(this, ScribbleController.PICTIONARY_PASS);
+        if (isMyTurn) {
+            // Auto-pass when idle
+            if (Game.ctrl.room.getAvatarInfo(Game.ctrl.player.getPlayerId()).isIdle) {
+                Game.ctrl.local.feedback(Messages.en.xlate("m_picto_autoPass"));
+                Command.dispatch(this, ScribbleController.PICTIONARY_PASS);
+            } else {
+                showMessage(Messages.en.xlate("m_picto_go"), 1, 0xff0000);
+            }
         }
     }
 
@@ -297,12 +301,19 @@ public class PictionaryMode extends ModeSprite
                 break;
 
             case Codes.msgCorrect(_prefix):
+                var drawerId :int = _logic.getPlayerId(_logic.getTurnHolder());
+                var guesserId :int = event.value[0];
+                var word :String = event.value[1];
+                var points :int = event.value[2];
+                var myId :int = Game.ctrl.player.getPlayerId();
+
                 Game.ctrl.local.feedback(Messages.en.xlate("m_picto_correct",
-                    Game.getName(event.value[0]),
-                    Game.getName(_logic.getPlayerId(_logic.getTurnHolder())),
-                    event.value[2],
-                    event.value[1]));
-                setHint(event.value[1] as String);
+                    Game.getName(event.value[0]), Game.getName(drawerId), points, word));
+                setHint(word);
+
+                if (drawerId == myId || guesserId == myId) {
+                    showMessage(Messages.en.xlate("m_picto_score"+int((points+1)/2)), 2);
+                }
                 break;
             
             case Codes.msgFail(_prefix):
@@ -310,7 +321,38 @@ public class PictionaryMode extends ModeSprite
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
                 setHint(event.value as String);
                 break;
+
+            case Codes.msgWinners(_prefix):
+                var winnerIds :Array = event.value as Array;
+                var text :String = Messages.en.xlate("m_picto_win",
+                    winnerIds.map(function (playerId :int, ... _) :String {
+                        return Game.getName(playerId);
+                    }).join(", "));
+                showMessage(text, 5);
+                Game.ctrl.local.feedback(text);
+                break;
         }
+    }
+
+    protected function showMessage (message :String, speed :Number, color :int = 0x195f85) :void
+    {
+        var tf :TextField = TextFieldUtil.createField(message,
+            { embedFonts: true, textColor: color, selectable: false, 
+                autoSize: TextFieldAutoSize.LEFT },
+            { font: "scribble", size: 36 });
+
+        tf.x = _canvas.width/2 - tf.textWidth/2;
+        tf.y = 0;
+        tf.filters = [ new DropShadowFilter(2) ]; // Everything's better with a drop shadow!
+        tf.alpha = 0.2;
+
+        var fadeOut :GTween = new GTween(tf, speed/4, {alpha: 0, y: 200}, {delay: speed, autoPlay: false});
+        var fadeIn :GTween = new GTween(tf, speed/4, {alpha: 1, y: 100}, {nextTween: fadeOut});
+
+        _canvas.addChild(tf);
+        fadeOut.addEventListener(Event.COMPLETE, function (... _) :void {
+            _canvas.removeChild(tf);
+        });
     }
 
     protected function setHint (hint :String) :void

@@ -171,11 +171,12 @@ public class PictionaryCanvas extends Canvas
                 if (_round == PictionaryLogic.ROUNDS) {
                     // TODO: Declare winner, payouts, etc
 
-                    var maxScore :int;
+                    var maxScore :int = 0; // Zomg! The default int value on Thane is NaN
                     for each (var score :int in scores) {
                         maxScore = Math.max(score, maxScore);
                     }
                     var now :int = flash.utils.getTimer();
+                    var winnerIds :Array = [];
                     for (var key :String in roster) {
                         var rosterId :int = int(key);
                         var playerId :int = int(roster[rosterId]);
@@ -187,6 +188,7 @@ public class PictionaryCanvas extends Canvas
                             player.ctrl.doBatch(function () :void {
                                 player.stats.submit("pictoRounds", 1);
                                 if (score == maxScore) {
+                                    winnerIds.push(playerId);
                                     player.stats.submit("pictoWins", 1);
                                 }
 
@@ -196,6 +198,7 @@ public class PictionaryCanvas extends Canvas
                         }
                     }
 
+                    _room.ctrl.sendMessage(Codes.msgWinners(_prefix), winnerIds);
                     setPhase(PictionaryLogic.PHASE_INTERMISSION);
                     return;
 

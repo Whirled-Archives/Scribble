@@ -76,13 +76,13 @@ public class ScribblePanel extends Sprite
             var last :String = Game.ctrl.player.props.get(Codes.PLAYER_VERSION) as String;
 
             if (version != last) {
-                Game.log.info("Updated version detected", "hash", version);
+                Game.log.info("Updated version detected", "version", version, "last", last);
                 if (last == null) {
                     Game.ctrl.local.feedback(Messages.en.xlate("m_welcome_newbie"));
                 } else {
                     Game.ctrl.local.feedback(Messages.en.xlate("m_updated"));
                 }
-                Game.ctrl.player.props.set(Codes.PLAYER_VERSION, version);
+                Game.ctrl.player.props.set(Codes.PLAYER_VERSION, version, true);
 
             } else {
                 Game.ctrl.local.feedback(Messages.en.xlate("m_welcome"));
