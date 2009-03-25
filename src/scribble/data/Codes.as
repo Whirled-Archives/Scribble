@@ -15,7 +15,7 @@ public class Codes
     public static const CANVAS_PREFIXES :Array = [ NetConstants.makePersistent("0"), "1", "2" ];
 
     /** A room property (Dictionary) that maps playerId to canvasIndex. */
-    public static const PLAYER_MODES :String = "mode";
+    public static const PLAYER_MODES :String = "m";
 
     /** A dummy mob name and ID used for a correct foreground overlay drawing. */
     public static const MOB_FOREGROUND :String = "fg";
@@ -41,71 +41,69 @@ public class Codes
         return false;
     }
 
-    /** TODO: Shrink these key names. */
-
     public static function keyCanvas (prefix :String) :String
     {
-        return prefix + "canvas"; // Dictionary
+        return prefix + "a"; // Dictionary
     }
 
     public static function keyScores (prefix :String) :String
     {
-        return prefix + "scores"; // Dictionary
+        return prefix + "b"; // Dictionary
     }
 
     public static function keyRoster (prefix :String) :String
     {
-        return prefix + "roster"; // Dictionary
+        return prefix + "c"; // Dictionary
     }
 
     public static function keyTurnHolder (prefix :String) :String
     {
-        return prefix + "turnHolder"; // int
+        return prefix + "d"; // int
     }
 
     public static function keyPhase (prefix :String) :String
     {
-        return prefix + "phase"; // int
+        return prefix + "e"; // int
     }
 
     public static function keyTicker (prefix :String) :String
     {
-        return prefix + "ticker"; // int
+        return prefix + "f"; // int
     }
 
     public static function keyLock (prefix :String) :String
     {
-        return prefix + "lock"; // Boolean
+        return prefix + "g"; // Boolean
     }
 
     public static function keyHint (prefix :String) :String
     {
-        return prefix + "hint"; // Boolean
+        return prefix + "h"; // Boolean
     }
 
     public static function msgCleared (prefix :String) :String
     {
-        return prefix + "cleared"; // int
+        return prefix + "a"; // int
     }
 
     public static function msgPass (prefix :String) :String
     {
-        return prefix + "pass"; // String
+        return prefix + "b"; // String
     }
 
     public static function msgCorrect (prefix :String) :String
     {
-        return prefix + "correct"; // [int, String]
+        return prefix + "c"; // [int, String]
     }
 
     public static function msgFail (prefix :String) :String
     {
-        return prefix + "fail"; // String
+        return prefix + "d"; // String
     }
 
     public static function msgWinners (prefix :String) :String
     {
-        return prefix + "winner"; // [String]
+        return prefix + "e"; // [String]
     }
 }
 

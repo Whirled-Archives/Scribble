@@ -18,7 +18,7 @@ public class PictionaryLogic
 
     public static const SECONDS :Number = 1000/Codes.TICKER_GRANULARITY;
 
-    public static const DELAY_INTERMISSION :int = 10*SECONDS;
+    public static const DELAY_INTERMISSION :int = 30*SECONDS;
     public static const DELAY_PLAYING :int = 90*SECONDS;
     public static const DELAY_PAUSE :int = 5*SECONDS;
 
