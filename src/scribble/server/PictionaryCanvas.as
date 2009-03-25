@@ -288,6 +288,10 @@ public class PictionaryCanvas extends Canvas
                 }
                 drawer.stats.submit("pictoColors", brushes.size());
 
+                if (frac <= 0.05) {
+                    drawer.stats.submit("pictoCloseCall", true);
+                }
+
                 drawer.ctrl.completeTask("pictoDraw", 0.015*points);
             });
             guesser.ctrl.doBatch(function () :void {
