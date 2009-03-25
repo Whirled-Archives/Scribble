@@ -12,7 +12,7 @@ public class Messages
         t_pass: "Skip turn",
         t_invite: "Invite friends to play",
         t_clear: "Clear canvas",
-        t_locate: "Find other players like me",
+        t_locate: "Find active rooms",
         t_quit: "Quit Scribble",
         t_turnHolder: "It is this person's turn to draw",
         t_walk: "Toggle walking/drawing",
@@ -52,8 +52,9 @@ public class Messages
 
         m_invite: "Check out this cool drawing game!",
 
-        m_locateSuccess: "Found a {0} game with {1} players! Join them at http://www.whirled.com/#world-s{2}",
-        m_locateFail: "No other games of {0} were found. Why not invite a friend?",
+        m_locatedHeader: "== Current Top 5 {0} rooms:",
+        m_locatedRoom: "{2} players in {1}: http://www.whirled.com/#world-s{0}",
+        m_locatedNone: "Nobody's playing {0} :(",
         m_bye: "Thanks for playing Scribble. Come back soon!",
 
         m_welcome_newbie: "Welcome to Scribble. Play Wordsketch with friends or just have fun Doodling!",

@@ -293,6 +293,7 @@ public class PictionaryCanvas extends Canvas
                 if (points >= QUICK_POINTS) {
                     guesser.stats.submit("pictoQuickGuess", true);
                 }
+                guesser.stats.submit("pictoGuessLength", _wordNormalized.length);
                 guesser.ctrl.completeTask("pictoGuess", 0.015*points);
             });
 

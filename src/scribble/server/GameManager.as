@@ -37,21 +37,33 @@ public class GameManager
 
     REMOTE function locatePeers (playerId :int, mode :int) :void
     {
-        var bestRoom :RoomManager = null;
-        var bestPop :int = 0;
+        var result :Array = []; // [ [ [56431, "Bob's room", 4], ... ], [ ... ] ]
 
-        for each (var room :RoomManager in _server.getRooms()) {
-            var pop :int = room.playersInMode(mode);
-            if (!(playerId in room.players) && pop > bestPop) {
-                bestRoom = room;
-                bestPop = pop;
+        for (var mode :int = 0; mode < 2; ++mode) {
+            var rooms :Array = []; // of loose Object
+            for each (var room :RoomManager in _server.getRooms()) {
+                var pop :int = room.playersInMode(mode);
+                if (pop > 0) {
+                    rooms.push({
+                        roomId: room.ctrl.getRoomId(),
+                        name: room.name,
+                        pop: pop
+                    });
+                }
             }
+
+            var top5 :Array = rooms.sortOn("pop", Array.NUMERIC | Array.DESCENDING).splice(0, 4);
+
+            var modeResult :Array = [];
+            for each (var o :Object in top5) {
+                Server.log.info("Got Top5 room", "mode", mode, "roomId", o.roomId, "name", o.name, "pop", o.pop);
+                modeResult.push([ o.roomId, o.name, o.pop ]);
+            }
+            result[mode] = modeResult;
         }
 
         // Respond to client request
-        _server.getPlayer(playerId).playerReceiver.apply("peersLocated", mode,
-            (bestRoom != null) ? bestRoom.ctrl.getRoomId() : 0,
-            bestPop);
+        _server.getPlayer(playerId).playerReceiver.apply("peersLocated", result);
     }
 
     public function feed (key :String, ... msg) :void

@@ -6,6 +6,8 @@ import com.threerings.util.Controller;
 import com.threerings.util.StringUtil;
 import com.threerings.util.ValueEvent;
 
+import com.whirled.avrg.AVRGamePlayerEvent;
+
 import aduros.net.REMOTE;
 import aduros.net.RemoteProvider;
 import aduros.net.RemoteProxy;
@@ -42,6 +44,15 @@ public class ScribbleController extends Controller
         new RemoteProvider(Game.ctrl.player, "mode", panel.getModeSprite);
         new RemoteProvider(Game.ctrl.player, "player", F.konst(this));
         new RemoteProvider(Game.ctrl.game, "game", F.konst(this));
+
+        // The room name doesn't exist on the server, and we need it.
+        // Therefore jump through a flaming hoop to get it.
+        Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, function (... _) :void {
+            if (Game.ctrl.room.getPlayerIds().length == 1) {
+                Game.log.info("Sending updated room name to server");
+                _roomService.updateName(Game.ctrl.room.getRoomName());
+            }
+        });
     }
 
     public function handleClearCanvas () :void
@@ -127,12 +138,26 @@ public class ScribbleController extends Controller
         Game.ctrl.local.feedback("Feed: " + Messages.en.xlate(message));
     }
 
-    REMOTE function peersLocated (mode :int, roomId :int, population :int) :void
+    REMOTE function peersLocated (result :Array) :void
     {
-        var modeName :String = Messages.en.xlate("l_mode"+mode);
-        Game.ctrl.local.feedback((roomId > 0) ?
-            Messages.en.xlate("m_locateSuccess", modeName, population, roomId) :
-            Messages.en.xlate("m_locateFail", modeName));
+        for (var mode :int = 0; mode < 2; ++mode) {
+            Game.ctrl.local.feedback(Messages.en.xlate("m_locatedHeader",
+                Messages.en.xlate("l_mode"+mode)));
+            if (result[mode].length > 0) {
+                for each (var room :Array in result[mode]) {
+                    trace("Room: mode="+mode+" " + room);
+                    var roomId :int = room[0];
+                    var name :String = room[1];
+                    var pop :int = room[2];
+                    Game.ctrl.local.feedback(Messages.en.xlate("m_locatedRoom",
+                        roomId, name, pop));
+                }
+
+            } else {
+                Game.ctrl.local.feedback(Messages.en.xlate("m_locatedNone",
+                    Messages.en.xlate("l_mode"+mode)));
+            }
+        }
     }
 
     protected var _roomService :RemoteProxy;
