@@ -43,6 +43,9 @@ public class BackdropMode extends ModeSprite
         _walkButton.addEventListener(MouseEvent.CLICK, function (... _) :void {
             _walkingEnabled = !_walkingEnabled;
             updateEnabled();
+            if (_walkingEnabled) {
+                Game.ctrl.local.feedback(Messages.en.xlate("m_doodle_walkOn"));
+            }
         });
         addChild(_walkButton);
 
@@ -146,6 +149,9 @@ public class BackdropMode extends ModeSprite
     {
         if (event.name == Codes.keyLock(_prefix)) {
             updateEnabled();
+            if (event.newValue == true) {
+                Game.ctrl.local.feedback(Messages.en.xlate("m_doodle_lockOn"));
+            }
         }
     }
 

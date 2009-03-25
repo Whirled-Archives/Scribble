@@ -18,7 +18,7 @@ public class Messages
         t_walk: "Toggle walking/drawing",
         t_reference: "Google Image Search this word",
         t_mode0: "Doodle this room",
-        t_mode1: "Play Wordsketch",
+        t_mode1: "Play Scribble: Wordsketch",
 
         b_mode0: "Doodling ({0})",
         b_mode1: "Wordsketch ({0})",
@@ -28,7 +28,7 @@ public class Messages
         m_joined: "{0} logged on.",
         m_erased: "{0} cleared the canvas.",
 
-        m_picto_notEnoughPlayers: "Not enough players to play Wordsketch. Why not invite a friend?",
+        m_picto_notEnoughPlayers: "Not enough players here to play Scribble: Wordsketch. Why not invite a friend, or use the \"Find active rooms\" button?",
         m_picto_intermission: "Get ready! The next round of Scribble: Wordsketch will soon begin.",
         m_picto_pass: "{0} passed on \"{1}\".",
         m_picto_correct: "{0} and {1} get {2} points for \"{3}\"!",
@@ -47,6 +47,9 @@ public class Messages
         m_picto_score5: "Marvellous!",
         //m_picto_score6: "Asshole!",
 
+        m_doodle_walkOn: "You have enabled walking. Click the pencil icon to resume doodling.",
+        m_doodle_lockOn: "This canvas is now locked. Only the room owner can unlock it for doodling.",
+
         l_mode0: "Doodle",
         l_mode1: "Wordsketch",
 
@@ -54,7 +57,7 @@ public class Messages
 
         m_locatedHeader: "== Current Top 5 {0} rooms:",
         m_locatedRoom: "{2} players in {1}: http://www.whirled.com/#world-s{0}",
-        m_locatedNone: "Nobody's playing {0} :(",
+        m_locatedNone: "Nobody playing {0} :(",
         m_bye: "Thanks for playing Scribble. Come back soon!",
 
         m_welcome_newbie: "Welcome to Scribble. Play Wordsketch with friends or just have fun Doodling!",
