@@ -143,16 +143,15 @@ public class ScribbleController extends Controller
         for (var mode :int = 0; mode < 2; ++mode) {
             Game.ctrl.local.feedback(Messages.en.xlate("m_locatedHeader",
                 Messages.en.xlate("l_mode"+mode)));
+
             if (result[mode].length > 0) {
                 for each (var room :Array in result[mode]) {
-                    trace("Room: mode="+mode+" " + room);
                     var roomId :int = room[0];
                     var name :String = room[1];
                     var pop :int = room[2];
                     Game.ctrl.local.feedback(Messages.en.xlate("m_locatedRoom",
                         roomId, name, pop));
                 }
-
             } else {
                 Game.ctrl.local.feedback(Messages.en.xlate("m_locatedNone",
                     Messages.en.xlate("l_mode"+mode)));

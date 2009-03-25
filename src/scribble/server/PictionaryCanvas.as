@@ -169,13 +169,13 @@ public class PictionaryCanvas extends Canvas
             if (turnHolder == end) {
                 _round += 1;
                 if (_round == PictionaryLogic.ROUNDS) {
-                    // TODO: Declare winner, payouts, etc
+                    var now :int = flash.utils.getTimer();
+                    var date :Date = new Date();
 
                     var maxScore :int = 0; // Zomg! The default int value on Thane is NaN
                     for each (var score :int in scores) {
                         maxScore = Math.max(score, maxScore);
                     }
-                    var now :int = flash.utils.getTimer();
                     var winnerIds :Array = [];
                     for (var key :String in roster) {
                         var rosterId :int = int(key);
@@ -190,6 +190,9 @@ public class PictionaryCanvas extends Canvas
                                 if (score == maxScore) {
                                     winnerIds.push(playerId);
                                     player.stats.submit("pictoWins", 1);
+                                    if (date.hours <= 3) { // Between midnight and 3:59 AM (Server time, PST)
+                                        player.stats.submit("pictoNightWins", 1);
+                                    }
                                 }
 
                                 player.ctrl.completeTask("pictoRound",

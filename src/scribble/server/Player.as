@@ -67,6 +67,7 @@ public class Player
 //        pictoConsecutives: Stat.MAX, // Number of rounds played in a single session
         pictoColors: Stat.MAX, // Number of colors used in a single drawing
         pictoGuessLength: Stat.MAX, // Longest word ever guessed
+        pictoNightWins: Stat.ADD,
 
         pictoQuickDraw: Stat.SET,
         pictoQuickGuess: Stat.SET,
@@ -126,6 +127,7 @@ public class Player
 
         pictoColors: [ new Trophy(6, "colors") ],
         pictoGuessLength: [ new Trophy(12, "dictionary") ],
+        pictoNightWins: [ new Trophy(5, "nightowl") ],
 
         // Only updated in multiples of 10
         backdropStrokes: [
