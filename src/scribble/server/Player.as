@@ -94,10 +94,11 @@ public class Player
             new Trophy(1, "rainbow1"),
             new Trophy(5, "rainbow2"),
             new Trophy(25, "rainbow3"),
-            new Trophy(100, "rainbow4"),
-            new Trophy(250, "rainbow5"),
-            new Trophy(500, "rainbow6"),
-            new Trophy(1000, "rainbow7"),
+            new Trophy(50, "rainbow4"),
+            new Trophy(100, "rainbow5"),
+            new Trophy(200, "rainbow6"),
+            new Trophy(500, "rainbow7"),
+            new Trophy(1000, "rainbow8"),
         ],
 
         pictoDraws: [
@@ -121,32 +122,32 @@ public class Player
         ],
 
         pictoScore: [
-            new Trophy(40, "medal1"),
+            new Trophy(30, "medal1"),
             new Trophy(50, "medal2"),
             new Trophy(80, "medal3"),
         ],
 
         pictoColors: [ new Trophy(6, "colors") ],
-        pictoGuessLength: [ new Trophy(12, "dictionary") ],
+        pictoGuessLength: [ new Trophy(14, "dictionary") ],
         pictoNightWins: [ new Trophy(5, "nightowl") ],
+        pictoBoobs: [ new Trophy(true, "boobeyes") ],
         pictoCloseCall: [ new Trophy(true, "watch") ],
+        pictoQuickDraw: [ new Trophy(true, "quickdraw") ],
+        pictoQuickGuess: [ new Trophy(true, "quickguess") ],
 
         // Only updated in multiples of 10
         backdropStrokes: [
-            new Trophy(10, "scribble1", "thumper"),
-            new Trophy(200, "scribble2", "popper"),
-            new Trophy(1000, "scribble3", "highway"),
-            new Trophy(2000, "scribble4", "feeder"),
-            new Trophy(5000, "scribble5", "pixeltar"),
-            new Trophy(10000, "scribble6", "babel"),
-            new Trophy(50000, "scribble7", "quakemix"),
+            new Trophy(10, "scribble1", "thumper"), // Amateur painter
+            new Trophy(200, "scribble2", "popper"), // Aspiring painter
+            new Trophy(1000, "scribble3", "highway"), // Apprentice painter
+            new Trophy(2000, "scribble4", "feeder"), // Journeyman painter
+            new Trophy(5000, "scribble5", "pixeltar"), // Master Artist
+            new Trophy(10000, "scribble6", "babel"), // Celebrated Artist
+            new Trophy(50000, "scribble7", "quakemix"), // Whirled-renown Artist
         ],
 
-        pictoBoobs: [ new Trophy(true, "boobeyes") ],
-        pictoQuickDraw: [ new Trophy(true, "quickdraw") ],
-        pictoQuickGuess: [ new Trophy(true, "quickguess") ],
-        boughtToolbox: [ new Trophy(true, "toolbox") ],
         killedMonster: [ new Trophy(true, "sword") ]
+        boughtToolbox: [ new Trophy(true, "toolbox") ],
     };
 
     protected var _ctrl :PlayerSubControlServer;
