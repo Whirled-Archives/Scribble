@@ -146,8 +146,8 @@ public class Player
             new Trophy(50000, "scribble7", "quakemix"), // Whirled-renown Artist
         ],
 
-        killedMonster: [ new Trophy(true, "sword") ]
-        boughtToolbox: [ new Trophy(true, "toolbox") ],
+        killedMonster: [ new Trophy(true, "sword") ],
+        boughtToolbox: [ new Trophy(true, "toolbox") ]
     };
 
     protected var _ctrl :PlayerSubControlServer;

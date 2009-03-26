@@ -240,6 +240,7 @@ public class PictionaryMode extends ModeSprite
                     playerId == Game.ctrl.player.getPlayerId());
                 _roster.setScore(rosterId, scores[rosterId]);
             }
+            _roster.setTurnHolder(_logic.getTurnHolder());
         }
     }
 
