@@ -6,7 +6,7 @@ import com.whirled.*;
 
 import scribble.data.Codes;
 
-[SWF(width="60", height="60")]
+[SWF(width="236", height="240")]
 public class Toolbench extends Sprite
 {
     public function Toolbench ()
