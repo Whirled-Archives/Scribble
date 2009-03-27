@@ -52,7 +52,7 @@ public class GameManager
                 }
             }
 
-            var top5 :Array = rooms.sortOn("pop", Array.NUMERIC | Array.DESCENDING).splice(0, 4);
+            var top5 :Array = rooms.sortOn("pop", Array.NUMERIC | Array.DESCENDING).splice(0, 5);
 
             var modeResult :Array = [];
             for each (var o :Object in top5) {
