@@ -44,6 +44,7 @@ public class ScribblePanel extends Sprite
         locator.addEventListener(MouseEvent.CLICK, function (... _) :void {
             Command.dispatch(locator, ScribbleController.LOCATE_PEERS, _localMode);
         });
+        GraphicsUtil.throttleClicks(locator);
         _buttonBar.addChild(locator);
 
         var invite :ImageButton = new ImageButton(new ICON_INVITE(),
