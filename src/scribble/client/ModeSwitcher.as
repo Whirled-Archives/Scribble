@@ -24,6 +24,7 @@ public class ModeSwitcher extends Sprite
 
         ToolTipManager.instance.attach(this, Messages.en.xlate("t_mode"+mode));
         Command.bind(this, MouseEvent.CLICK, ScribbleController.CHANGE_MODE, mode);
+        GraphicsUtil.throttleClicks(this);
 
         Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED,
             function (event :ElementChangedEvent) :void {

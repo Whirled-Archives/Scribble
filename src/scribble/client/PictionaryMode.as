@@ -240,7 +240,14 @@ public class PictionaryMode extends ModeSprite
                     playerId == Game.ctrl.player.getPlayerId());
                 _roster.setScore(rosterId, scores[rosterId]);
             }
-            _roster.setTurnHolder(_logic.getTurnHolder());
+        }
+
+        var turnHolder :int = _logic.getTurnHolder();
+        if (roster[turnHolder] in modes) {
+            _roster.setTurnHolder(turnHolder);
+        } else {
+            // This happened when Sivius crashed as the turn holder
+            Game.log.warning("Booch! Turn holder not in room");
         }
     }
 

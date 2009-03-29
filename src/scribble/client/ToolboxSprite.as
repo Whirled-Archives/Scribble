@@ -1,6 +1,12 @@
 package scribble.client {
 
+import flash.display.Bitmap;
 import flash.display.Sprite;
+import flash.events.MouseEvent;
+
+import com.threerings.util.Command;
+
+import aduros.display.ImageButton;
 
 import scribble.data.Codes;
 
@@ -17,7 +23,10 @@ public class ToolboxSprite extends Sprite
 
         addChild(picker);
 
-        var clearButton :ClearButton = new ClearButton();
+        var clearButton :ImageButton = new ImageButton(Bitmap(new ICON_CLEAR()),
+            Messages.en.xlate("t_clear"));
+        Command.bind(clearButton, MouseEvent.CLICK, ScribbleController.CLEAR_CANVAS);
+        GraphicsUtil.throttleClicks(clearButton);
         clearButton.x = width+16;
         clearButton.y = height/2 - clearButton.height/2;
         addChild(clearButton);
@@ -31,6 +40,9 @@ public class ToolboxSprite extends Sprite
     {
         picker.reset();
     }
+
+    [Embed(source="../../../res/clear.png")]
+    protected static const ICON_CLEAR :Class;
 }
 
 }

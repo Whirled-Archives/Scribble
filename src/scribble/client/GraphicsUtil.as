@@ -1,10 +1,13 @@
 package scribble.client {
 
+import flash.display.InteractiveObject;
 import flash.display.BlendMode;
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.display.Graphics;
 import flash.display.Shape;
+import flash.events.MouseEvent;
+import flash.utils.setTimeout;
 
 import com.gskinner.motion.GTween;
 
@@ -73,6 +76,16 @@ public class GraphicsUtil
         if (tween.state == GTween.END) {
             tween.play();
         }
+    }
+
+    public static function throttleClicks (source :InteractiveObject, timeout :int = 2000) :void
+    {
+        source.addEventListener(MouseEvent.CLICK, function (... _) :void {
+            source.mouseEnabled = false;
+            setTimeout(function () :void {
+                source.mouseEnabled = true;
+            }, timeout);
+        });
     }
 }
 

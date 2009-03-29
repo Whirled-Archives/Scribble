@@ -36,7 +36,7 @@ public class Messages
         m_picto_fail: "{0} ran out of time on \"{1}\".",
         m_picto_autoPass: "Auto-passing because you were away. Wake up!",
         m_picto_win: "{0} wins!",
-        m_picto_go: "DRAW!",
+        m_picto_go: "DRAW YOUR WORD!",
 
         t_picto_close: "Close Wordsketch",
 
