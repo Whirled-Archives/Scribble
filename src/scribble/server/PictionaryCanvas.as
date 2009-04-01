@@ -30,6 +30,9 @@ public class PictionaryCanvas extends Canvas
         _room.ctrl.addEventListener(AVRGameRoomEvent.ROOM_UNLOADED, onRoomUnloaded);
 
         _props.set(Codes.keyPhase(_prefix), null, true);
+        _props.set(Codes.keyRoster(_prefix), null, true);
+        _props.set(Codes.keyTurnHolder(_prefix), null, true);
+        _props.set(Codes.keyScores(_prefix), null, true);
     }
 
     protected function setPhase (phase :int) :void

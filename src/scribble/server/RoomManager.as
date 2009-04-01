@@ -23,22 +23,20 @@ public class RoomManager
     {
         _ctrl = ctrl;
 
-        // Reinitialize memory. It turns out if a game is rebooted by the owner uploading a new
-        // version, non-persistent memory sticks around! 
-        _ctrl.props.set(Codes.PLAYER_MODES, null, true);
-
         _ctrl.addEventListener(AVRGameRoomEvent.PLAYER_LEFT, onPlayerLeft);
         _ctrl.addEventListener(AVRGameRoomEvent.SIGNAL_RECEIVED, onSignal);
 
-        // TODO: Handle this better
-        //_ctrl.addEventListener(AVRGameRoomEvent.ROOM_UNLOADED, function (... _) :void {
-        //    _ctrl.props.set("game", null);
-        //});
+        const self :RoomManager = this; // Fucking Actionscript
+        _ctrl.doBatch(function () :void {
+            // Reinitialize memory. It turns out if a game is rebooted by the owner uploading a new
+            // version, non-persistent memory sticks around! 
+            _ctrl.props.set(Codes.PLAYER_MODES, null, true);
 
-        _pictionary = new PictionaryCanvas(1, this);
+            _pictionary = new PictionaryCanvas(1, self);
 
-        _canvases.push(new BackdropCanvas(0, this));
-        _canvases.push(_pictionary);
+            _canvases.push(new BackdropCanvas(0, self));
+            _canvases.push(_pictionary);
+        });
     }
 
     public function get ctrl () :RoomSubControlServer
