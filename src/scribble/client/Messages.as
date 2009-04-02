@@ -19,6 +19,7 @@ public class Messages
         t_reference: "Google Image Search this word",
         t_mode0: "Doodle this room",
         t_mode1: "Play Scribble: Wordsketch",
+        t_eraser: "Eraser",
 
         b_mode0: "Doodling ({0})",
         b_mode1: "Wordsketch ({0})",

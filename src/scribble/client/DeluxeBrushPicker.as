@@ -17,8 +17,7 @@ public class DeluxeBrushPicker extends BrushPicker
 {
     override protected function createUI () :void
     {
-        var eraser :Sprite = new Sprite();
-        eraser.addChild(new ICON_ERASER());
+        var eraser :Sprite = createEraser();
         eraser.y = 4;
         Command.bind(eraser, MouseEvent.CLICK, setColor, -1);
         addChild(eraser);

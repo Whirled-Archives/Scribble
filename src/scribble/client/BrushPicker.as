@@ -11,6 +11,8 @@ import com.gskinner.motion.GTween;
 import com.threerings.util.Command;
 import com.threerings.util.ValueEvent;
 
+import aduros.display.ToolTipManager;
+
 import scribble.data.Codes;
 
 public class BrushPicker extends Sprite
@@ -33,12 +35,13 @@ public class BrushPicker extends Sprite
     {
         for (var ii :int = 0; ii < COLORS.length; ++ii) {
             var brushId :int = COLORS[ii] as int;
-            var button :Sprite = new Sprite();
+            var button :Sprite;
 
             if (brushId < 0) {
-                button.addChild(new ICON_ERASER());
+                button = createEraser();
             } else {
                 var color :int = GraphicsUtil.getColor(brushId);
+                button = new Sprite();
                 button.graphics.beginFill(color);
                 button.graphics.lineStyle(1, ColorUtil.adjustBrightness(color, 0x33));
                 button.graphics.drawRect(0, 0, 24, 24);
@@ -59,6 +62,15 @@ public class BrushPicker extends Sprite
         });
 
         addChild(_cursor);
+    }
+
+    protected function createEraser () :Sprite
+    {
+        var eraser :Sprite = new Sprite();
+        eraser.addChild(new ICON_ERASER());
+        ToolTipManager.instance.attach(eraser, Messages.en.xlate("t_eraser"));
+
+        return eraser;
     }
 
     protected function setColor (colorId :int) :void
