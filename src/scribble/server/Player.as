@@ -25,6 +25,20 @@ public class Player
         playerReceiver = new RemoteCaller(_ctrl, "player");
 
         stats = new StatTracker(STATS, TROPHIES, ctrl);
+
+        // TEMPORARY
+        // Prizes weren't being awarded, so give them out once to trophy owners
+        if (ctrl.props.get("@migration") < 1) {
+            ctrl.doBatch(function () :void {
+                for each (var trophy :Trophy in TROPHIES.backdropStrokes) {
+                    if (ctrl.holdsTrophy(trophy.id)) {
+                        ctrl.awardPrize(trophy.prize);
+                    }
+                }
+                ctrl.props.set("@migration", 1);
+            });
+        }
+        // END TEMPORARY
     }
 
     public function get ctrl () :PlayerSubControlServer
