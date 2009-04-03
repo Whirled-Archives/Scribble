@@ -11,6 +11,8 @@ import com.whirled.avrg.*;
 import com.whirled.net.*;
 
 import aduros.net.REMOTE;
+import aduros.net.BatchInvoker;
+import aduros.util.F;
 
 import scribble.data.Codes;
 
@@ -25,6 +27,7 @@ public class RoomManager
 
         _ctrl.addEventListener(AVRGameRoomEvent.PLAYER_LEFT, onPlayerLeft);
         _ctrl.addEventListener(AVRGameRoomEvent.SIGNAL_RECEIVED, onSignal);
+        _ctrl.addEventListener(AVRGameRoomEvent.ROOM_UNLOADED, onRoomUnloaded);
 
         const self :RoomManager = this; // Fucking Actionscript
         _ctrl.doBatch(function () :void {
@@ -37,6 +40,9 @@ public class RoomManager
             _canvases.push(new BackdropCanvas(0, self));
             _canvases.push(_pictionary);
         });
+
+        _invoker = new BatchInvoker(_ctrl);
+        _invoker.start(200);
     }
 
     public function get ctrl () :RoomSubControlServer
@@ -64,7 +70,7 @@ public class RoomManager
 
     protected function onPlayerLeft (event :AVRGameRoomEvent) :void
     {
-        _ctrl.doBatch(setMode, event.value, null);
+        _invoker.push(F.callback(setMode, event.value, null));
     }
 
     protected function onSignal (event :AVRGameRoomEvent) :void
@@ -77,6 +83,11 @@ public class RoomManager
                 Player(_players[killerId]).stats.submit("killedMonster", true);
             }
         }
+    }
+
+    protected function onRoomUnloaded (event :AVRGameRoomEvent) :void
+    {
+        _invoker.stop();
     }
 
     protected function getCanvas (playerId :int) :Canvas
@@ -112,42 +123,43 @@ public class RoomManager
 
     REMOTE function changeMode (playerId :int, mode :int) :void
     {
+        // For the sake of keeping a snappy UI, this isn't put on the batch invoker
         _ctrl.doBatch(setMode, playerId, mode);
     }
 
     REMOTE function sendStroke (playerId :int, strokeBytes :ByteArray) :void
     {
-        _ctrl.doBatch(getCanvas(playerId).sendStroke, playerId, strokeBytes);
+        _invoker.push(F.callback(getCanvas(playerId).sendStroke, playerId, strokeBytes));
     }
 
     REMOTE function sendStrokeList (playerId :int, list :Array) :void
     {
-        _ctrl.doBatch(getCanvas(playerId).sendStrokeList, playerId, list);
+        _invoker.push(F.callback(getCanvas(playerId).sendStrokeList, playerId, list));
     }
 
     REMOTE function removeStrokes (playerId :int, strokeIds :Array) :void
     {
-        _ctrl.doBatch(getCanvas(playerId).removeStrokes, playerId, strokeIds);
+        _invoker.push(F.callback(getCanvas(playerId).removeStrokes, playerId, strokeIds));
     }
 
     REMOTE function clearCanvas (playerId :int) :void
     {
-        _ctrl.doBatch(getCanvas(playerId).clearCanvas, playerId);
+        _invoker.push(F.callback(getCanvas(playerId).clearCanvas, playerId));
     }
 
     REMOTE function pictionaryPass (playerId :int) :void
     {
-        _ctrl.doBatch(_pictionary.pass, playerId);
+        _invoker.push(F.callback(_pictionary.pass, playerId));
     }
 
     REMOTE function pictionaryGuess (playerId :int, guess :String) :void
     {
-        _ctrl.doBatch(_pictionary.guess, playerId, guess);
+        _invoker.push(F.callback(_pictionary.guess, playerId, guess));
     }
 
     REMOTE function toggleLock (playerId :int) :void
     {
-        _ctrl.doBatch(getCanvas(playerId).toggleLock);
+        _invoker.push(getCanvas(playerId).toggleLock);
     }
 
     REMOTE function updateName (playerId :int, name :String) :void
@@ -160,6 +172,8 @@ public class RoomManager
 
     protected var _canvases :Array = []; // of Canvas
     protected var _pictionary :PictionaryCanvas;
+
+    protected var _invoker :BatchInvoker;
 }
 
 }
