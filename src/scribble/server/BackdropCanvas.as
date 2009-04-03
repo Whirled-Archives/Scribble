@@ -29,13 +29,14 @@ public class BackdropCanvas extends Canvas
         _room.ctrl.sendMessage(Codes.msgCleared(_prefix), playerId);
     }
 
-    override protected function requireWriteAccess (playerId :int) :void
-        // throws Error
-    {
-        if (_props.get(Codes.keyLock(_prefix))) {
-            throw new Error("Permission denied. Canvas is locked.");
-        }
-    }
+    // DISABLED
+//    override protected function requireWriteAccess (playerId :int) :void
+//        // throws Error
+//    {
+//        if (_props.get(Codes.keyLock(_prefix))) {
+//            throw new Error("Permission denied. Canvas is locked.");
+//        }
+//    }
 
     override public function sendStroke (playerId :int, strokeBytes :ByteArray) :void
     {

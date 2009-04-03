@@ -49,7 +49,8 @@ public class Messages
         //m_picto_score6: "Asshole!",
 
         m_doodle_walkOn: "You have enabled walking. Click the pencil icon to resume doodling.",
-        m_doodle_lockOn: "This canvas is now locked. Only the room owner can unlock it for doodling.",
+        m_doodle_lockOn: "This canvas is now locked. Only the room owners can doodle or unlock it for everyone.",
+        m_doodle_lockOff: "This canvas is now UNLOCKED, anyone can doodle on it.",
 
         l_mode0: "Doodle",
         l_mode1: "Wordsketch",

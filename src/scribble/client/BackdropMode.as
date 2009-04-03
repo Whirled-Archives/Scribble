@@ -38,6 +38,7 @@ public class BackdropMode extends ModeSprite
 
         Command.bind(_lockButton, MouseEvent.CLICK, ScribbleController.TOGGLE_LOCK);
         _lockButton.mouseEnabled = Game.canLock();
+        GraphicsUtil.throttleClicks(_lockButton);
         addChild(_lockButton);
 
         _walkButton.addEventListener(MouseEvent.CLICK, function (... _) :void {
@@ -149,23 +150,29 @@ public class BackdropMode extends ModeSprite
     {
         if (event.name == Codes.keyLock(_prefix)) {
             updateEnabled();
-            if (event.newValue == true) {
-                Game.ctrl.local.feedback(Messages.en.xlate("m_doodle_lockOn"));
-            }
+            Game.ctrl.local.feedback(Messages.en.xlate(
+                "m_doodle_lock" + (event.newValue ? "On" : "Off")));
         }
     }
 
     protected function updateEnabled () :void
     {
+        _walkButton.toggled = _walkingEnabled;
+
         var locked :Boolean = Game.ctrl.room.props.get(Codes.keyLock(_prefix));
-        var enabled :Boolean = !_walkingEnabled && !locked;
+        var enabled :Boolean;
+
+        if (Game.canLock()) {
+            enabled = !_walkingEnabled;
+            _walkButton.visible = true;
+        } else {
+            enabled = !_walkingEnabled && !locked;
+            _walkButton.visible = !locked;
+        }
 
         _toolbox.visible = enabled;
         _canvas.enabled = enabled;
         _lockButton.toggled = locked;
-        _walkButton.visible = !locked;
-
-        _walkButton.toggled = _walkingEnabled;
     }
 
     override public function didLeave () :void
