@@ -295,7 +295,7 @@ public class PictionaryCanvas extends Canvas
                     drawer.stats.submit("pictoCloseCall", true);
                 }
 
-                drawer.ctrl.completeTask("pictoDraw", 0.015*points);
+                drawer.ctrl.completeTask("pictoDraw", 0.025*points);
             });
             guesser.ctrl.doBatch(function () :void {
                 guesser.stats.submit("pictoScore", addScore(guesserId, points));
