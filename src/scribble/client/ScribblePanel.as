@@ -159,7 +159,11 @@ public class ScribblePanel extends Sprite
 
     protected function onEnteredRoom (event :AVRGamePlayerEvent) :void
     {
-        Command.dispatch(this, ScribbleController.CHANGE_MODE, Codes.CANVAS_ROOM);
+        var roomId :int = int(event.value);
+
+        // If joining a parlor, go to wordsketch, else doodle
+        Command.dispatch(this, ScribbleController.CHANGE_MODE,
+            (Codes.PARLORS.indexOf(roomId) == -1) ? Codes.CANVAS_ROOM : Codes.CANVAS_PICTIONARY);
     }
 
     protected function onChat (event :ControlEvent) :void
