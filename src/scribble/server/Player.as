@@ -48,7 +48,7 @@ public class Player
 
     public function getName () :String
     {
-        return room.ctrl.getAvatarInfo(_ctrl.getPlayerId()).name;
+        return ctrl.getPlayerName();
     }
 
     public function equals (other :Object) :Boolean

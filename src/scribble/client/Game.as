@@ -20,7 +20,7 @@ public class Game extends Sprite
 
     public static function getName (playerId :int) :String
     {
-        return ctrl.room.getAvatarInfo(playerId).name;
+        return ctrl.room.getOccupantName(playerId);
     }
 
     public static function canLock () :Boolean
