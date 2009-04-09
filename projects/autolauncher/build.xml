@@ -1,0 +1,9 @@
+<project default="test">
+
+  <property name="app.name" value="AutoLauncher"/>
+  <property name="app.type" value="toy"/>
+  <property name="app.package-dir" value="scribble/autolauncher"/>
+
+  <import file="../scribble-project.xml"/>
+
+</project>
