@@ -25,11 +25,13 @@ public class Codes
 
     public static const PUBLIC_TOOLBENCH :String = "scribble:toolbench";
 
-    /** Lobby rooms used by LoadBalancer. */
-    public static const LOBBIES :Array = [ 666 ]; // TODO
+    /** Landing rooms used by LoadBalancer. */
+    public static const LOBBIES :Array = [
+        712409, // Newgrounds
+    ];
 
     /** Parlor rooms used by LoadBalancer. */
-    public static const PARLORS :Array = [ 999 ]; // TODO
+    public static const PARLORS :Array = [ 569884, 709725, 709723, 709722 ];
 
     public static function isAdmin (playerId :int) :Boolean
     {
