@@ -3,12 +3,14 @@ package scribble.server {
 import flash.utils.ByteArray;
 import flash.utils.Dictionary;
 
+import com.threerings.util.ArrayUtil;
 import com.threerings.util.Log;
 
 import com.whirled.ServerObject;
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
+import aduros.game.LoadBalancer;
 import aduros.i18n.MessageUtil;
 import aduros.net.RemoteProvider;
 import aduros.util.F;
@@ -38,6 +40,8 @@ public class Server extends ServerObject
         new RemoteProvider(_ctrl.game, "room", function (senderId :int) :Object {
             return getPlayer(senderId).room;
         });
+
+        new LoadBalancer(_ctrl, 10, F.curry(ArrayUtil.contains, Codes.LOBBIES), Codes.PARLORS);
     }
 
     public function getRoom (roomId :int) :RoomManager

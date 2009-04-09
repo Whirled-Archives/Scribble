@@ -25,6 +25,12 @@ public class Codes
 
     public static const PUBLIC_TOOLBENCH :String = "scribble:toolbench";
 
+    /** Lobby rooms used by LoadBalancer. */
+    public static const LOBBIES :Array = [ 666 ]; // TODO
+
+    /** Parlor rooms used by LoadBalancer. */
+    public static const PARLORS :Array = [ 999 ]; // TODO
+
     public static function isAdmin (playerId :int) :Boolean
     {
         return playerId == 878  // Aduros
