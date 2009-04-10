@@ -28,6 +28,8 @@ public class Codes
     /** Landing rooms used by LoadBalancer. */
     public static const LOBBIES :Array = [
         712409, // Newgrounds
+        713833, // Kongregate
+        714510, // pending
     ];
 
     /** Parlor rooms used by LoadBalancer. */
