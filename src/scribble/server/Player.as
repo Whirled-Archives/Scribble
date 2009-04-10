@@ -157,7 +157,7 @@ public class Player
             new Trophy(2000, "scribble4", "feeder"), // Journeyman painter
             new Trophy(5000, "scribble5", "pixeltar"), // Master Artist
             new Trophy(10000, "scribble6", "babel"), // Celebrated Artist
-            new Trophy(50000, "scribble7", "quakemix"), // Whirled-renown Artist
+            new Trophy(20000, "scribble7", "quakemix"), // Whirled-renown Artist
         ],
 
         killedMonster: [ new Trophy(true, "sword") ],
