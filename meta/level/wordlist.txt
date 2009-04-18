@@ -1,5 +1,6 @@
 aardvark
 abdomen
+abduct
 able
 about
 above
@@ -40,6 +41,7 @@ aim
 air
 airplane
 airport
+alarm clock
 album
 algebra
 alive
@@ -62,7 +64,6 @@ amusement
 analyze
 anchor
 ancient
-and
 angel
 angle
 angrily
@@ -88,6 +89,7 @@ anyway
 anywhere
 apache
 apartment
+apartment building
 ape
 apparatus
 appear
@@ -178,6 +180,7 @@ bad
 badly
 baffle
 bag
+bagel
 bagpipes
 bait
 bake
@@ -210,6 +213,7 @@ bard
 bare
 bark
 barn
+barnyard
 barrel
 bars
 base
@@ -298,11 +302,13 @@ biking
 bile
 bill
 bin
+binder
 bing
 binoculars
 bird
 birth
 birthday
+birthday party
 bishop
 bit
 bite
@@ -390,6 +396,7 @@ both
 bottle
 bottle cap
 bow
+bowel
 bowl
 bowling ball
 bowling pin
@@ -613,9 +620,11 @@ cheek
 cheep
 cheer
 cheerful
+cheering
 cheers
 cheese
 cheeseburger
+cheesecake
 chef
 chemical
 cheque
@@ -659,6 +668,7 @@ chose
 chow
 christmas
 christmas tree
+chrome
 chuck
 chuckle
 chug
@@ -778,6 +788,7 @@ complication
 compliment
 compost
 computer
+computer screen
 con
 concave
 concert
@@ -1114,6 +1125,7 @@ drunk
 dry
 duck
 duct
+duct tape
 dud
 dude
 due
@@ -1182,6 +1194,7 @@ encounter
 end
 enemy
 energetic
+energy
 engine
 enjoy
 enough
@@ -1190,6 +1203,7 @@ enterprise
 entertainer
 entrance
 envelope
+envy
 equal
 era
 erase
@@ -1428,6 +1442,7 @@ fourth
 fowl
 fox
 fracture
+fragile
 frame
 frank
 fraud
@@ -1509,6 +1524,7 @@ ghettoblaster
 ghost
 giant
 gift
+gift wrap
 gig
 giggle
 ginger
@@ -1540,6 +1556,7 @@ glow
 glue
 gluestick
 glum
+gnoll
 go
 goal
 goat
@@ -1988,6 +2005,7 @@ justice
 jut
 kangaroo
 karaoke
+kawaii
 keep
 keg
 kept
@@ -2018,6 +2036,7 @@ kite
 kits
 kitten
 kitty
+kiwi
 kleptomania
 knack
 knead
@@ -2093,7 +2112,9 @@ lava
 lavender
 law
 lawn
+lawn chair
 lawnmower
+lawn mower
 lay
 laying
 lazy
@@ -2116,6 +2137,7 @@ leek
 left
 left hand
 leg
+legend
 lei
 lemon
 lemonade
@@ -2274,6 +2296,7 @@ marksmanship
 married
 marry
 marsh
+marshmallow
 mascot
 masculine
 mash
@@ -2286,6 +2309,7 @@ match
 mate
 material
 math
+matrix
 mattress
 mature
 may
@@ -2364,6 +2388,7 @@ mix
 mixed
 moan
 mob
+mobile home
 mock
 model
 moist
@@ -2596,6 +2621,7 @@ pair
 pajamas
 pal
 pale
+pallet
 palm
 pan
 pancake
@@ -2643,6 +2669,7 @@ peak
 pear
 pearl
 peas
+pebble
 peck
 peddle
 peek
@@ -2776,6 +2803,7 @@ ponytail
 pooch
 poodle
 pool
+pool table
 poor
 poor quality
 pop
@@ -2799,6 +2827,7 @@ post office
 pot
 potato
 potato chip
+pothole
 pot of gold
 potpie
 pouch
@@ -2830,6 +2859,7 @@ prince
 principal
 print
 printed
+printer
 prism
 prison
 private
@@ -2993,6 +3023,7 @@ repulse
 request
 reservoir
 resist
+resource
 respect
 responsibility
 responsible
@@ -3077,6 +3108,8 @@ row
 royal
 rub
 rubber
+rubber band
+rubiks cube
 rude
 ruff
 ruffle
@@ -3155,6 +3188,7 @@ scare
 scarecrow
 scarf
 scat
+scheme
 school
 science
 scissor
@@ -3340,6 +3374,7 @@ sketch
 ski
 skid
 ski jump
+ski lift
 skill
 skilled
 skim
@@ -3485,6 +3520,7 @@ sorbet
 sore
 sorry
 sort
+soul
 sound
 soup
 sour
@@ -3581,6 +3617,7 @@ stairs
 stake
 stale
 stalk
+stalker
 stall
 stamp
 stand
@@ -3602,6 +3639,7 @@ steal
 steam
 steel
 steep
+steering wheel
 stem
 step
 step mother
@@ -3736,6 +3774,7 @@ swig
 swim
 swimmer
 swimming
+swimming pool
 swine
 swing
 swing set
@@ -3899,6 +3938,7 @@ timber
 time
 timebomb
 time machine
+timer
 tin
 tint
 tiny
@@ -4116,6 +4156,7 @@ vest
 vet
 vibe
 vice
+video game
 view
 viking
 vim
@@ -4152,6 +4193,7 @@ walked
 wall
 wallaby
 wallop
+wallpaper
 wand
 want
 wanted
@@ -4308,6 +4350,7 @@ written
 wrong
 wrongly
 wrote
+wyvern
 x ray
 xylophone
 yak
