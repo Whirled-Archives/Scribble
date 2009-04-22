@@ -167,7 +167,7 @@ baa
 babble
 baboon
 baby
-baby-sitter
+baby sitter
 back
 backbone
 backdoor
@@ -1575,7 +1575,6 @@ gone
 gong
 good
 good bye
-good-bye
 goose
 go out
 gorgeous
@@ -1643,7 +1642,7 @@ grove
 grow
 growl
 grown
-grown-up
+grown up
 growth
 grub
 gruesome
@@ -1764,7 +1763,7 @@ hi
 hid
 hidden
 hide
-hide-and-seek
+hide and seek
 high
 highway
 hike
