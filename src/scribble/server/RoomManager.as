@@ -18,9 +18,6 @@ import scribble.data.Codes;
 
 public class RoomManager
 {
-    /** The readable name of this room, sent by the client since this doesn't exist serverside. */
-    public var name :String = "";
-
     public function RoomManager (ctrl :RoomSubControlServer)
     {
         _ctrl = ctrl;
@@ -160,11 +157,6 @@ public class RoomManager
     REMOTE function toggleLock (playerId :int) :void
     {
         _invoker.push(getCanvas(playerId).toggleLock);
-    }
-
-    REMOTE function updateName (playerId :int, name :String) :void
-    {
-        this.name = name;
     }
 
     protected var _ctrl :RoomSubControlServer;

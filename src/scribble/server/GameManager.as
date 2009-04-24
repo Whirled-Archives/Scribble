@@ -47,7 +47,7 @@ public class GameManager
                 if (pop > 0) {
                     rooms.push({
                         roomId: room.ctrl.getRoomId(),
-                        name: room.name,
+                        name: room.ctrl.getRoomName(),
                         pop: pop
                     });
                 }

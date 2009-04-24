@@ -45,15 +45,6 @@ public class ScribbleController extends Controller
         new RemoteProvider(Game.ctrl.player, "player", F.konst(this));
         new RemoteProvider(Game.ctrl.game, "game", F.konst(this));
 
-        // The room name doesn't exist on the server, and we need it.
-        // Therefore jump through a flaming hoop to get it.
-        Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, function (... _) :void {
-            if (Game.ctrl.room.getPlayerIds().length == 1) {
-                Game.log.info("Sending updated room name to server");
-                _roomService.updateName(Game.ctrl.room.getRoomName());
-            }
-        });
-
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
     }
 
