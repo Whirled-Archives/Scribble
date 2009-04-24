@@ -112,7 +112,7 @@ public class ScribblePanel extends Sprite
             _buttonBar.y = 0;
         }
 
-        this.visible = screen != null;
+//        this.visible = screen != null;
     }
 
     protected function onRoomElementChanged (event :ElementChangedEvent) :void
