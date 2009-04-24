@@ -26,7 +26,6 @@ public class ScribblePanel extends Sprite
     public function ScribblePanel ()
     {
         Game.ctrl.room.props.addEventListener(ElementChangedEvent.ELEMENT_CHANGED, onRoomElementChanged);
-        Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
         Game.ctrl.player.addEventListener(AVRGamePlayerEvent.LEFT_ROOM, onLeftRoom);
         Game.ctrl.room.addEventListener(ControlEvent.CHAT_RECEIVED, onChat);
 
@@ -155,15 +154,6 @@ public class ScribblePanel extends Sprite
         } else {
             Game.log.warning("Couldn't clean up the current mode on room exit", "mode", _localMode);
         }
-    }
-
-    protected function onEnteredRoom (event :AVRGamePlayerEvent) :void
-    {
-        var roomId :int = int(event.value);
-
-        // If joining a parlor, go to wordsketch, else doodle
-        Command.dispatch(this, ScribbleController.CHANGE_MODE,
-            (Codes.PARLORS.indexOf(roomId) == -1) ? Codes.CANVAS_ROOM : Codes.CANVAS_PICTIONARY);
     }
 
     protected function onChat (event :ControlEvent) :void

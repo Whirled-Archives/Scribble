@@ -53,6 +53,21 @@ public class ScribbleController extends Controller
                 _roomService.updateName(Game.ctrl.room.getRoomName());
             }
         });
+
+        Game.ctrl.player.addEventListener(AVRGamePlayerEvent.ENTERED_ROOM, onEnteredRoom);
+    }
+
+    protected function onEnteredRoom (event :AVRGamePlayerEvent) :void
+    {
+        var roomId :int = int(event.value);
+
+        if (Codes.LOBBIES.indexOf(roomId) != -1) {
+            // If it's a special "lobby" room, tell the server to move us to a parlor
+            _gameService.moveToParlor();
+        } else {
+            // Switch to either wordsketch or drawing
+            handleChangeMode((Codes.PARLORS.indexOf(roomId) != -1) ? Codes.CANVAS_PICTIONARY : Codes.CANVAS_ROOM);
+        }
     }
 
     public function handleClearCanvas () :void
@@ -157,6 +172,11 @@ public class ScribbleController extends Controller
                     Messages.en.xlate("l_mode"+mode)));
             }
         }
+    }
+
+    REMOTE function moveToRoom (roomId :int) :void
+    {
+        Game.ctrl.player.moveToRoom(roomId);
     }
 
     protected var _roomService :RemoteProxy;

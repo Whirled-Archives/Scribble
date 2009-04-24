@@ -5,6 +5,7 @@ import com.whirled.avrg.*;
 import aduros.i18n.MessageUtil;
 import aduros.net.REMOTE;
 import aduros.net.RemoteCaller;
+import aduros.util.F;
 
 import scribble.data.Codes;
 
@@ -64,6 +65,38 @@ public class GameManager
 
         // Respond to client request
         _server.getPlayer(playerId).playerReceiver.apply("peersLocated", result);
+    }
+
+    REMOTE function moveToParlor (playerId :int) :void
+    {
+        _server.getPlayer(playerId).ctrl.moveToRoom(getBestParlor());
+    }
+
+    protected function getBestParlor () :int
+    {
+        var pop :Array = []; // roomId -> population
+        for each (var parlorId :int in Codes.PARLORS) {
+            var room :RoomManager = _server.getRoom(parlorId);
+            pop[parlorId] = (room != null) ? room.ctrl.getPlayerIds().length : 0;
+        }
+
+        // List of parlor roomIds that are below max capacity
+        var belowCapacity :Array = Codes.PARLORS.filter(function (parlorId :int, ..._) :Boolean {
+            return pop[parlorId] < 10;
+        });
+
+        if (belowCapacity.length > 0) {
+            // The highest populated room that's below capacity
+            return F.foldl(function (bestId :int, parlorId :int) :int {
+                return (pop[parlorId] > pop[bestId]) ? parlorId : bestId;
+            }, belowCapacity[0], belowCapacity);
+
+        } else {
+            // The lowest populated room, if all the rooms are full anyways
+            return F.foldl(function (bestId :int, parlorId :int) :int {
+                return (pop[parlorId] < pop[bestId]) ? parlorId : bestId;
+            }, Codes.PARLORS[0], Codes.PARLORS);
+        }
     }
 
     public function feed (key :String, ... msg) :void
