@@ -10,6 +10,7 @@ import flash.utils.Dictionary; // TODO: temp
 import com.gskinner.motion.GTween;
 
 import com.threerings.util.Command;
+import com.threerings.util.MethodQueue;
 import com.threerings.util.ValueEvent;
 
 import com.whirled.*;
@@ -114,37 +115,40 @@ public class ScribblePanel extends Sprite
 
     protected function onRoomElementChanged (event :ElementChangedEvent) :void
     {
-        // Has the server put us in a new mode?
-        if (event.name == Codes.PLAYER_MODES && event.key == Game.ctrl.player.getPlayerId()
-            && event.newValue != event.oldValue) {
+        // Let the room load fully, process this event the next frame
+        MethodQueue.callLater(function () :void {
+            // Has the server put us in a new mode?
+            if (event.name == Codes.PLAYER_MODES && event.key == Game.ctrl.player.getPlayerId()
+                && event.newValue != event.oldValue) {
 
-            // Transition out of the old mode
-            if (_localMode in _modeSprites) {
-                _modeSprites[_localMode].didLeave();
-            }
-
-            const newMode :int = int(event.newValue);
-            _localMode = newMode;
-
-            if (event.newValue != null) {
-                if (newMode in _modeSprites) {
-                    ModeSprite(_modeSprites[newMode]).didEnter();
-                } else {
-                    var ms :ModeSprite = (newMode == 0) ? new BackdropMode() : new PictionaryMode();
-                    _modeSprites[newMode] = ms;
-                    ms.addEventListener(Event.REMOVED_FROM_STAGE, function (... _) :void {
-                        trace("Cleaning out " + newMode);
-                        Game.log.info("Transition finished", "mode", newMode);
-                        delete _modeSprites[newMode];
-                    });
-                    addChild(ms);
-                    ms.didEnter();
+                // Transition out of the old mode
+                if (_localMode in _modeSprites) {
+                    _modeSprites[_localMode].didLeave();
                 }
-            }
 
-            var switcher :Sprite = _modeSwitchers[newMode];
-            new GTween(_modeArrow, 0.2, {y: switcher.y + switcher.height/2 - _modeArrow.height/2});
-        }
+                const newMode :int = int(event.newValue);
+                _localMode = newMode;
+
+                if (event.newValue != null) {
+                    if (newMode in _modeSprites) {
+                        ModeSprite(_modeSprites[newMode]).didEnter();
+                    } else {
+                        var ms :ModeSprite = (newMode == 0) ? new BackdropMode() : new PictionaryMode();
+                        _modeSprites[newMode] = ms;
+                        ms.addEventListener(Event.REMOVED_FROM_STAGE, function (... _) :void {
+                            trace("Cleaning out " + newMode);
+                            Game.log.info("Transition finished", "mode", newMode);
+                            delete _modeSprites[newMode];
+                        });
+                        addChild(ms);
+                        ms.didEnter();
+                    }
+                }
+
+                var switcher :Sprite = _modeSwitchers[newMode];
+                new GTween(_modeArrow, 0.2, {y: switcher.y + switcher.height/2 - _modeArrow.height/2});
+            }
+        });
     }
 
     protected function onLeftRoom (event :AVRGamePlayerEvent) :void
