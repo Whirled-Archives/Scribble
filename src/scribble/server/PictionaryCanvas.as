@@ -264,7 +264,7 @@ public class PictionaryCanvas extends Canvas
         var turnHolder :int = _logic.getTurnHolder();
         var guesserId :int = _logic.getRosterId(playerId);
 
-        if (guess == "boob" && _wordNormalized.indexOf("eye") != -1) {
+        if (guess.indexOf("boob") != -1 && _wordNormalized.indexOf("eye") != -1) {
             _room.players[playerId].stats.submit("pictoBoobs", true);
         }
 
