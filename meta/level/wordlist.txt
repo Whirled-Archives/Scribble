@@ -400,6 +400,7 @@ bowel
 bowl
 bowling ball
 bowling pin
+bowtie
 bow tie
 box
 boy
@@ -528,6 +529,7 @@ camp
 camping
 can
 canada
+cancel
 candle
 candy
 candy cane
@@ -640,6 +642,7 @@ chicken
 chief
 child
 children
+chili
 chill
 chilli
 chime
@@ -676,6 +679,7 @@ chum
 chunk
 church
 churn
+cigar
 cigarette
 cinema
 cinnamon
@@ -692,6 +696,7 @@ clan
 clang
 clap
 clapped
+clarinet
 clash
 clasp
 class
@@ -786,6 +791,7 @@ complete
 complex
 complication
 compliment
+composer
 compost
 computer
 computer screen
@@ -933,6 +939,7 @@ cute
 cuttlefish
 cyborg
 cyclops
+cymbals
 dab
 dad
 daddy
@@ -950,6 +957,7 @@ damsel
 dance
 danger
 dangle
+danish
 dare
 dark
 darling
@@ -1067,6 +1075,7 @@ dollar
 dome
 dominoes
 don
+donate
 done
 donkey
 doodle
@@ -1120,6 +1129,7 @@ drown
 drug
 drugstore
 drum
+drums
 drum set
 drunk
 dry
@@ -1129,6 +1139,7 @@ duct tape
 dud
 dude
 due
+duet
 dug
 dull
 dummy
@@ -1156,6 +1167,7 @@ earwig
 easel
 east
 easter bunny
+easter egg
 easy
 eat
 edge
@@ -1226,6 +1238,7 @@ everybody
 everyone
 everything
 everywhere
+evil
 evolution
 evolve
 ewe
@@ -1256,6 +1269,7 @@ eyes
 fabric
 face
 facebook
+facepaint
 fact
 fad
 fade
@@ -1505,6 +1519,7 @@ gasp
 gate
 gave
 gaze
+gazebo
 gear
 gears
 gecko
@@ -1669,6 +1684,7 @@ gym
 gypsy
 habit
 hack
+hacksaw
 had
 hag
 hail
@@ -2011,6 +2027,7 @@ kept
 ketchup
 kettle
 key
+keyboard
 keyhole
 keyring
 keys
@@ -2137,6 +2154,7 @@ left
 left hand
 leg
 legend
+lego
 lei
 lemon
 lemonade
@@ -2527,6 +2545,7 @@ northwest
 nose
 not
 note
+notepad
 nothing
 notice
 november
@@ -2545,6 +2564,7 @@ oath
 oatmeal
 obey
 object
+oboe
 observation
 ocean
 october
@@ -2689,6 +2709,7 @@ people
 pep
 percent
 perch
+percussion
 perfect
 period
 period of time
@@ -2924,6 +2945,7 @@ quake
 quality
 quarter
 quarterstaff
+quartet
 queen
 question
 question mark
@@ -2955,6 +2977,7 @@ railroad
 railway
 rain
 rainbow
+rain cloud
 rake
 ram
 ramp
@@ -3051,6 +3074,7 @@ ricochet
 rid
 riddle
 ride
+rider
 rifle
 rig
 right
@@ -3172,6 +3196,7 @@ save
 saved
 saw
 sawn
+saxophone
 say
 saying
 says
@@ -3741,6 +3766,7 @@ sunrise
 sunset
 sunshine
 suntan
+superhero
 supernatural
 supper
 support
@@ -4028,6 +4054,7 @@ tribe
 trick
 trike
 trim
+trio
 trip
 triplets
 trod
@@ -4067,6 +4094,7 @@ turn off
 turn on
 turtle
 tusk
+tuxedo
 tv
 twang
 tweed
@@ -4208,6 +4236,7 @@ waste
 watch
 water
 waterfall
+watergun
 watermelon
 wave
 waves
