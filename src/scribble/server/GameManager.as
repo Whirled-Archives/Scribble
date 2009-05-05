@@ -11,6 +11,8 @@ import scribble.data.Codes;
 
 public class GameManager
 {
+    public static const PARLOR_CAPACITY :int = 6;
+     
     public function GameManager (server :Server, ctrl :GameSubControlServer)
     {
         _server = server;
@@ -82,7 +84,7 @@ public class GameManager
 
         // List of parlor roomIds that are below max capacity
         var belowCapacity :Array = Codes.PARLORS.filter(function (parlorId :int, ..._) :Boolean {
-            return pop[parlorId] < 10;
+            return pop[parlorId] < PARLOR_CAPACITY;
         });
 
         if (belowCapacity.length > 0) {

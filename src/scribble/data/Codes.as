@@ -33,7 +33,8 @@ public class Codes
     ];
 
     /** Parlor rooms used by LoadBalancer. */
-    public static const PARLORS :Array = [ 569884, 709725, 709723, 709722, 724060, 724062 ];
+    //public static const PARLORS :Array = [ 569884, 709725, 709723, 709722, 724060, 724062 ];
+    public static const PARLORS :Array = [ 543748, 375791 ];
 
     public static function isAdmin (playerId :int) :Boolean
     {
