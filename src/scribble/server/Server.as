@@ -30,7 +30,7 @@ public class Server extends ServerObject
 
         // Load up the pictionary word list right off the bat
         _ctrl.game.loadLevelPackData("wordlist", PictionaryCanvas.createWordList,
-            F.curry(log.error, "Couldn't load word list!"));
+            F.partial(log.error, "Couldn't load word list!"));
 
         _gameManager = new GameManager(this, _ctrl.game);
 
