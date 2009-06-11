@@ -48,6 +48,8 @@ public class Game extends Sprite
 
         log.info("Starting Scribble", "compiled", BuildConfig.WHEN, "debug", BuildConfig.DEBUG);
 
+        MochiBot.track(this, BuildConfig.MOCHIBOT_ID);
+
         // Set up the ToolTipManager
         ToolTipManager.instance.screen = this;
         ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, function (... _) :void {
