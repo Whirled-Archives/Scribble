@@ -52,7 +52,7 @@ public class ScribbleController extends Controller
     {
         var roomId :int = int(event.value);
 
-        if (Codes.LOBBIES.indexOf(roomId) != -1) {
+        if (Codes.LOBBIES.indexOf(roomId) != -1 && !Codes.isAdmin(Game.ctrl.player.getPlayerId())) {
             // If it's a special "lobby" room, tell the server to move us to a parlor
             _gameService.moveToParlor();
         } else {
