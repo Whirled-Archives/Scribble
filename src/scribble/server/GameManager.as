@@ -11,7 +11,7 @@ import scribble.data.Codes;
 
 public class GameManager
 {
-    public static const PARLOR_CAPACITY :int = 6;
+    public static const PARLOR_CAPACITY :int = 18;
      
     public function GameManager (server :Server, ctrl :GameSubControlServer)
     {
