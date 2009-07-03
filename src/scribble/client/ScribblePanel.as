@@ -19,6 +19,7 @@ import com.whirled.net.*;
 
 import aduros.display.ImageButton;
 import aduros.display.ToolTipManager;
+import aduros.util.F;
 
 import scribble.data.Codes;
 
@@ -72,7 +73,7 @@ public class ScribblePanel extends Sprite
 
         addChild(_modeArrow);
 
-        var welcome :Function = function (... _) :void {
+        addEventListener(Event.ADDED_TO_STAGE, F.justOnce(function (event :Event) :void {
             var version :String = root.loaderInfo.url.replace(/.*\/([0-9a-f]+).swf$/i, "$1");
             var last :String = Game.ctrl.player.props.get(Codes.PLAYER_VERSION) as String;
 
@@ -88,10 +89,7 @@ public class ScribblePanel extends Sprite
             } else {
                 Game.ctrl.local.feedback(Messages.en.xlate("m_welcome"));
             }
-
-            removeEventListener(Event.ADDED_TO_STAGE, welcome);
-        };
-        addEventListener(Event.ADDED_TO_STAGE, welcome);
+        }));
 
         Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
         onResize();
