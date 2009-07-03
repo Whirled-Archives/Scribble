@@ -8,7 +8,7 @@ public class BuildConfig
 
     public static const DEBUG :Boolean = @DEBUG@;
 
-    public static const MOCHIBOT_ID :String = "@MOCHIBOT_ID@";
+    public static const ANALYTICS_ID :String = "@ANALYTICS_ID@";
 }
 
 }

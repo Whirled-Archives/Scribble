@@ -10,12 +10,14 @@ import com.whirled.avrg.AVRGameControl;
 import com.whirled.avrg.AVRGameControlEvent;
 
 import aduros.display.ToolTipManager;
+import aduros.game.Metrics;
 
 import scribble.data.Codes;
 
 public class Game extends Sprite
 {
     public static var ctrl :AVRGameControl;
+    public static var metrics :Metrics;
     public static const log :Log = Log.getLog(Game);
 
     public static function getName (playerId :int) :String
@@ -48,7 +50,7 @@ public class Game extends Sprite
 
         log.info("Starting Scribble", "compiled", BuildConfig.WHEN, "debug", BuildConfig.DEBUG);
 
-        MochiBot.track(this, BuildConfig.MOCHIBOT_ID);
+        metrics = new Metrics(ctrl, this, BuildConfig.ANALYTICS_ID);
 
         // Set up the ToolTipManager
         ToolTipManager.instance.screen = this;

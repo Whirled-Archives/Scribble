@@ -131,6 +131,8 @@ public class ScribblePanel extends Sprite
                 const newMode :int = int(event.newValue);
                 _localMode = newMode;
 
+                Game.metrics.trackState(["Doodling", "Wordsketch"][newMode]);
+
                 if (event.newValue != null) {
                     if (newMode in _modeSprites) {
                         ModeSprite(_modeSprites[newMode]).didEnter();

@@ -14,7 +14,7 @@
   <property file="build.properties" />
 
   <property name="release" value="false"/>
-  <property name="mochibot_id" value="XXX"/>
+  <property name="analytics_id" value="UA-1234567-1"/>
 
   <target name="build-config">
     <tstamp>
@@ -22,7 +22,7 @@
     </tstamp>
     <filter token="WHEN" value="${when}" />
     <filter token="DEBUG" value="!${release}" />
-    <filter token="MOCHIBOT_ID" value="${mochibot_id}" />
+    <filter token="ANALYTICS_ID" value="${analytics_id}" />
     <copy file="lib/BuildConfig.as.in" tofile="${app.source-dir}/BuildConfig.as" filtering="true" overwrite="true" />
   </target>
 
