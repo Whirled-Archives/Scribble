@@ -10,7 +10,8 @@ import flash.utils.Dictionary;
 import com.whirled.net.*;
 
 import com.threerings.util.Command;
-import com.threerings.util.SortedHashMap;
+import com.threerings.util.Map;
+import com.threerings.util.Maps;
 import com.threerings.util.ValueEvent;
 
 import aduros.display.DisplayUtil;
@@ -162,8 +163,7 @@ public class CanvasSprite extends Sprite
      * add them.
      */
     // TODO: Does this have to be sorted?
-    protected var _pendingStrokes :SortedHashMap =
-        new SortedHashMap(SortedHashMap.NUMERIC_KEYS); // strokeId -> Stroke
+    protected var _pendingStrokes :Map = Maps.newSortedMapOf(int); // strokeId -> Stroke
 
     /**
      * Because this canvas may be in a mob, we need to specify the _source so CommandEvents will

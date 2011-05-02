@@ -10,7 +10,6 @@ import flash.text.TextFormat;
 import com.gskinner.motion.GTween;
 
 import com.threerings.text.TextFieldUtil;
-import com.threerings.util.SortedHashMap;
 
 import aduros.display.ToolTipManager;
 
@@ -149,7 +148,7 @@ import flash.display.Sprite;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 
-import com.threerings.flash.TextFieldUtil;
+import com.threerings.text.TextFieldUtil;
 
 import scribble.client.RosterSprite;
 

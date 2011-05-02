@@ -3,10 +3,6 @@ package scribble.server {
 import flash.utils.ByteArray;
 import flash.utils.Dictionary;
 
-import com.threerings.util.HashMap;
-import com.threerings.util.HashSet;
-import com.threerings.util.Set;
-
 import com.whirled.avrg.*;
 import com.whirled.net.*;
 
@@ -20,17 +16,17 @@ public class RoomManager
 {
     public function RoomManager (ctrl :RoomSubControlServer)
     {
-        _ctrl = ctrl;
+        test = ctrl;
 
-        _ctrl.addEventListener(AVRGameRoomEvent.PLAYER_LEFT, onPlayerLeft);
-        _ctrl.addEventListener(AVRGameRoomEvent.SIGNAL_RECEIVED, onSignal);
-        _ctrl.addEventListener(AVRGameRoomEvent.ROOM_UNLOADED, onRoomUnloaded);
+        test.addEventListener(AVRGameRoomEvent.PLAYER_LEFT, onPlayerLeft);
+        test.addEventListener(AVRGameRoomEvent.SIGNAL_RECEIVED, onSignal);
+        test.addEventListener(AVRGameRoomEvent.ROOM_UNLOADED, onRoomUnloaded);
 
         const self :RoomManager = this; // Fucking Actionscript
-        _ctrl.doBatch(function () :void {
+        test.doBatch(function () :void {
             // Reinitialize memory. It turns out if a game is rebooted by the owner uploading a new
-            // version, non-persistent memory sticks around! 
-            _ctrl.props.set(Codes.PLAYER_MODES, null, true);
+            // version, non-persistent memory sticks around!
+            test.props.set(Codes.PLAYER_MODES, null, true);
 
             _pictionary = new PictionaryCanvas(1, self);
 
@@ -38,13 +34,13 @@ public class RoomManager
             _canvases.push(_pictionary);
         });
 
-        _invoker = new BatchInvoker(_ctrl);
+        _invoker = new BatchInvoker(test);
         _invoker.start(200);
     }
 
     public function get ctrl () :RoomSubControlServer
     {
-        return _ctrl;
+        return test;
     }
 
     /** All the players in this room. */
@@ -57,7 +53,7 @@ public class RoomManager
     public function playersInMode (mode :int) :int
     {
         var count :int = 0;
-        for each (var m :int in _ctrl.props.get(Codes.PLAYER_MODES)) {
+        for each (var m :int in test.props.get(Codes.PLAYER_MODES)) {
             if (m == mode) {
                 count += 1;
             }
@@ -89,7 +85,7 @@ public class RoomManager
 
     protected function getCanvas (playerId :int) :Canvas
     {
-        var modes :Dictionary = Dictionary(_ctrl.props.get(Codes.PLAYER_MODES));
+        var modes :Dictionary = Dictionary(test.props.get(Codes.PLAYER_MODES));
         if (modes == null) {
             throw new Error("Modes dictionary not found.");
         }
@@ -104,7 +100,7 @@ public class RoomManager
 
     public function setMode (playerId :int, newMode :Object) :void
     {
-        var modes :Dictionary = Dictionary(_ctrl.props.get(Codes.PLAYER_MODES));
+        var modes :Dictionary = Dictionary(test.props.get(Codes.PLAYER_MODES));
 
         if (modes != null && playerId in modes) {
             var oldMode :int = int(modes[playerId]);
@@ -115,13 +111,13 @@ public class RoomManager
             Canvas(_canvases[newMode]).playerDidOpen(playerId);
         }
 
-        _ctrl.props.setIn(Codes.PLAYER_MODES, playerId, newMode, true);
+        test.props.setIn(Codes.PLAYER_MODES, playerId, newMode, true);
     }
 
     REMOTE function changeMode (playerId :int, mode :int) :void
     {
         // For the sake of keeping a snappy UI, this isn't put on the batch invoker
-        _ctrl.doBatch(setMode, playerId, mode);
+        test.doBatch(setMode, playerId, mode);
     }
 
     REMOTE function sendStroke (playerId :int, strokeBytes :ByteArray) :void
@@ -159,7 +155,7 @@ public class RoomManager
         _invoker.push(getCanvas(playerId).toggleLock);
     }
 
-    protected var _ctrl :RoomSubControlServer;
+    protected var test :RoomSubControlServer;
     protected var _players :Dictionary = new Dictionary(); // playerId -> Player
 
     protected var _canvases :Array = []; // of Canvas

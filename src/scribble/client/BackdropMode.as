@@ -9,7 +9,7 @@ import com.gskinner.motion.GTween;
 import com.gskinner.motion.MultiTween; // TODO: Upgrade to latest GTween and use timelines
 
 import com.threerings.util.Command;
-import com.threerings.util.MethodQueue;
+import com.threerings.util.DelayUtil;
 
 import com.whirled.avrg.*;
 import com.whirled.net.*;
@@ -103,7 +103,7 @@ public class BackdropMode extends ModeSprite
             // is set up. This callLater is to avoid a race condition when canvas is added to the
             // mob, but is then wiped by Whirled.
             // TODO: Report this bug
-            MethodQueue.callLater(function () :void {
+            DelayUtil.delayFrame(function () :void {
                 var sprite :Sprite = Sprite(mob.getMobSprite());
                 sprite.addChild(_canvas);
                 mob.setHotSpot(_canvas.width/2, _canvas.height, 0);

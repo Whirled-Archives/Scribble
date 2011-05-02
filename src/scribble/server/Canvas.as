@@ -3,7 +3,7 @@ package scribble.server {
 import flash.utils.ByteArray;
 import flash.utils.Dictionary;
 
-import com.threerings.util.HashSet;
+import com.threerings.util.Sets;
 import com.threerings.util.Set;
 
 import com.whirled.avrg.*;
@@ -121,7 +121,7 @@ public class Canvas
     protected var _strokeCounter :int;
 
     // Set of playerIds that are currently in this mode
-    protected var _players :Set = new HashSet(); // of playerId
+    protected var _players :Set = Sets.newSetOf(int); // playerId
 
     protected var _mode :int;
     protected var _prefix :String;

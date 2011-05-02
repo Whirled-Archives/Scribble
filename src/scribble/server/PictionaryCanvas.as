@@ -3,7 +3,8 @@ package scribble.server {
 import flash.utils.ByteArray;
 import flash.utils.Dictionary;
 
-import com.threerings.util.HashSet;
+import com.threerings.util.Set;
+import com.threerings.util.Sets;
 
 import com.whirled.avrg.*;
 import com.whirled.net.*;
@@ -285,7 +286,7 @@ public class PictionaryCanvas extends Canvas
                 }
 
                 // Count brush color/styles
-                var brushes :HashSet = new HashSet();
+                var brushes :Set = Sets.newSetOf(Stroke);
                 for each (var record :Array in _props.get(Codes.keyCanvas(_prefix))) {
                     brushes.add(Stroke.fromBytes(ByteArray(record[1])).brush);
                 }

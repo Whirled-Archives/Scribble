@@ -10,7 +10,7 @@ import flash.utils.Dictionary; // TODO: temp
 import com.gskinner.motion.GTween;
 
 import com.threerings.util.Command;
-import com.threerings.util.MethodQueue;
+import com.threerings.util.DelayUtil;
 import com.threerings.util.ValueEvent;
 
 import com.whirled.*;
@@ -116,7 +116,7 @@ public class ScribblePanel extends Sprite
     protected function onRoomElementChanged (event :ElementChangedEvent) :void
     {
         // Let the room load fully, process this event the next frame
-        MethodQueue.callLater(function () :void {
+        DelayUtil.delayFrame(function () :void {
             // Has the server put us in a new mode?
             if (event.name == Codes.PLAYER_MODES && event.key == Game.ctrl.player.getPlayerId()
                 && event.newValue != event.oldValue) {
