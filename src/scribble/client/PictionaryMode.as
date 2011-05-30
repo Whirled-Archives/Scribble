@@ -44,13 +44,16 @@ public class PictionaryMode extends ModeSprite
         _panel.graphics.beginFill(0xffffff);
         _panel.graphics.drawRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         _panel.graphics.endFill();
-
-        _panel.addChild(_wordField);
-        _panel.addChild(_hintField);
+        _panel.filters = [ new DropShadowFilter() ];
 
         _canvas = new CanvasSprite(_prefix, CANVAS_WIDTH, CANVAS_HEIGHT);
         _panel.addChild(_canvas);
-        _panel.filters = [ new DropShadowFilter() ];
+
+        _wordField.mouseEnabled = false;
+        _panel.addChild(_wordField);
+
+        _hintField.mouseEnabled = false;
+        _panel.addChild(_hintField);
 
         _tickerContainer.x = CANVAS_WIDTH + RosterSprite.WIDTH/2 - TickerSprite.RADIUS;
         _tickerContainer.y = SPACING;
@@ -386,6 +389,7 @@ public class PictionaryMode extends ModeSprite
     REMOTE function sendWord (word :String) :void
     {
         _wordField.text = word;
+        _wordField.x = CANVAS_WIDTH - SPACING - _wordField.textWidth;
         Game.log.info("Got word to draw", "word", word);
     }
 
@@ -419,13 +423,13 @@ public class PictionaryMode extends ModeSprite
 
     protected var _wordField :TextField = TextFieldUtil.createField("",
         { embedFonts: true, textColor: 0x999999, selectable: false, width: 0,
-            x: CANVAS_WIDTH-SPACING, y: CANVAS_HEIGHT-24-SPACING,
-            autoSize: TextFieldAutoSize.RIGHT },
+            y: CANVAS_HEIGHT-24-SPACING, outlineColor: 0xffffff,
+            autoSize: TextFieldAutoSize.LEFT },
         { font: "scribble", size: 24 });
 
     protected var _hintField :TextField = TextFieldUtil.createField("",
         { embedFonts: true, textColor: 0, selectable: false, width: 0,
-            x: 0, y: 0,
+            x: 0, y: 0, outlineColor: 0xffffff,
             autoSize: TextFieldAutoSize.LEFT },
         { font: "scribble", size: 24 });
 
