@@ -130,7 +130,6 @@ askew
 ask for
 asleep
 aspect
-ass
 association
 astonishing
 astounding
@@ -755,7 +754,6 @@ coax
 cob
 cobble
 cobblestone
-cock
 cockatoo
 cockroach
 coconut
