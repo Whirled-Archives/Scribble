@@ -60,10 +60,15 @@ public class ScribblePanel extends Sprite
         quit.x = _buttonBar.width;
         _buttonBar.addChild(quit);
 
+        var w :Number = _buttonBar.width;
+        var h :Number = _buttonBar.height;
+        var pad :Number = 50;
         _buttonBar.graphics.beginFill(0, 0.6);
         _buttonBar.graphics.lineStyle(1, 0xc0c0c0);
-        _buttonBar.graphics.drawRoundRect(-16, -100, _buttonBar.width+100, _buttonBar.height+100, 16);
+        _buttonBar.graphics.drawRoundRect(-16, -pad, w + pad, h + pad, 16);
         _buttonBar.graphics.endFill();
+
+        _buttonBar.scrollRect = new Rectangle(-pad, 0, w + 2*pad, h);
 
         addChild(_buttonBar);
 
@@ -106,7 +111,7 @@ public class ScribblePanel extends Sprite
             }
             _modeArrow.x = _modeSwitchers[0].x;
 
-            _buttonBar.x = screen.width-_buttonBar.width+100-8;
+            _buttonBar.x = screen.width - _buttonBar.width - 8;
             _buttonBar.y = 0;
         }
 
