@@ -82,7 +82,7 @@ public class PictionaryLogic
     {
         return _props.get(Codes.keyHint(_prefix)) as String;
     }
-    
+
     public function canDraw (playerId :int) :Boolean
     {
         var phase :int = getPhase();

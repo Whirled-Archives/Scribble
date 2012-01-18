@@ -77,7 +77,7 @@ public class StrokeComposer extends EventDispatcher
             if (!_stroke.isBeginning) {
                 delete _stroke.points[0];
             }
-            
+
             // Convert to non-sparse array
             var denseArray :Array = _stroke.points.filter(function (point :Point, ..._) :Boolean {
                 return point != null;

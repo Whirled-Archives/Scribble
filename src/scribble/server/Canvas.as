@@ -68,7 +68,7 @@ public class Canvas
     {
         // See subclasses
     }
-    
+
     public function toggleLock () :void
     {
         // Nothing by default, see subclasses

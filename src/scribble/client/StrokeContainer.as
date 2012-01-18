@@ -160,24 +160,24 @@ public class StrokeContainer extends Sprite
 //        graphics :Graphics, from :Point, control1 :Point, control2 :Point, to :Point) :void
 //    {
 //        graphics.moveTo(from.x, from.y);
-//         
+//
 //        // store values where to lineTo
 //        var posx :Number;
 //        var posy :Number;
-//         
+//
 //        //loop through 100 steps of the curve
 //        for (var u :Number = 0; u <= 1; u += 1/100) {
 //            posx = Math.pow(u,3)*(to.x+3*(control1.x-control2.x)-from.x)
 //                +3*Math.pow(u,2)*(from.x-2*control1.x+control2.x)
 //                +3*u*(control1.x-from.x)+from.x;
-//         
+//
 //            posy = Math.pow(u,3)*(to.y+3*(control1.y-control2.y)-from.y)
 //                +3*Math.pow(u,2)*(from.y-2*control1.y+control2.y)
 //                +3*u*(control1.y-from.y)+from.y;
-//         
+//
 //            graphics.lineTo(posx,posy);
 //        }
-//         
+//
 //        //Let the curve end on the second anchorPoint
 //        graphics.lineTo(to.x, to.y);
 //    }

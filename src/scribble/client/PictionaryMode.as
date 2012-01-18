@@ -326,7 +326,7 @@ public class PictionaryMode extends ModeSprite
                     showMessage(Messages.en.xlate("m_picto_score"+int((points+1)/2)), 2);
                 }
                 break;
-            
+
             case Codes.msgFail(_prefix):
                 Game.ctrl.local.feedback(Messages.en.xlate("m_picto_fail",
                     Game.getName(_logic.getPlayerId(_logic.getTurnHolder())), event.value));
@@ -348,7 +348,7 @@ public class PictionaryMode extends ModeSprite
     protected function showMessage (message :String, speed :Number, color :int = 0x195f85) :void
     {
         var tf :TextField = TextFieldUtil.createField(message,
-            { embedFonts: true, textColor: color, selectable: false, 
+            { embedFonts: true, textColor: color, selectable: false,
                 autoSize: TextFieldAutoSize.LEFT },
             { font: "scribble", size: 36 });
 

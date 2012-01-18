@@ -36,15 +36,15 @@ public class Wedge extends Sprite
         var by:Number;
         var cx:Number;
         var cy:Number;
-        
+
         numOfSegs = Math.ceil(Math.abs(_arc) / 45);
         segAngle = _arc / numOfSegs;
         segAngle = (segAngle / 180) * Math.PI;
-        
+
         // Calculate the start point
         ax = Math.cos(angle) * _radius;
         ay = Math.sin(-angle) * _radius;
-        
+
         // Draw the first line
         graphics.lineTo(ax, ay);
 
@@ -57,7 +57,7 @@ public class Wedge extends Sprite
             cy = Math.sin(angleMid) * (_radius / Math.cos(segAngle / 2));
             graphics.curveTo(cx, cy, bx, by);
         }
-        
+
         // Close the wedge
         graphics.lineTo(0, 0);
 

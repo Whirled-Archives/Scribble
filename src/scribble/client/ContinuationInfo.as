@@ -20,7 +20,7 @@ public class ContinuationInfo
 //        return p0 != null;
 //    }
 //
-//    public function set 
+//    public function set
 }
 
 }

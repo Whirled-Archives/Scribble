@@ -20,7 +20,7 @@ public class GraphicsUtil
     {
         var u2 :Number = u*u;
         var u3 :Number = u2*u;
-     
+
         graphics.lineTo(
             u3 * (curve.to.x + 3*(curve.control1.x - curve.control2.x) - curve.from.x) +
                 3*u2 * (curve.from.x - 2*curve.control1.x + curve.control2.x) +

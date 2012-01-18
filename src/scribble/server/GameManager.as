@@ -12,7 +12,7 @@ import scribble.data.Codes;
 public class GameManager
 {
     public static const PARLOR_CAPACITY :int = 18;
-     
+
     public function GameManager (server :Server, ctrl :GameSubControlServer)
     {
         _server = server;
@@ -34,7 +34,7 @@ public class GameManager
         requireAdmin(playerId);
 
         var player :Player = _server.getPlayer(playerId);
-        
+
         _gameReceiver.apply("broadcast", MessageUtil.pack("m_broadcast", player.getName(), text));
     }
 
