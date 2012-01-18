@@ -33,7 +33,11 @@ public class RosterSprite extends Sprite
     {
         _entries[rosterId].score = score;
         // TODO: Look at the original score, calculate the delta and show a nice little animation
-        _sprites[rosterId].scoreLabel.text = String(score);
+        var row :RowSprite = _sprites[rosterId];
+        row.scoreLabel.text = String(score);
+
+        // Right aligned text in Flash is buggy, position it manually
+        row.scoreLabel.x = RosterSprite.WIDTH - row.scoreLabel.textWidth - 8;
 
         updateUI();
     }
@@ -179,8 +183,7 @@ class RowSprite extends Sprite
             { font: "_sans", size: 12, bold: true, italic: italic });
         scoreLabel = TextFieldUtil.createField("test",
             { textColor: 0x00ff00, selectable: false,
-                outlineColor: 0x00000, width: 0, x: RosterSprite.WIDTH-8,
-                autoSize: TextFieldAutoSize.RIGHT },
+                outlineColor: 0x00000, autoSize: TextFieldAutoSize.LEFT },
             { font: "_sans", size: 12, bold: true });
 
         addChild(nameLabel);
