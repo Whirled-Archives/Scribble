@@ -97,7 +97,7 @@ public class ScribblePanel extends Sprite
         }));
 
         Game.ctrl.local.addEventListener(AVRGameControlEvent.SIZE_CHANGED, onResize);
-        onResize();
+        DelayUtil.delayFrame(onResize);
     }
 
     protected function onResize (... _) :void
@@ -111,7 +111,7 @@ public class ScribblePanel extends Sprite
             }
             _modeArrow.x = _modeSwitchers[0].x;
 
-            _buttonBar.x = screen.width - _buttonBar.width - 8;
+            _buttonBar.x = screen.width - _buttonBar.width - 8 + 50;
             _buttonBar.y = 0;
         }
 
