@@ -79,10 +79,9 @@ public class StrokeComposer extends EventDispatcher
             }
             
             // Convert to non-sparse array
-            var denseArray :Array = [];
-            for each (var point :Point in _stroke.points) {
-                denseArray.push(point);
-            }
+            var denseArray :Array = _stroke.points.filter(function (point :Point, ..._) :Boolean {
+                return point != null;
+            });
             _stroke.points = denseArray;
 
             dispatchEvent(new ValueEvent(STROKE_COMPOSED, _stroke));
